@@ -60,6 +60,7 @@ class ApplicationModule {
         return Configuration.authCloudBuilder()
             .packageInfo(packageInfo)
             .hostname("myinstance.mauth.nevis.cloud")
+            .facetId("android:apk-key-hash:ch.nevis.mobile.authentication.sdk.android.example")
             .authenticationRetryIntervalInSeconds(15L)
             .build()
     }
