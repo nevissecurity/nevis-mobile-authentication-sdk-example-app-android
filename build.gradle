@@ -1,0 +1,56 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.dagger_hilt_version = "2.44.2"
+    ext.gradle_version = "7.3.1"
+    ext.kotlin_version = "1.7.20"
+    ext.navigation_version = "2.5.3"
+}
+
+plugins {
+    id 'androidx.navigation.safeargs' version "${navigation_version}" apply false
+    id 'com.android.application' version "${gradle_version}" apply false
+    id 'com.google.dagger.hilt.android' version "${dagger_hilt_version}" apply false
+    id 'org.jetbrains.kotlin.android' version "${kotlin_version}" apply false
+}
+
+ext.getConfig = { String name ->
+    def env = System.getenv(name)
+    if (env != null) {
+        return env
+    }
+
+    def prop = System.getProperty(name)
+    if (prop != null) {
+        return prop
+    }
+
+    if (project.hasProperty(name)) {
+        return project.getProperty(name)
+    }
+
+    println("Getting env variable failed, returning empty: set $name as environment variable or as system property in your ~/.gradle/gradle.properties")
+    return ""
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        maven {
+            url "https://maven.pkg.github.com/nevissecurity/nevis-mobile-authentication-sdk-android-package"
+            credentials {
+                username = getConfig("GITHUB_USERNAME")
+                password = getConfig("GITHUB_PERSONAL_ACCESS_TOKEN")
+            }
+        }
+        google {
+            content {
+                excludeGroupByRegex "ch\\.nevis\\..*"
+            }
+        }
+        mavenCentral {
+            content {
+                excludeGroupByRegex "ch\\.nevis\\..*"
+            }
+        }
+    }
+}
