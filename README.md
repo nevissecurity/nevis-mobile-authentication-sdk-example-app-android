@@ -259,4 +259,4 @@ The change PIN operation is implemented in the [HomeViewModel](app/src/main/java
 
 During registration, the device information can be provided that contains the name identifying your device, and also the Firebase Cloud Messaging registration token. Updating both the name and the token is implemented in the [ChangeDeviceInformationViewModel](app/src/main/java/ch/nevis/exampleapp/ui/changeDeviceInformation/ChangeDeviceInformationViewModel.kt) class.
 
-© 2022 made with ❤ by Nevis
+© 2023 made with ❤ by Nevis
