@@ -112,7 +112,7 @@ platform :android do
             gradle(task: "assembleDebug")
 
             firebase_app_distribution(
-                app: ENV["FIREBASE_APP_ID_ANDROID"],
+                app: ENV["FIREBASE_APP_ID"],
                 apk_path: apk_path,
                 groups: 'developers, internal-testers, presales'
                )
