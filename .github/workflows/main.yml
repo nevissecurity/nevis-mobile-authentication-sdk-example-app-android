@@ -41,7 +41,7 @@ jobs:
         uses: timheuer/base64-to-file@v1
         with:
           fileName: 'keystore-example-app.jks'
-          fileDir: './android/etc'
+          fileDir: './etc'
           encodedString: ${{ secrets.KEYSTORE_FILE }}
 
       # Generate build number based on Git tag
