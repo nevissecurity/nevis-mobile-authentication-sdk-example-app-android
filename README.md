@@ -214,7 +214,7 @@ In this section you can find hints about how the Nevis Mobile Authentication SDK
 ### Initialization
 
 The [HomeViewModel](app/src/main/java/ch/nevis/exampleapp/ui/home/HomeViewModel.kt) class is responsible for creating and initializing a `MobileAuthenticationClient` instance which is the entry point to the SDK. Later this instance can be used to start the different operations.  
-The initialized `MobileAuthenticationClient` instance can be accesed via [ClientProviderImpl](app/src/main/java/ch/nevis/exampleapp/domain/client/ClientProviderImpl.kt).
+The initialized `MobileAuthenticationClient` instance can be accessed via [ClientProviderImpl](app/src/main/java/ch/nevis/exampleapp/domain/client/ClientProviderImpl.kt).
 
 ### Registration
 
