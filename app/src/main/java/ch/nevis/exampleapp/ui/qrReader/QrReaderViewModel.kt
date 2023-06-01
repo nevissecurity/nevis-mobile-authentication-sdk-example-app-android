@@ -7,6 +7,7 @@
 package ch.nevis.exampleapp.ui.qrReader
 
 import ch.nevis.exampleapp.common.error.ErrorHandler
+import ch.nevis.exampleapp.common.settings.Settings
 import ch.nevis.exampleapp.domain.client.ClientProvider
 import ch.nevis.exampleapp.domain.deviceInformation.DeviceInformationFactory
 import ch.nevis.exampleapp.domain.interaction.AuthenticationAuthenticatorSelector
@@ -36,6 +37,11 @@ class QrReaderViewModel @Inject constructor(
      * An instance of a [NavigationDispatcher] interface implementation.
      */
     navigationDispatcher: NavigationDispatcher,
+
+    /**
+     * An instance of a [Settings] interface implementation.
+     */
+    settings: Settings,
 
     /**
      * An instance of a [DeviceInformationFactory] interface implementation.
@@ -86,6 +92,7 @@ class QrReaderViewModel @Inject constructor(
     clientProvider,
     deviceInformationFactory,
     navigationDispatcher,
+    settings,
     accountSelector,
     biometricUserVerifier,
     fingerprintUserVerifier,

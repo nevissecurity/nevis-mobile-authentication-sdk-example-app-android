@@ -18,7 +18,6 @@ import ch.nevis.exampleapp.ui.base.BaseFragment
 import ch.nevis.exampleapp.ui.base.CancelOperationOnBackPressedCallback
 import ch.nevis.exampleapp.ui.base.model.NavigationParameter
 import ch.nevis.exampleapp.ui.selectAuthenticator.parameter.SelectAuthenticatorNavigationParameter
-import ch.nevis.mobile.sdk.api.localdata.Authenticator
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -69,7 +68,7 @@ class SelectAuthenticatorFragment : BaseFragment(), AuthenticatorSelectedListene
         viewModel.updateViewModel(navigationArguments.parameter)
 
         authenticatorsRecyclerViewAdapter = AuthenticatorsRecyclerViewAdapter(
-            navigationArguments.parameter.authenticators?.toTypedArray() ?: arrayOf(),
+            navigationArguments.parameter.authenticatorItems?.toTypedArray() ?: arrayOf(),
             this
         )
         binding.authenticatorsRecyclerView.adapter = authenticatorsRecyclerViewAdapter
@@ -89,8 +88,8 @@ class SelectAuthenticatorFragment : BaseFragment(), AuthenticatorSelectedListene
     //endregion
 
     //region AuthenticatorsRecyclerViewAdapterDelegate
-    override fun onAuthenticatorSelected(authenticator: Authenticator) {
-        viewModel.selectAuthenticator(authenticator.aaid())
+    override fun onAuthenticatorSelected(aaid: String) {
+        viewModel.selectAuthenticator(aaid)
     }
     //endregion
 

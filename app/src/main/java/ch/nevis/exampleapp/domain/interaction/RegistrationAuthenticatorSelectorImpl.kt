@@ -7,9 +7,12 @@
 package ch.nevis.exampleapp.domain.interaction
 
 import ch.nevis.exampleapp.NavigationGraphDirections
+import ch.nevis.exampleapp.common.settings.Settings
 import ch.nevis.exampleapp.domain.model.operation.Operation
+import ch.nevis.exampleapp.domain.util.isUserEnrolled
 import ch.nevis.exampleapp.logging.sdk
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
+import ch.nevis.exampleapp.ui.selectAuthenticator.model.AuthenticatorItem
 import ch.nevis.exampleapp.ui.selectAuthenticator.parameter.SelectAuthenticatorNavigationParameter
 import ch.nevis.mobile.sdk.api.localdata.Authenticator
 import ch.nevis.mobile.sdk.api.operation.selection.AuthenticatorSelectionContext
@@ -26,10 +29,15 @@ class RegistrationAuthenticatorSelectorImpl(
     /**
      * An instance of a [NavigationDispatcher] interface implementation.
      */
-    private val navigationDispatcher: NavigationDispatcher
+    private val navigationDispatcher: NavigationDispatcher,
+
+    /**
+     * An instance of a [Settings] interface implementation.
+     */
+    private val settings: Settings
 ) : RegistrationAuthenticatorSelector {
 
-    //region AuthenticatorSelector
+    //region RegistrationAuthenticatorSelector
     override fun selectAuthenticator(
         authenticatorSelectionContext: AuthenticatorSelectionContext,
         authenticatorSelectionHandler: AuthenticatorSelectionHandler
@@ -37,15 +45,15 @@ class RegistrationAuthenticatorSelectorImpl(
         Timber.asTree()
             .sdk("Please select one of the received available authenticators!")
 
-        val authenticators = authenticatorSelectionContext.authenticators().filter {
-            isAvailableForRegistration(it, authenticatorSelectionContext)
+        val authenticatorItems = authenticatorSelectionContext.authenticators().mapNotNull {
+            mapForRegistration(it, authenticatorSelectionContext)
         }.toSet()
 
         navigationDispatcher.requestNavigation(
             NavigationGraphDirections.actionGlobalSelectAuthenticatorFragment(
                 SelectAuthenticatorNavigationParameter(
                     Operation.REGISTRATION,
-                    authenticators,
+                    authenticatorItems,
                     authenticatorSelectionHandler
                 )
             )
@@ -54,10 +62,10 @@ class RegistrationAuthenticatorSelectorImpl(
     //endregion
 
     //region Private Interface
-    private fun isAvailableForRegistration(
+    private fun mapForRegistration(
         authenticator: Authenticator,
         context: AuthenticatorSelectionContext
-    ): Boolean {
+    ): AuthenticatorItem? {
         val username = context.account().username()
         val authenticators = context.authenticators()
 
@@ -83,12 +91,23 @@ class RegistrationAuthenticatorSelectorImpl(
         if ((canRegisterBiometric || biometricRegistered || !canRegisterFingerprint) &&
             authenticator.aaid() == Authenticator.FINGERPRINT_AUTHENTICATOR_AAID
         ) {
-            return false
+            return null
         }
 
         // Do not display policy non-compliant authenticators (this includes already registered
         // authenticators), nor those not supported by hardware.
-        return authenticator.isSupportedByHardware && context.isPolicyCompliant(authenticator.aaid())
+        return if (authenticator.isSupportedByHardware && context.isPolicyCompliant(authenticator.aaid())) {
+            AuthenticatorItem(
+                authenticator.aaid(),
+                true,
+                authenticator.isUserEnrolled(
+                    context.account().username(),
+                    settings.allowClass2Sensors
+                )
+            )
+        } else {
+            null
+        }
     }
     //endregion
 }

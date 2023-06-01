@@ -12,6 +12,7 @@ import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.common.configuration.ConfigurationProvider
 import ch.nevis.exampleapp.common.configuration.Environment
 import ch.nevis.exampleapp.common.error.ErrorHandler
+import ch.nevis.exampleapp.common.settings.Settings
 import ch.nevis.exampleapp.domain.client.ClientProvider
 import ch.nevis.exampleapp.domain.deviceInformation.DeviceInformationFactory
 import ch.nevis.exampleapp.domain.interaction.AuthenticationAuthenticatorSelector
@@ -67,6 +68,11 @@ class HomeViewModel @Inject constructor(
     private val navigationDispatcher: NavigationDispatcher,
 
     /**
+     * An instance of a [Settings] interface implementation.
+     */
+    settings: Settings,
+
+    /**
      * An instance of a [DeviceInformationFactory] implementation.
      */
     deviceInformationFactory: DeviceInformationFactory,
@@ -115,6 +121,7 @@ class HomeViewModel @Inject constructor(
     clientProvider,
     deviceInformationFactory,
     navigationDispatcher,
+    settings,
     accountSelector,
     biometricUserVerifier,
     fingerprintUserVerifier,
@@ -243,6 +250,7 @@ class HomeViewModel @Inject constructor(
                         }
                     }
                 }
+
                 Environment.IDENTITY_SUITE -> {
                     navigationDispatcher.requestNavigation(
                         NavigationGraphDirections.actionGlobalSelectAccountFragment(

@@ -8,6 +8,7 @@ package ch.nevis.exampleapp.ui.outOfBand
 
 import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.common.error.ErrorHandler
+import ch.nevis.exampleapp.common.settings.Settings
 import ch.nevis.exampleapp.domain.client.ClientProvider
 import ch.nevis.exampleapp.domain.deviceInformation.DeviceInformationFactory
 import ch.nevis.exampleapp.domain.interaction.AuthenticationAuthenticatorSelector
@@ -47,6 +48,11 @@ abstract class OutOfBandViewModel(
      * An instance of a [NavigationDispatcher] interface implementation.
      */
     private val navigationDispatcher: NavigationDispatcher,
+
+    /**
+     * An instance of a [Settings] interface implementation.
+     */
+    private val settings: Settings,
 
     /**
      * An instance of a [AccountSelector] interface implementation.
@@ -169,6 +175,7 @@ abstract class OutOfBandViewModel(
     ) {
         outOfBandRegistration
             .deviceInformation(deviceInformationFactory.create())
+            .allowClass2Sensors(settings.allowClass2Sensors)
             .authenticatorSelector(registrationAuthenticatorSelector)
             .pinEnroller(pinEnroller)
             .biometricUserVerifier(biometricUserVerifier)
