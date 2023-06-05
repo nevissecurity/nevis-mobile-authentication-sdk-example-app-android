@@ -14,6 +14,8 @@ import ch.nevis.exampleapp.common.configuration.ConfigurationProvider
 import ch.nevis.exampleapp.common.configuration.ConfigurationProviderImpl
 import ch.nevis.exampleapp.common.configuration.Environment
 import ch.nevis.exampleapp.common.error.*
+import ch.nevis.exampleapp.common.settings.Settings
+import ch.nevis.exampleapp.common.settings.SettingsImpl
 import ch.nevis.exampleapp.domain.client.ClientProvider
 import ch.nevis.exampleapp.domain.client.ClientProviderImpl
 import ch.nevis.exampleapp.domain.deviceInformation.DeviceInformationFactory
@@ -122,6 +124,12 @@ class ApplicationModule {
     fun provideNavigator(): NavigationDispatcher = NavigationDispatcherImpl()
     //endregion
 
+    //region Settings
+    @Provides
+    @Singleton
+    fun provideSettings(@ApplicationContext context: Context): Settings = SettingsImpl(context)
+    //endregion
+
     //region Interaction
     @Provides
     fun provideBiometricUserVerifier(navigationDispatcher: NavigationDispatcher): BiometricUserVerifier =
@@ -139,12 +147,24 @@ class ApplicationModule {
         AccountSelectorImpl(navigationDispatcher, errorHandler)
 
     @Provides
-    fun provideAuthenticationAuthenticatorSelector(navigationDispatcher: NavigationDispatcher): AuthenticationAuthenticatorSelector =
-        AuthenticationAuthenticatorSelectorImpl(navigationDispatcher)
+    fun provideAuthenticationAuthenticatorSelector(
+        navigationDispatcher: NavigationDispatcher,
+        settings: Settings
+    ): AuthenticationAuthenticatorSelector =
+        AuthenticationAuthenticatorSelectorImpl(
+            navigationDispatcher,
+            settings
+        )
 
     @Provides
-    fun provideRegistrationAuthenticatorSelector(navigationDispatcher: NavigationDispatcher): RegistrationAuthenticatorSelector =
-        RegistrationAuthenticatorSelectorImpl(navigationDispatcher)
+    fun provideRegistrationAuthenticatorSelector(
+        navigationDispatcher: NavigationDispatcher,
+        settings: Settings
+    ): RegistrationAuthenticatorSelector =
+        RegistrationAuthenticatorSelectorImpl(
+            navigationDispatcher,
+            settings
+        )
 
     @Provides
     fun providePinChanger(navigationDispatcher: NavigationDispatcher): PinChanger =

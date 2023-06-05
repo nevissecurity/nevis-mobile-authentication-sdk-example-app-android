@@ -18,7 +18,7 @@ interface AuthenticatorSelectedListener {
     /**
      * Event method that is called when an authenticator is selected.
      *
-     * @param authenticator The selected authenticator.
+     * @param aaid The AAID of selected authenticator.
      */
-    fun onAuthenticatorSelected(authenticator: Authenticator)
+    fun onAuthenticatorSelected(aaid: String)
 }

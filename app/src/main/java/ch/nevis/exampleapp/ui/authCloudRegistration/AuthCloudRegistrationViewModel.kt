@@ -8,6 +8,7 @@ package ch.nevis.exampleapp.ui.authCloudRegistration
 
 import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.common.error.ErrorHandler
+import ch.nevis.exampleapp.common.settings.Settings
 import ch.nevis.exampleapp.domain.client.ClientProvider
 import ch.nevis.exampleapp.domain.deviceInformation.DeviceInformationFactory
 import ch.nevis.exampleapp.domain.interaction.OnErrorImpl
@@ -42,6 +43,11 @@ class AuthCloudRegistrationViewModel @Inject constructor(
      * An instance of a [NavigationDispatcher] interface implementation.
      */
     private val navigationDispatcher: NavigationDispatcher,
+
+    /**
+     * An instance of a [Settings] interface implementation.
+     */
+    private val settings: Settings,
 
     /**
      * An instance of a [BiometricUserVerifier] interface implementation.
@@ -92,6 +98,7 @@ class AuthCloudRegistrationViewModel @Inject constructor(
 
             val operation = client.operations().authCloudApiRegistration()
                 .authenticatorSelector(authenticatorSelector)
+                .allowClass2Sensors(settings.allowClass2Sensors)
                 .deviceInformation(deviceInformation)
                 .pinEnroller(pinEnroller)
                 .fingerprintUserVerifier(fingerprintUserVerifier)

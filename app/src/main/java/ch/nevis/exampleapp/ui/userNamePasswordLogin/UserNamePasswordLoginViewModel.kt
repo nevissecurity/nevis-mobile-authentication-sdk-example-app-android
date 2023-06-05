@@ -9,6 +9,7 @@ package ch.nevis.exampleapp.ui.userNamePasswordLogin
 import androidx.lifecycle.viewModelScope
 import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.common.error.ErrorHandler
+import ch.nevis.exampleapp.common.settings.Settings
 import ch.nevis.exampleapp.domain.client.ClientProvider
 import ch.nevis.exampleapp.domain.deviceInformation.DeviceInformationFactory
 import ch.nevis.exampleapp.domain.interaction.OnErrorImpl
@@ -56,12 +57,29 @@ class UserNamePasswordLoginViewModel @Inject constructor(
      */
     private val navigationDispatcher: NavigationDispatcher,
 
+    /**
+     * An instance of a [Settings] interface implementation.
+     */
+    private val settings: Settings,
+
+    /**
+     * An instance of a [BiometricUserVerifier] interface implementation.
+     */
     private val biometricUserVerifier: BiometricUserVerifier,
 
+    /**
+     * An instance of a [FingerprintUserVerifier] interface implementation.
+     */
     private val fingerprintUserVerifier: FingerprintUserVerifier,
 
+    /**
+     * An instance of a [PinEnroller] interface implementation.
+     */
     private val pinEnroller: PinEnroller,
 
+    /**
+     * An instance of a [RegistrationAuthenticatorSelector] interface implementation.
+     */
     private val authenticatorSelector: RegistrationAuthenticatorSelector,
 
     /**
@@ -125,6 +143,7 @@ class UserNamePasswordLoginViewModel @Inject constructor(
                 .username(extId)
                 .authorizationProvider(CookieAuthorizationProvider.create(cookies))
                 .deviceInformation(deviceInformation)
+                .allowClass2Sensors(settings.allowClass2Sensors)
                 .authenticatorSelector(authenticatorSelector)
                 .pinEnroller(pinEnroller)
                 .biometricUserVerifier(biometricUserVerifier)
