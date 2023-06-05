@@ -66,6 +66,7 @@ class AuthenticationAuthenticatorSelectorImpl(
         authenticator: Authenticator,
         context: AuthenticatorSelectionContext
     ): AuthenticatorItem? {
+        Timber.d("Checking if authenticator %s is eligible for authentication.", authenticator.aaid())
         return if (authenticator.registration()
                 .isRegistered(context.account().username()) && authenticator.isSupportedByHardware
         ) {

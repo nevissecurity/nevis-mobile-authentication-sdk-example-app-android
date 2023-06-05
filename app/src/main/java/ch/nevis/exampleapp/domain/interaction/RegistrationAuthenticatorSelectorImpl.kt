@@ -66,6 +66,7 @@ class RegistrationAuthenticatorSelectorImpl(
         authenticator: Authenticator,
         context: AuthenticatorSelectionContext
     ): AuthenticatorItem? {
+        Timber.d("Checking if authenticator %s is eligible for registration.", authenticator.aaid())
         val username = context.account().username()
         val authenticators = context.authenticators()
 
