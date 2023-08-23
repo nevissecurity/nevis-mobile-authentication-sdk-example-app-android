@@ -21,6 +21,7 @@ import ch.nevis.mobile.sdk.api.operation.pin.PinChanger
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelectionHandler
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelector
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
+import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,6 +47,11 @@ class SelectAccountViewModel @Inject constructor(
      * An instance of a [BiometricUserVerifier] interface implementation.
      */
     private val biometricUserVerifier: BiometricUserVerifier,
+
+    /**
+     * An instance of a [DevicePasscodeUserVerifier] interface implementation.
+     */
+    private val devicePasscodeUserVerifier: DevicePasscodeUserVerifier,
 
     /**
      * An instance of a [FingerprintUserVerifier] interface implementation.
@@ -148,6 +154,7 @@ class SelectAccountViewModel @Inject constructor(
             .username(username)
             .authenticatorSelector(authenticatorSelector)
             .biometricUserVerifier(biometricUserVerifier)
+            .devicePasscodeUserVerifier(devicePasscodeUserVerifier)
             .fingerprintUserVerifier(fingerprintUserVerifier)
             .pinUserVerifier(pinUserVerifier)
             .onSuccess {
@@ -172,6 +179,7 @@ class SelectAccountViewModel @Inject constructor(
             .username(username)
             .authenticatorSelector(authenticatorSelector)
             .biometricUserVerifier(biometricUserVerifier)
+            .devicePasscodeUserVerifier(devicePasscodeUserVerifier)
             .fingerprintUserVerifier(fingerprintUserVerifier)
             .pinUserVerifier(pinUserVerifier)
             .onSuccess {

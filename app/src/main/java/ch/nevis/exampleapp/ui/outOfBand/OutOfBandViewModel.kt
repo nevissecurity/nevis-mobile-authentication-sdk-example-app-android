@@ -25,6 +25,7 @@ import ch.nevis.mobile.sdk.api.operation.outofband.OutOfBandRegistration
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnroller
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelector
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
+import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 
@@ -63,6 +64,11 @@ abstract class OutOfBandViewModel(
      * An instance of a [BiometricUserVerifier] interface implementation.
      */
     private val biometricUserVerifier: BiometricUserVerifier,
+
+    /**
+     * An instance of a [DevicePasscodeUserVerifier] interface implementation.
+     */
+    private val devicePasscodeUserVerifier: DevicePasscodeUserVerifier,
 
     /**
      * An instance of a [FingerprintUserVerifier] interface implementation.
@@ -154,6 +160,7 @@ abstract class OutOfBandViewModel(
             .pinUserVerifier(pinUserVerifier)
             .fingerprintUserVerifier(fingerprintUserVerifier)
             .biometricUserVerifier(biometricUserVerifier)
+            .devicePasscodeUserVerifier(devicePasscodeUserVerifier)
             .onSuccess {
                 navigationDispatcher.requestNavigation(
                     NavigationGraphDirections.actionGlobalResultFragment(
@@ -179,6 +186,7 @@ abstract class OutOfBandViewModel(
             .authenticatorSelector(registrationAuthenticatorSelector)
             .pinEnroller(pinEnroller)
             .biometricUserVerifier(biometricUserVerifier)
+            .devicePasscodeUserVerifier(devicePasscodeUserVerifier)
             .fingerprintUserVerifier(fingerprintUserVerifier)
             .onSuccess {
                 navigationDispatcher.requestNavigation(

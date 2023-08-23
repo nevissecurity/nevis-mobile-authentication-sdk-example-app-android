@@ -17,7 +17,7 @@ import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifie
 import timber.log.Timber
 
 /**
- * Default implementation of [FingerprintUserVerifier] interface. It navigates to the Verify Biometric
+ * Default implementation of [FingerprintUserVerifier] interface. It navigates to the Verify User
  * view with the received [FingerprintUserVerificationHandler] object.
  */
 class FingerprintUserVerifierImpl(

@@ -24,6 +24,7 @@ import ch.nevis.mobile.sdk.api.authorization.AuthorizationProvider.CookieAuthori
 import ch.nevis.mobile.sdk.api.authorization.Cookie
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnroller
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
+import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -66,6 +67,11 @@ class UserNamePasswordLoginViewModel @Inject constructor(
      * An instance of a [BiometricUserVerifier] interface implementation.
      */
     private val biometricUserVerifier: BiometricUserVerifier,
+
+    /**
+     * An instance of a [DevicePasscodeUserVerifier] interface implementation.
+     */
+    private val devicePasscodeUserVerifier: DevicePasscodeUserVerifier,
 
     /**
      * An instance of a [FingerprintUserVerifier] interface implementation.
@@ -147,6 +153,7 @@ class UserNamePasswordLoginViewModel @Inject constructor(
                 .authenticatorSelector(authenticatorSelector)
                 .pinEnroller(pinEnroller)
                 .biometricUserVerifier(biometricUserVerifier)
+                .devicePasscodeUserVerifier(devicePasscodeUserVerifier)
                 .fingerprintUserVerifier(fingerprintUserVerifier)
                 .onSuccess {
                     navigationDispatcher.requestNavigation(

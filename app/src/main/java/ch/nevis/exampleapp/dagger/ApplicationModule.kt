@@ -30,6 +30,7 @@ import ch.nevis.mobile.sdk.api.operation.pin.PinChanger
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnroller
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelector
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
+import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 import dagger.Module
@@ -134,6 +135,10 @@ class ApplicationModule {
     @Provides
     fun provideBiometricUserVerifier(navigationDispatcher: NavigationDispatcher): BiometricUserVerifier =
         BiometricUserVerifierImpl(navigationDispatcher)
+
+    @Provides
+    fun provideDevicePasscodeUserVerifier(navigationDispatcher: NavigationDispatcher): DevicePasscodeUserVerifier =
+        DevicePasscodeUserVerifierImpl(navigationDispatcher)
 
     @Provides
     fun provideFingerprintUserVerifier(navigationDispatcher: NavigationDispatcher): FingerprintUserVerifier =

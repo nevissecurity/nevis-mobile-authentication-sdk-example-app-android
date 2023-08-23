@@ -17,6 +17,7 @@ import ch.nevis.exampleapp.ui.outOfBand.OutOfBandViewModel
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnroller
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelector
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
+import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -59,6 +60,11 @@ class QrReaderViewModel @Inject constructor(
     biometricUserVerifier: BiometricUserVerifier,
 
     /**
+     * An instance of a [DevicePasscodeUserVerifier] interface implementation.
+     */
+    devicePasscodeUserVerifier: DevicePasscodeUserVerifier,
+
+    /**
      * An instance of a [FingerprintUserVerifier] interface implementation.
      */
     fingerprintUserVerifier: FingerprintUserVerifier,
@@ -95,6 +101,7 @@ class QrReaderViewModel @Inject constructor(
     settings,
     accountSelector,
     biometricUserVerifier,
+    devicePasscodeUserVerifier,
     fingerprintUserVerifier,
     pinUserVerifier,
     pinEnroller,

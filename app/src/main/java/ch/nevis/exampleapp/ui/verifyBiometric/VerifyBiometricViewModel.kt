@@ -14,13 +14,15 @@ import ch.nevis.exampleapp.ui.verifyBiometric.model.VerifyBiometricViewMode
 import ch.nevis.exampleapp.ui.verifyBiometric.parameter.VerifyBiometricNavigationParameter
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricPromptOptions
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerificationHandler
+import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodePromptOptions
+import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerificationHandler
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerificationHandler
 import ch.nevis.mobile.sdk.api.operation.userverification.OsAuthenticationListenHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 /**
- * View model implementation of Verify Biometric view.
+ * View model implementation of Verify User view.
  */
 @HiltViewModel
 class VerifyBiometricViewModel @Inject constructor(
@@ -35,7 +37,7 @@ class VerifyBiometricViewModel @Inject constructor(
     //region Properties
     /**
      * An instance of a [BiometricUserVerificationHandler] in case of an operation is started that requested
-     * biometric user verification and we navigate to Verify Biometric view to ask the user to verify herself/himself
+     * biometric user verification and we navigate to Verify User view to ask the user to verify herself/himself
      * using biometric authentication (fingerprint or face ID) to be able to continue the operation.
      *
      * [VerifyBiometricNavigationParameter.verifyBiometricViewMode] must be [VerifyBiometricViewMode.BIOMETRIC].
@@ -43,8 +45,17 @@ class VerifyBiometricViewModel @Inject constructor(
     private var biometricUserVerificationHandler: BiometricUserVerificationHandler? = null
 
     /**
+     * An instance of a [DevicePasscodeUserVerificationHandler] in case of an operation is started that requested
+     * device passcode user verification and we navigate to Verify User view to ask the user to verify herself/himself
+     * using device passcode authentication to be able to continue the operation.
+     *
+     * [VerifyBiometricNavigationParameter.verifyBiometricViewMode] must be [VerifyBiometricViewMode.DEVICE_PASSCODE].
+     */
+    private var devicePasscodeUserVerificationHandler: DevicePasscodeUserVerificationHandler? = null
+
+    /**
      * An instance of a [FingerprintUserVerificationHandler] in case of an operation is started that requested
-     * fingerprint user verification and we navigate to Verify Biometric view to ask the user to verify herself/himself
+     * fingerprint user verification and we navigate to Verify User view to ask the user to verify herself/himself
      * using fingerprint authentication to be able to continue the operation.
      *
      * [VerifyBiometricNavigationParameter.verifyBiometricViewMode] must be [VerifyBiometricViewMode.FINGERPRINT].
@@ -65,20 +76,27 @@ class VerifyBiometricViewModel @Inject constructor(
      *
      * @param parameter The [VerifyBiometricNavigationParameter] that was received by the owner [VerifyBiometricFragment].
      * @param biometricPromptOptions [BiometricPromptOptions] object that is required in case of biometric user
-     * verification forthe dialog shown by the OS.
+     * verification for the dialog shown by the OS.
+     * @param devicePasscodePromptOptions [DevicePasscodePromptOptions] object that is required in case of device
+     * passcode user verification for the dialog shown by the OS.
      */
     fun updateViewModel(
         parameter: VerifyBiometricNavigationParameter,
-        biometricPromptOptions: BiometricPromptOptions
+        biometricPromptOptions: BiometricPromptOptions,
+        devicePasscodePromptOptions: DevicePasscodePromptOptions
     ) {
         biometricUserVerificationHandler = null
         fingerprintUserVerificationHandler = null
         biometricUserVerificationHandler = parameter.biometricUserVerificationHandler
+        devicePasscodeUserVerificationHandler = parameter.devicePasscodeUserVerificationHandler
         fingerprintUserVerificationHandler = parameter.fingerprintUserVerificationHandler
 
         when (parameter.verifyBiometricViewMode) {
             VerifyBiometricViewMode.FINGERPRINT -> verifyFingerprint()
             VerifyBiometricViewMode.BIOMETRIC -> verifyBiometric(biometricPromptOptions)
+            VerifyBiometricViewMode.DEVICE_PASSCODE -> verifyDevicePasscode(
+                devicePasscodePromptOptions
+            )
         }
 
         parameter.fingerprintUserVerificationError?.let {
@@ -127,6 +145,26 @@ class VerifyBiometricViewModel @Inject constructor(
             osAuthenticationListenHandler =
                 biometricUserVerificationHandler.listenForOsCredentials(biometricPromptOptions)
             this.biometricUserVerificationHandler = null
+        } catch (exception: Exception) {
+            errorHandler.handle(exception)
+        }
+    }
+
+    /**
+     * Starts device passcode authentication for an operation.
+     *
+     * @param devicePasscodePromptOptions The device passcode prompt options that is used for
+     * displaying the dialog that asks the user to verify her-/himself.
+     */
+    private fun verifyDevicePasscode(devicePasscodePromptOptions: DevicePasscodePromptOptions) {
+        try {
+            val devicePasscodeUserVerificationHandler =
+                this.devicePasscodeUserVerificationHandler ?: throw BusinessException.invalidState()
+            osAuthenticationListenHandler =
+                devicePasscodeUserVerificationHandler.listenForOsCredentials(
+                    devicePasscodePromptOptions
+                )
+            this.devicePasscodeUserVerificationHandler = null
         } catch (exception: Exception) {
             errorHandler.handle(exception)
         }
