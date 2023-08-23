@@ -4,14 +4,14 @@
  * Copyright © 2023. Nevis Security AG. All rights reserved.
  */
 
-package ch.nevis.exampleapp.ui.verifyBiometric
+package ch.nevis.exampleapp.ui.verifyUser
 
 import ch.nevis.exampleapp.common.error.ErrorHandler
 import ch.nevis.exampleapp.domain.model.error.BusinessException
 import ch.nevis.exampleapp.ui.base.CancellableOperationViewModel
-import ch.nevis.exampleapp.ui.verifyBiometric.model.VerifyBiometricViewData
-import ch.nevis.exampleapp.ui.verifyBiometric.model.VerifyBiometricViewMode
-import ch.nevis.exampleapp.ui.verifyBiometric.parameter.VerifyBiometricNavigationParameter
+import ch.nevis.exampleapp.ui.verifyUser.model.VerifyUserViewData
+import ch.nevis.exampleapp.ui.verifyUser.model.VerifyUserViewMode
+import ch.nevis.exampleapp.ui.verifyUser.parameter.VerifyUserNavigationParameter
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricPromptOptions
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerificationHandler
 import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodePromptOptions
@@ -25,7 +25,7 @@ import javax.inject.Inject
  * View model implementation of Verify User view.
  */
 @HiltViewModel
-class VerifyBiometricViewModel @Inject constructor(
+class VerifyUserViewModel @Inject constructor(
 
     /**
      * An instance of an [ErrorHandler] interface implementation. Received errors will be passed to this error
@@ -40,7 +40,7 @@ class VerifyBiometricViewModel @Inject constructor(
      * biometric user verification and we navigate to Verify User view to ask the user to verify herself/himself
      * using biometric authentication (fingerprint or face ID) to be able to continue the operation.
      *
-     * [VerifyBiometricNavigationParameter.verifyBiometricViewMode] must be [VerifyBiometricViewMode.BIOMETRIC].
+     * [VerifyUserNavigationParameter.verifyUserViewMode] must be [VerifyUserViewMode.BIOMETRIC].
      */
     private var biometricUserVerificationHandler: BiometricUserVerificationHandler? = null
 
@@ -49,7 +49,7 @@ class VerifyBiometricViewModel @Inject constructor(
      * device passcode user verification and we navigate to Verify User view to ask the user to verify herself/himself
      * using device passcode authentication to be able to continue the operation.
      *
-     * [VerifyBiometricNavigationParameter.verifyBiometricViewMode] must be [VerifyBiometricViewMode.DEVICE_PASSCODE].
+     * [VerifyUserNavigationParameter.verifyUserViewMode] must be [VerifyUserViewMode.DEVICE_PASSCODE].
      */
     private var devicePasscodeUserVerificationHandler: DevicePasscodeUserVerificationHandler? = null
 
@@ -58,30 +58,30 @@ class VerifyBiometricViewModel @Inject constructor(
      * fingerprint user verification and we navigate to Verify User view to ask the user to verify herself/himself
      * using fingerprint authentication to be able to continue the operation.
      *
-     * [VerifyBiometricNavigationParameter.verifyBiometricViewMode] must be [VerifyBiometricViewMode.FINGERPRINT].
+     * [VerifyUserNavigationParameter.verifyUserViewMode] must be [VerifyUserViewMode.FINGERPRINT].
      */
     private var fingerprintUserVerificationHandler: FingerprintUserVerificationHandler? = null
 
     /**
      * The [OsAuthenticationListenHandler] that is received when [BiometricUserVerificationHandler.listenForOsCredentials] or
-     * [FingerprintUserVerificationHandler.listenForOsCredentials] is called based on the current mode of [VerifyBiometricFragment].
+     * [FingerprintUserVerificationHandler.listenForOsCredentials] is called based on the current mode of [VerifyUserFragment].
      */
     private var osAuthenticationListenHandler: OsAuthenticationListenHandler? = null
     //endregion
 
     //region Public Interface
     /**
-     * Updates this view model instance based on the [VerifyBiometricNavigationParameter] that was received by
-     * the owner [VerifyBiometricFragment]. This method must be called by the owner fragment.
+     * Updates this view model instance based on the [VerifyUserNavigationParameter] that was received by
+     * the owner [VerifyUserFragment]. This method must be called by the owner fragment.
      *
-     * @param parameter The [VerifyBiometricNavigationParameter] that was received by the owner [VerifyBiometricFragment].
+     * @param parameter The [VerifyUserNavigationParameter] that was received by the owner [VerifyUserFragment].
      * @param biometricPromptOptions [BiometricPromptOptions] object that is required in case of biometric user
      * verification for the dialog shown by the OS.
      * @param devicePasscodePromptOptions [DevicePasscodePromptOptions] object that is required in case of device
      * passcode user verification for the dialog shown by the OS.
      */
     fun updateViewModel(
-        parameter: VerifyBiometricNavigationParameter,
+        parameter: VerifyUserNavigationParameter,
         biometricPromptOptions: BiometricPromptOptions,
         devicePasscodePromptOptions: DevicePasscodePromptOptions
     ) {
@@ -91,16 +91,16 @@ class VerifyBiometricViewModel @Inject constructor(
         devicePasscodeUserVerificationHandler = parameter.devicePasscodeUserVerificationHandler
         fingerprintUserVerificationHandler = parameter.fingerprintUserVerificationHandler
 
-        when (parameter.verifyBiometricViewMode) {
-            VerifyBiometricViewMode.FINGERPRINT -> verifyFingerprint()
-            VerifyBiometricViewMode.BIOMETRIC -> verifyBiometric(biometricPromptOptions)
-            VerifyBiometricViewMode.DEVICE_PASSCODE -> verifyDevicePasscode(
+        when (parameter.verifyUserViewMode) {
+            VerifyUserViewMode.FINGERPRINT -> verifyFingerprint()
+            VerifyUserViewMode.BIOMETRIC -> verifyBiometric(biometricPromptOptions)
+            VerifyUserViewMode.DEVICE_PASSCODE -> verifyDevicePasscode(
                 devicePasscodePromptOptions
             )
         }
 
         parameter.fingerprintUserVerificationError?.let {
-            requestViewUpdate(VerifyBiometricViewData(it.description()))
+            requestViewUpdate(VerifyUserViewData(it.description()))
         }
     }
 

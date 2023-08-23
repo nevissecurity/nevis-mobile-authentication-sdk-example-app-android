@@ -4,7 +4,7 @@
  * Copyright © 2023. Nevis Security AG. All rights reserved.
  */
 
-package ch.nevis.exampleapp.ui.verifyBiometric
+package ch.nevis.exampleapp.ui.verifyUser
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,13 +13,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import ch.nevis.exampleapp.R
-import ch.nevis.exampleapp.databinding.FragmentVerifyBiometricBinding
+import ch.nevis.exampleapp.databinding.FragmentVerifyUserBinding
 import ch.nevis.exampleapp.ui.base.BaseFragment
 import ch.nevis.exampleapp.ui.base.CancelOperationOnBackPressedCallback
 import ch.nevis.exampleapp.ui.base.model.NavigationParameter
 import ch.nevis.exampleapp.ui.base.model.ViewData
-import ch.nevis.exampleapp.ui.verifyBiometric.model.VerifyBiometricViewData
-import ch.nevis.exampleapp.ui.verifyBiometric.parameter.VerifyBiometricNavigationParameter
+import ch.nevis.exampleapp.ui.verifyUser.model.VerifyUserViewData
+import ch.nevis.exampleapp.ui.verifyUser.parameter.VerifyUserNavigationParameter
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricPromptOptions
 import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodePromptOptions
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,24 +29,24 @@ import dagger.hilt.android.AndroidEntryPoint
  * fingerprint, face ID or device passcode.
  */
 @AndroidEntryPoint
-class VerifyBiometricFragment : BaseFragment() {
+class VerifyUserFragment : BaseFragment() {
 
     //region Properties
     /**
      * UI component bindings.
      */
-    private var _binding: FragmentVerifyBiometricBinding? = null
+    private var _binding: FragmentVerifyUserBinding? = null
     private val binding get() = _binding!!
 
     /**
      * The view model instance for this view.
      */
-    override val viewModel: VerifyBiometricViewModel by viewModels()
+    override val viewModel: VerifyUserViewModel by viewModels()
 
     /**
      * Safe Args navigation arguments.
      */
-    private val navigationArguments: VerifyBiometricFragmentArgs by navArgs()
+    private val navigationArguments: VerifyUserFragmentArgs by navArgs()
 
     /**
      * [BiometricPromptOptions] object that is required in case of biometric user verification for
@@ -66,7 +66,7 @@ class VerifyBiometricFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentVerifyBiometricBinding.inflate(inflater, container, false)
+        _binding = FragmentVerifyUserBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -113,7 +113,7 @@ class VerifyBiometricFragment : BaseFragment() {
 
     //region BaseFragment
     override fun updateViewParameter(parameter: NavigationParameter): Boolean {
-        if (parameter is VerifyBiometricNavigationParameter) {
+        if (parameter is VerifyUserNavigationParameter) {
             viewModel.updateViewModel(
                 parameter,
                 biometricPromptOptions,
@@ -126,7 +126,7 @@ class VerifyBiometricFragment : BaseFragment() {
 
     override fun updateView(viewData: ViewData) {
         super.updateView(viewData)
-        if (viewData is VerifyBiometricViewData) {
+        if (viewData is VerifyUserViewData) {
             binding.errorMessageTextView.text = viewData.errorMessage
         }
     }

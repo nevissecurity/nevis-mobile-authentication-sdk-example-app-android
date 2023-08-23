@@ -9,8 +9,8 @@ package ch.nevis.exampleapp.domain.interaction
 import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.logging.sdk
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
-import ch.nevis.exampleapp.ui.verifyBiometric.model.VerifyBiometricViewMode
-import ch.nevis.exampleapp.ui.verifyBiometric.parameter.VerifyBiometricNavigationParameter
+import ch.nevis.exampleapp.ui.verifyUser.model.VerifyUserViewMode
+import ch.nevis.exampleapp.ui.verifyUser.parameter.VerifyUserNavigationParameter
 import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerificationContext
 import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerificationHandler
 import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
@@ -35,9 +35,9 @@ class DevicePasscodeUserVerifierImpl(
     ) {
         Timber.asTree().sdk("Verify yourself using device passcode authenticator.")
         navigationDispatcher.requestNavigation(
-            NavigationGraphDirections.actionGlobalVerifyBiometricFragment(
-                VerifyBiometricNavigationParameter(
-                    VerifyBiometricViewMode.DEVICE_PASSCODE,
+            NavigationGraphDirections.actionGlobalVerifyUserFragment(
+                VerifyUserNavigationParameter(
+                    VerifyUserViewMode.DEVICE_PASSCODE,
                     devicePasscodeUserVerificationHandler = devicePasscodeUserVerificationHandler
                 )
             )
