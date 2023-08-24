@@ -9,15 +9,15 @@ package ch.nevis.exampleapp.domain.interaction
 import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.logging.sdk
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
-import ch.nevis.exampleapp.ui.verifyBiometric.model.VerifyBiometricViewMode
-import ch.nevis.exampleapp.ui.verifyBiometric.parameter.VerifyBiometricNavigationParameter
+import ch.nevis.exampleapp.ui.verifyUser.model.VerifyUserViewMode
+import ch.nevis.exampleapp.ui.verifyUser.parameter.VerifyUserNavigationParameter
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerificationContext
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerificationHandler
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
 import timber.log.Timber
 
 /**
- * Default implementation of [FingerprintUserVerifier] interface. It navigates to the Verify Biometric
+ * Default implementation of [FingerprintUserVerifier] interface. It navigates to the Verify User
  * view with the received [FingerprintUserVerificationHandler] object.
  */
 class FingerprintUserVerifierImpl(
@@ -35,9 +35,9 @@ class FingerprintUserVerifierImpl(
     ) {
         Timber.asTree().sdk("Verify yourself using fingerprint authenticator.")
         navigationDispatcher.requestNavigation(
-            NavigationGraphDirections.actionGlobalVerifyBiometricFragment(
-                VerifyBiometricNavigationParameter(
-                    VerifyBiometricViewMode.FINGERPRINT,
+            NavigationGraphDirections.actionGlobalVerifyUserFragment(
+                VerifyUserNavigationParameter(
+                    VerifyUserViewMode.FINGERPRINT,
                     fingerprintUserVerificationHandler = fingerprintUserVerificationHandler,
                     fingerprintUserVerificationError = fingerprintUserVerificationContext.lastRecoverableError()
                         .orElse(null)

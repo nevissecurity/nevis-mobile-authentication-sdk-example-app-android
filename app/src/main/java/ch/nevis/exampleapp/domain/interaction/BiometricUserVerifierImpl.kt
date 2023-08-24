@@ -9,15 +9,15 @@ package ch.nevis.exampleapp.domain.interaction
 import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.logging.sdk
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
-import ch.nevis.exampleapp.ui.verifyBiometric.model.VerifyBiometricViewMode
-import ch.nevis.exampleapp.ui.verifyBiometric.parameter.VerifyBiometricNavigationParameter
+import ch.nevis.exampleapp.ui.verifyUser.model.VerifyUserViewMode
+import ch.nevis.exampleapp.ui.verifyUser.parameter.VerifyUserNavigationParameter
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerificationContext
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerificationHandler
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
 import timber.log.Timber
 
 /**
- * Default implementation of [BiometricUserVerifier] interface. It navigates to the Verify Biometric
+ * Default implementation of [BiometricUserVerifier] interface. It navigates to the Verify User
  * view with the received [BiometricUserVerificationHandler] object.
  */
 class BiometricUserVerifierImpl(
@@ -35,9 +35,9 @@ class BiometricUserVerifierImpl(
     ) {
         Timber.asTree().sdk("Verify yourself using biometric authenticator.")
         navigationDispatcher.requestNavigation(
-            NavigationGraphDirections.actionGlobalVerifyBiometricFragment(
-                VerifyBiometricNavigationParameter(
-                    VerifyBiometricViewMode.BIOMETRIC,
+            NavigationGraphDirections.actionGlobalVerifyUserFragment(
+                VerifyUserNavigationParameter(
+                    VerifyUserViewMode.BIOMETRIC,
                     biometricUserVerificationHandler = biometricUserVerificationHandler
                 )
             )

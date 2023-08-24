@@ -4,12 +4,12 @@
  * Copyright © 2023. Nevis Security AG. All rights reserved.
  */
 
-package ch.nevis.exampleapp.ui.verifyBiometric.model
+package ch.nevis.exampleapp.ui.verifyUser.model
 
 /**
- * Enumeration of available Verify Biometric view modes.
+ * Enumeration of available Verify User view modes.
  */
-enum class VerifyBiometricViewMode {
+enum class VerifyUserViewMode {
 
     /**
      * Fingerprint verification.
@@ -19,5 +19,10 @@ enum class VerifyBiometricViewMode {
     /**
      * Biometric verification that could be fingerprint or face ID verification as well.
      */
-    BIOMETRIC
+    BIOMETRIC,
+
+    /**
+     * Device passcode verification.
+     */
+    DEVICE_PASSCODE
 }

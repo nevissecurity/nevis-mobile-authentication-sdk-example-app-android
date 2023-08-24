@@ -4,7 +4,7 @@
  * Copyright © 2023. Nevis Security AG. All rights reserved.
  */
 
-package ch.nevis.exampleapp.ui.verifyBiometric
+package ch.nevis.exampleapp.ui.verifyUser
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,58 +13,52 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import ch.nevis.exampleapp.R
-import ch.nevis.exampleapp.databinding.FragmentVerifyBiometricBinding
+import ch.nevis.exampleapp.databinding.FragmentVerifyUserBinding
 import ch.nevis.exampleapp.ui.base.BaseFragment
 import ch.nevis.exampleapp.ui.base.CancelOperationOnBackPressedCallback
 import ch.nevis.exampleapp.ui.base.model.NavigationParameter
 import ch.nevis.exampleapp.ui.base.model.ViewData
-import ch.nevis.exampleapp.ui.verifyBiometric.model.VerifyBiometricViewData
-import ch.nevis.exampleapp.ui.verifyBiometric.parameter.VerifyBiometricNavigationParameter
+import ch.nevis.exampleapp.ui.verifyUser.model.VerifyUserViewData
+import ch.nevis.exampleapp.ui.verifyUser.parameter.VerifyUserNavigationParameter
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricPromptOptions
-import ch.nevis.mobile.sdk.api.util.Optional
+import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodePromptOptions
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
- * Fragment implementation of Verify Biometric view where the user can verify her-/himself with
- * fingerprint or face ID.
+ * Fragment implementation of Verify User view where the user can verify her-/himself with
+ * fingerprint, face ID or device passcode.
  */
 @AndroidEntryPoint
-class VerifyBiometricFragment : BaseFragment() {
+class VerifyUserFragment : BaseFragment() {
 
     //region Properties
     /**
      * UI component bindings.
      */
-    private var _binding: FragmentVerifyBiometricBinding? = null
+    private var _binding: FragmentVerifyUserBinding? = null
     private val binding get() = _binding!!
 
     /**
      * The view model instance for this view.
      */
-    override val viewModel: VerifyBiometricViewModel by viewModels()
+    override val viewModel: VerifyUserViewModel by viewModels()
 
     /**
      * Safe Args navigation arguments.
      */
-    private val navigationArguments: VerifyBiometricFragmentArgs by navArgs()
+    private val navigationArguments: VerifyUserFragmentArgs by navArgs()
 
     /**
      * [BiometricPromptOptions] object that is required in case of biometric user verification for
      * the dialog shown by the OS.
      */
-    private val biometricPromptOptions = object : BiometricPromptOptions {
-        override fun title(): String {
-            return getString(R.string.verify_biometric_prompt_title)
-        }
+    private lateinit var biometricPromptOptions: BiometricPromptOptions
 
-        override fun description(): Optional<String> {
-            return Optional.empty()
-        }
-
-        override fun cancelButtonText(): String {
-            return getString(R.string.verify_biometric_prompt_cancel_button_title)
-        }
-    }
+    /**
+     * [DevicePasscodePromptOptions] object that is required in case of device passcode user verification for
+     * the dialog shown by the OS.
+     */
+    private lateinit var devicePasscodePromptOptions: DevicePasscodePromptOptions
     //endregion
 
     //region Fragment
@@ -72,14 +66,27 @@ class VerifyBiometricFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentVerifyBiometricBinding.inflate(inflater, container, false)
+        _binding = FragmentVerifyUserBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.updateViewModel(navigationArguments.parameter, biometricPromptOptions)
+        biometricPromptOptions = BiometricPromptOptions.builder()
+            .title(getString(R.string.verify_user_biometric_prompt_title))
+            .cancelButtonText(getString(R.string.verify_user_biometric_prompt_cancel_button_title))
+            .build()
+
+        devicePasscodePromptOptions = DevicePasscodePromptOptions.builder()
+            .title(getString(R.string.verify_user_device_pass_code_prompt_title))
+            .build()
+
+        viewModel.updateViewModel(
+            navigationArguments.parameter,
+            biometricPromptOptions,
+            devicePasscodePromptOptions
+        )
 
         // Override back button handling.
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -106,8 +113,12 @@ class VerifyBiometricFragment : BaseFragment() {
 
     //region BaseFragment
     override fun updateViewParameter(parameter: NavigationParameter): Boolean {
-        if (parameter is VerifyBiometricNavigationParameter) {
-            viewModel.updateViewModel(parameter, biometricPromptOptions)
+        if (parameter is VerifyUserNavigationParameter) {
+            viewModel.updateViewModel(
+                parameter,
+                biometricPromptOptions,
+                devicePasscodePromptOptions
+            )
             return true
         }
         return false
@@ -115,7 +126,7 @@ class VerifyBiometricFragment : BaseFragment() {
 
     override fun updateView(viewData: ViewData) {
         super.updateView(viewData)
-        if (viewData is VerifyBiometricViewData) {
+        if (viewData is VerifyUserViewData) {
             binding.errorMessageTextView.text = viewData.errorMessage
         }
     }
