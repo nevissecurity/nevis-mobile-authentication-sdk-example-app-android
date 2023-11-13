@@ -82,6 +82,10 @@ class HomeFragment : BaseFragment() {
             navController.navigate(action)
         }
 
+        binding.deleteAuthenticatorsButton.setOnClickListener {
+            viewModel.deleteAuthenticators()
+        }
+
         binding.inBandRegistrationButton.setOnClickListener {
             val action = NavigationGraphDirections.actionGlobalUserNamePasswordLoginFragment()
             navController.navigate(action)
