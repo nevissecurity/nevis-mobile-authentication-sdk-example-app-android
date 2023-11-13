@@ -37,8 +37,10 @@ import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVeri
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import kotlin.coroutines.resume
 
@@ -233,10 +235,12 @@ class HomeViewModel @Inject constructor(
                     viewModelScope.launch {
                         try {
                             var operationError: OperationError? = null
-                            for (account in accounts) {
-                                operationError = deregisterAccount(account.username())
-                                if (operationError != null) {
-                                    break
+                            withContext(Dispatchers.IO) {
+                                for (account in accounts) {
+                                    operationError = deregisterAccount(account.username())
+                                    if (operationError != null) {
+                                        break
+                                    }
                                 }
                             }
 
@@ -273,6 +277,35 @@ class HomeViewModel @Inject constructor(
             errorHandler.handle(exception)
         }
     }
+
+    /**
+     * Starts deleting local authenticators of all registered users.
+     */
+    fun deleteAuthenticators() {
+        try {
+            val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
+            val accounts = client.localData().accounts()
+            if (accounts.isEmpty()) {
+                throw BusinessException.accountsNotFound()
+            }
+
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+                    for (account in accounts) {
+                        deleteAuthenticators(account.username())
+                    }
+                }
+
+                navigationDispatcher.requestNavigation(
+                    NavigationGraphDirections.actionGlobalResultFragment(
+                        ResultNavigationParameter.forSuccessfulOperation(Operation.LOCAL_DATA)
+                    )
+                )
+            }
+        } catch (exception: Exception) {
+            errorHandler.handle(exception)
+        }
+    }
     //endregion
 
     //region Private Interface
@@ -295,6 +328,19 @@ class HomeViewModel @Inject constructor(
                     cancellableContinuation.resume(it)
                 }
                 .execute()
+        }
+    }
+
+    /**
+     * Deletes all local authenticators of an enrolled account.
+     *
+     * @param username The username that identifies the account whose authenticators must be deleted locally.
+     */
+    private suspend fun deleteAuthenticators(username: String) {
+        return suspendCancellableCoroutine { cancellableContinuation ->
+            val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
+            client.localData().deleteAuthenticator(username)
+            cancellableContinuation.resume(Unit)
         }
     }
     //endregion
