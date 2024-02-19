@@ -14,7 +14,7 @@ plugins {
 }
 
 ext.getConfig = { String name ->
-    File localPropertiesFile = project.file('local.properties')
+    File localPropertiesFile = project.rootProject.file('local.properties')
     if (localPropertiesFile?.exists()) {
         Properties localProperties = new Properties()
         localProperties.load(localPropertiesFile.newDataInputStream())
