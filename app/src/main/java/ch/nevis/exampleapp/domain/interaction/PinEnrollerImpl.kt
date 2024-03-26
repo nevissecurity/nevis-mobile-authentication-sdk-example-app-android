@@ -33,7 +33,12 @@ class PinEnrollerImpl(
         pinEnrollmentContext: PinEnrollmentContext,
         pinEnrollmentHandler: PinEnrollmentHandler
     ) {
-        Timber.asTree().sdk("Enroll PIN.")
+        if (pinEnrollmentContext.lastRecoverableError().isPresent) {
+            Timber.asTree().sdk("PIN enrollment failed. Please try again.")
+        } else {
+            Timber.asTree().sdk("Please start PIN enrollment.")
+        }
+
         navigationDispatcher.requestNavigation(
             NavigationGraphDirections.actionGlobalPinFragment(
                 PinNavigationParameter(

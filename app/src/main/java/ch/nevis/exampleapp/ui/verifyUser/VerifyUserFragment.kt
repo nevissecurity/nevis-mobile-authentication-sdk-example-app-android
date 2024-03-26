@@ -79,7 +79,7 @@ class VerifyUserFragment : BaseFragment() {
             .build()
 
         devicePasscodePromptOptions = DevicePasscodePromptOptions.builder()
-            .title(getString(R.string.verify_user_device_pass_code_prompt_title))
+            .title(getString(R.string.verify_user_device_passcode_prompt_title))
             .build()
 
         viewModel.updateViewModel(
@@ -87,6 +87,16 @@ class VerifyUserFragment : BaseFragment() {
             biometricPromptOptions,
             devicePasscodePromptOptions
         )
+
+        val title = getString(
+            R.string.verify_user_title,
+            getString(navigationArguments.parameter.authenticatorTitleResId)
+        )
+        binding.titleTextView.text = title
+
+        binding.confirmButton.setOnClickListener {
+            viewModel.verifyUser()
+        }
 
         // Override back button handling.
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -127,6 +137,8 @@ class VerifyUserFragment : BaseFragment() {
     override fun updateView(viewData: ViewData) {
         super.updateView(viewData)
         if (viewData is VerifyUserViewData) {
+            val visibility = if (viewData.isFingerPrintVerification) View.VISIBLE else View.GONE
+            binding.descriptionTextView.visibility = visibility
             binding.errorMessageTextView.text = viewData.errorMessage
         }
     }

@@ -10,6 +10,7 @@ import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.common.settings.Settings
 import ch.nevis.exampleapp.domain.model.operation.Operation
 import ch.nevis.exampleapp.domain.util.isUserEnrolled
+import ch.nevis.exampleapp.domain.util.titleResId
 import ch.nevis.exampleapp.logging.sdk
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.selectAuthenticator.model.AuthenticatorItem
@@ -76,7 +77,8 @@ class AuthenticationAuthenticatorSelectorImpl(
                 authenticator.isUserEnrolled(
                     context.account().username(),
                     settings.allowClass2Sensors
-                )
+                ),
+                authenticator.titleResId()
             )
         } else {
             null

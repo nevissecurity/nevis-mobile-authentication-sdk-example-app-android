@@ -6,6 +6,7 @@
 
 package ch.nevis.exampleapp.ui.verifyUser.parameter
 
+import androidx.annotation.StringRes
 import ch.nevis.exampleapp.ui.base.model.NavigationParameter
 import ch.nevis.exampleapp.ui.verifyUser.model.VerifyUserViewMode
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerificationHandler
@@ -24,6 +25,12 @@ data class VerifyUserNavigationParameter(
      * The mode, the Verify User view intend to be used/initialized.
      */
     val verifyUserViewMode: VerifyUserViewMode,
+
+    /**
+     * String resource identifier of the title of the authenticator.
+     */
+    @StringRes
+    val authenticatorTitleResId: Int,
 
     /**
      * An instance of a [BiometricUserVerificationHandler] in case of an operation is started that requested

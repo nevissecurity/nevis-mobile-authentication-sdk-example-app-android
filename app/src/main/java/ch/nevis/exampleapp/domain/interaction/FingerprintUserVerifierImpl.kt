@@ -7,6 +7,7 @@
 package ch.nevis.exampleapp.domain.interaction
 
 import ch.nevis.exampleapp.NavigationGraphDirections
+import ch.nevis.exampleapp.domain.util.titleResId
 import ch.nevis.exampleapp.logging.sdk
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.verifyUser.model.VerifyUserViewMode
@@ -33,11 +34,17 @@ class FingerprintUserVerifierImpl(
         fingerprintUserVerificationContext: FingerprintUserVerificationContext,
         fingerprintUserVerificationHandler: FingerprintUserVerificationHandler
     ) {
-        Timber.asTree().sdk("Verify yourself using fingerprint authenticator.")
+        if (fingerprintUserVerificationContext.lastRecoverableError().isPresent) {
+            Timber.asTree().sdk("Fingerprint user verification failed. Please try again.")
+        } else {
+            Timber.asTree().sdk("Please start fingerprint user verification.")
+        }
+
         navigationDispatcher.requestNavigation(
             NavigationGraphDirections.actionGlobalVerifyUserFragment(
                 VerifyUserNavigationParameter(
                     VerifyUserViewMode.FINGERPRINT,
+                    fingerprintUserVerificationContext.authenticator().titleResId(),
                     fingerprintUserVerificationHandler = fingerprintUserVerificationHandler,
                     fingerprintUserVerificationError = fingerprintUserVerificationContext.lastRecoverableError()
                         .orElse(null)

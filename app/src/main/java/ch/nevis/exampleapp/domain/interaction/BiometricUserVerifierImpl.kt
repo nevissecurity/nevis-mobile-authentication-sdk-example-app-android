@@ -7,6 +7,7 @@
 package ch.nevis.exampleapp.domain.interaction
 
 import ch.nevis.exampleapp.NavigationGraphDirections
+import ch.nevis.exampleapp.domain.util.titleResId
 import ch.nevis.exampleapp.logging.sdk
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.verifyUser.model.VerifyUserViewMode
@@ -33,11 +34,12 @@ class BiometricUserVerifierImpl(
         biometricUserVerificationContext: BiometricUserVerificationContext,
         biometricUserVerificationHandler: BiometricUserVerificationHandler
     ) {
-        Timber.asTree().sdk("Verify yourself using biometric authenticator.")
+        Timber.asTree().sdk("Please start biometric user verification.")
         navigationDispatcher.requestNavigation(
             NavigationGraphDirections.actionGlobalVerifyUserFragment(
                 VerifyUserNavigationParameter(
                     VerifyUserViewMode.BIOMETRIC,
+                    biometricUserVerificationContext.authenticator().titleResId(),
                     biometricUserVerificationHandler = biometricUserVerificationHandler
                 )
             )
