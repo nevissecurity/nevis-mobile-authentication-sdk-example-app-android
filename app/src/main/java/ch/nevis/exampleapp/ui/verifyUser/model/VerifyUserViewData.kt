@@ -18,5 +18,10 @@ data class VerifyUserViewData(
     /**
      * The error message that should be displayed on Verify User view.
      */
-    val errorMessage: String
+    val errorMessage: String? = null,
+
+    /**
+     * Flag that tells whether fingerprint verification is in progress.
+     */
+    val isFingerPrintVerification: Boolean = false
 ) : ViewData

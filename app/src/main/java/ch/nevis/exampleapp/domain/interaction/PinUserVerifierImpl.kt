@@ -34,7 +34,12 @@ class PinUserVerifierImpl(
         pinUserVerificationContext: PinUserVerificationContext,
         pinUserVerificationHandler: PinUserVerificationHandler
     ) {
-        Timber.asTree().sdk("Verify yourself using PIN authenticator.")
+        if (pinUserVerificationContext.lastRecoverableError().isPresent) {
+            Timber.asTree().sdk("PIN user verification failed. Please try again.")
+        } else {
+            Timber.asTree().sdk("Please start PIN user verification.")
+        }
+
         navigationDispatcher.requestNavigation(
             NavigationGraphDirections.actionGlobalPinFragment(
                 PinNavigationParameter(

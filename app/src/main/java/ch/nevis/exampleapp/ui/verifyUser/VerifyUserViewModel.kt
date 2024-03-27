@@ -36,6 +36,23 @@ class VerifyUserViewModel @Inject constructor(
 
     //region Properties
     /**
+     * The mode, the Verify User view intend to be used/initialized.
+     */
+    private var verifyUserViewMode: VerifyUserViewMode? = null
+
+    /**
+     * [BiometricPromptOptions] object that is required in case of biometric user verification for
+     * the dialog shown by the OS.
+     */
+    private lateinit var biometricPromptOptions: BiometricPromptOptions
+
+    /**
+     * [DevicePasscodePromptOptions] object that is required in case of device passcode user verification for
+     * the dialog shown by the OS.
+     */
+    private lateinit var devicePasscodePromptOptions: DevicePasscodePromptOptions
+
+    /**
      * An instance of a [BiometricUserVerificationHandler] in case of an operation is started that requested
      * biometric user verification and we navigate to Verify User view to ask the user to verify herself/himself
      * using biometric authentication (fingerprint or face ID) to be able to continue the operation.
@@ -87,17 +104,13 @@ class VerifyUserViewModel @Inject constructor(
     ) {
         biometricUserVerificationHandler = null
         fingerprintUserVerificationHandler = null
+        devicePasscodeUserVerificationHandler = null
+        verifyUserViewMode = parameter.verifyUserViewMode
+        this.biometricPromptOptions = biometricPromptOptions
+        this.devicePasscodePromptOptions = devicePasscodePromptOptions
         biometricUserVerificationHandler = parameter.biometricUserVerificationHandler
         devicePasscodeUserVerificationHandler = parameter.devicePasscodeUserVerificationHandler
         fingerprintUserVerificationHandler = parameter.fingerprintUserVerificationHandler
-
-        when (parameter.verifyUserViewMode) {
-            VerifyUserViewMode.FINGERPRINT -> verifyFingerprint()
-            VerifyUserViewMode.BIOMETRIC -> verifyBiometric(biometricPromptOptions)
-            VerifyUserViewMode.DEVICE_PASSCODE -> verifyDevicePasscode(
-                devicePasscodePromptOptions
-            )
-        }
 
         parameter.fingerprintUserVerificationError?.let {
             requestViewUpdate(VerifyUserViewData(it.description()))
@@ -105,14 +118,29 @@ class VerifyUserViewModel @Inject constructor(
     }
 
     /**
-     *
+     * Resumes listening for OS credentials.
      */
     fun resumeOsListening() {
         osAuthenticationListenHandler = osAuthenticationListenHandler?.resumeListening()
     }
 
+    /**
+     * Pauses listening for OS credentials.
+     */
     fun pauseOsListening() {
         osAuthenticationListenHandler = osAuthenticationListenHandler?.pauseListening()
+    }
+
+    /**
+     * Verifies the user using the previously selected authentication method.
+     */
+    fun verifyUser() {
+        when (verifyUserViewMode) {
+            VerifyUserViewMode.FINGERPRINT -> verifyFingerprint()
+            VerifyUserViewMode.BIOMETRIC -> verifyBiometric()
+            VerifyUserViewMode.DEVICE_PASSCODE -> verifyDevicePasscode()
+            else -> throw BusinessException.invalidState()
+        }
     }
     //endregion
 
@@ -122,6 +150,8 @@ class VerifyUserViewModel @Inject constructor(
      */
     private fun verifyFingerprint() {
         try {
+            requestViewUpdate(VerifyUserViewData(null, true))
+
             val fingerprintUserVerificationHandler =
                 this.fingerprintUserVerificationHandler ?: throw BusinessException.invalidState()
             osAuthenticationListenHandler =
@@ -134,11 +164,8 @@ class VerifyUserViewModel @Inject constructor(
 
     /**
      * Starts biometric authentication for an operation.
-     *
-     * @param biometricPromptOptions The biometric prompt options that is used for displaying the
-     * dialog that asks the user to verify her-/himself.
      */
-    private fun verifyBiometric(biometricPromptOptions: BiometricPromptOptions) {
+    private fun verifyBiometric() {
         try {
             val biometricUserVerificationHandler =
                 this.biometricUserVerificationHandler ?: throw BusinessException.invalidState()
@@ -152,11 +179,8 @@ class VerifyUserViewModel @Inject constructor(
 
     /**
      * Starts device passcode authentication for an operation.
-     *
-     * @param devicePasscodePromptOptions The device passcode prompt options that is used for
-     * displaying the dialog that asks the user to verify her-/himself.
      */
-    private fun verifyDevicePasscode(devicePasscodePromptOptions: DevicePasscodePromptOptions) {
+    private fun verifyDevicePasscode() {
         try {
             val devicePasscodeUserVerificationHandler =
                 this.devicePasscodeUserVerificationHandler ?: throw BusinessException.invalidState()
