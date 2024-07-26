@@ -15,8 +15,11 @@ import javax.inject.Inject
  * Default implementation of [Settings] interface.
  */
 class SettingsImpl @Inject constructor(
+    /**
+     * The Android [Context].
+     */
     @ApplicationContext
-    context: Context
+    private val context: Context
 ) : Settings {
     override val allowClass2Sensors = context.resources.getBoolean(R.bool.allow_class2_sensors)
 }
