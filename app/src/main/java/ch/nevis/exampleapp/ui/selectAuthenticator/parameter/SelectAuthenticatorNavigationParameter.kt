@@ -9,7 +9,6 @@ package ch.nevis.exampleapp.ui.selectAuthenticator.parameter
 import ch.nevis.exampleapp.domain.model.operation.Operation
 import ch.nevis.exampleapp.ui.base.model.NavigationParameter
 import ch.nevis.exampleapp.ui.selectAuthenticator.model.AuthenticatorItem
-import ch.nevis.mobile.sdk.api.localdata.Authenticator
 import ch.nevis.mobile.sdk.api.operation.selection.AuthenticatorSelectionHandler
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
@@ -19,12 +18,6 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class SelectAuthenticatorNavigationParameter(
-
-    /**
-     * The operation type the authenticator selection was requested for.
-     */
-    val operation: Operation,
-
     /**
      * The list of available authenticator items the user can select from.
      */

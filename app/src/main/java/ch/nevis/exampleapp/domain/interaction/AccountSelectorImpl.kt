@@ -21,10 +21,10 @@ import ch.nevis.mobile.sdk.api.operation.selection.AccountSelector
 import timber.log.Timber
 
 /**
- * Default implementation of [AccountSelector] interface. It checks the <Account> set and
- * transaction confirmation data in received [AccountSelectionContext] object and decides
+ * Default implementation of [AccountSelector] interface. It checks the [Account] set and
+ * transaction confirmation data received in the [AccountSelectionContext] object and decides
  * if the next step is transaction confirmation or account selection. As an addition it also showcases
- * how to skip account selection if the received account list set only one element.
+ * how to skip account selection if the received account list set has only one element.
  */
 class AccountSelectorImpl(
 
@@ -42,28 +42,28 @@ class AccountSelectorImpl(
 
     //region AccountSelector
     override fun selectAccount(
-        accountSelectionContext: AccountSelectionContext,
-        accountSelectionHandler: AccountSelectionHandler
+        context: AccountSelectionContext,
+        handler: AccountSelectionHandler
     ) {
         Timber.asTree()
             .sdk("Please select one of the received available accounts!")
         try {
-            val accounts = validAccounts(accountSelectionContext)
+            val accounts = validAccounts(context)
             if (accounts.isEmpty()) {
                 throw BusinessException.accountsNotFound()
             }
 
             val transactionConfirmationData =
-                accountSelectionContext.transactionConfirmationData().orElse(null)
+                context.transactionConfirmationData().orElse(null)
 
             transactionConfirmationData?.also {
                 navigationDispatcher.requestNavigation(
                     NavigationGraphDirections.actionGlobalTransactionConfirmationFragment(
                         TransactionConfirmationNavigationParameter(
                             Operation.OUT_OF_BAND_AUTHENTICATION,
-                            accountSelectionContext.accounts(),
+                            context.accounts(),
                             it.decodeToString(),
-                            accountSelectionHandler
+                            handler
                         )
                     )
                 )
@@ -71,14 +71,14 @@ class AccountSelectorImpl(
                 if (accounts.size == 1) {
                     Timber.asTree()
                         .sdk("One account found, performing automatic selection!")
-                    accountSelectionHandler.username(accounts.first().username())
+                    handler.username(accounts.first().username())
                 } else {
                     navigationDispatcher.requestNavigation(
                         NavigationGraphDirections.actionGlobalSelectAccountFragment(
                             SelectAccountNavigationParameter(
                                 Operation.OUT_OF_BAND_AUTHENTICATION,
-                                accountSelectionContext.accounts(),
-                                accountSelectionHandler
+                                context.accounts(),
+                                handler
                             )
                         )
                     )

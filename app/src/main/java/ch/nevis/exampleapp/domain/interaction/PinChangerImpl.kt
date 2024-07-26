@@ -28,8 +28,11 @@ class PinChangerImpl(
      */
     private val navigationDispatcher: NavigationDispatcher
 ) : PinChanger {
-    override fun changePin(pinChangeContext: PinChangeContext, pinChangeHandler: PinChangeHandler) {
-        if (pinChangeContext.lastRecoverableError().isPresent) {
+    override fun changePin(
+        context: PinChangeContext,
+        handler: PinChangeHandler
+    ) {
+        if (context.lastRecoverableError().isPresent) {
             Timber.asTree().sdk("PIN change failed. Please try again.")
         } else {
             Timber.asTree().sdk("Please start PIN change.")
@@ -39,10 +42,9 @@ class PinChangerImpl(
             NavigationGraphDirections.actionGlobalPinFragment(
                 PinNavigationParameter(
                     PinViewMode.CHANGE_PIN,
-                    pinChangeContext.authenticatorProtectionStatus(),
-                    lastRecoverableError = pinChangeContext.lastRecoverableError()
-                        .orElse(null),
-                    pinChangeHandler = pinChangeHandler
+                    context.authenticatorProtectionStatus(),
+                    lastRecoverableError = context.lastRecoverableError().orElse(null),
+                    pinChangeHandler = handler
                 )
             )
         )

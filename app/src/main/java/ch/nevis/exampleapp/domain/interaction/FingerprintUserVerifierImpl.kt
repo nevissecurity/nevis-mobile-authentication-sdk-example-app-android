@@ -31,10 +31,10 @@ class FingerprintUserVerifierImpl(
 
     //region FingerprintUserVerifier
     override fun verifyFingerprint(
-        fingerprintUserVerificationContext: FingerprintUserVerificationContext,
-        fingerprintUserVerificationHandler: FingerprintUserVerificationHandler
+        context: FingerprintUserVerificationContext,
+        handler: FingerprintUserVerificationHandler
     ) {
-        if (fingerprintUserVerificationContext.lastRecoverableError().isPresent) {
+        if (context.lastRecoverableError().isPresent) {
             Timber.asTree().sdk("Fingerprint user verification failed. Please try again.")
         } else {
             Timber.asTree().sdk("Please start fingerprint user verification.")
@@ -44,9 +44,9 @@ class FingerprintUserVerifierImpl(
             NavigationGraphDirections.actionGlobalVerifyUserFragment(
                 VerifyUserNavigationParameter(
                     VerifyUserViewMode.FINGERPRINT,
-                    fingerprintUserVerificationContext.authenticator().titleResId(),
-                    fingerprintUserVerificationHandler = fingerprintUserVerificationHandler,
-                    fingerprintUserVerificationError = fingerprintUserVerificationContext.lastRecoverableError()
+                    context.authenticator().titleResId(),
+                    fingerprintUserVerificationHandler = handler,
+                    fingerprintUserVerificationError = context.lastRecoverableError()
                         .orElse(null)
                 )
             )

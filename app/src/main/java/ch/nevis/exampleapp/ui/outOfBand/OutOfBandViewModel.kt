@@ -11,9 +11,7 @@ import ch.nevis.exampleapp.common.error.ErrorHandler
 import ch.nevis.exampleapp.common.settings.Settings
 import ch.nevis.exampleapp.domain.client.ClientProvider
 import ch.nevis.exampleapp.domain.deviceInformation.DeviceInformationFactory
-import ch.nevis.exampleapp.domain.interaction.AuthenticationAuthenticatorSelector
 import ch.nevis.exampleapp.domain.interaction.OnErrorImpl
-import ch.nevis.exampleapp.domain.interaction.RegistrationAuthenticatorSelector
 import ch.nevis.exampleapp.domain.model.error.BusinessException
 import ch.nevis.exampleapp.domain.model.operation.Operation
 import ch.nevis.exampleapp.ui.base.BaseViewModel
@@ -24,6 +22,7 @@ import ch.nevis.mobile.sdk.api.operation.outofband.OutOfBandPayload
 import ch.nevis.mobile.sdk.api.operation.outofband.OutOfBandRegistration
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnroller
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelector
+import ch.nevis.mobile.sdk.api.operation.selection.AuthenticatorSelector
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
@@ -61,6 +60,26 @@ abstract class OutOfBandViewModel(
     private val accountSelector: AccountSelector,
 
     /**
+     * An instance of a [AuthenticatorSelector] interface implementation.
+     */
+    private val registrationAuthenticatorSelector: AuthenticatorSelector,
+
+    /**
+     * An instance of a [AuthenticatorSelector] interface implementation.
+     */
+    private val authenticationAuthenticatorSelector: AuthenticatorSelector,
+
+    /**
+     * An instance of a [PinEnroller] interface implementation.
+     */
+    private val pinEnroller: PinEnroller,
+
+    /**
+     * An instance of a [PinUserVerifier] interface implementation.
+     */
+    private val pinUserVerifier: PinUserVerifier,
+
+    /**
      * An instance of a [BiometricUserVerifier] interface implementation.
      */
     private val biometricUserVerifier: BiometricUserVerifier,
@@ -74,26 +93,6 @@ abstract class OutOfBandViewModel(
      * An instance of a [FingerprintUserVerifier] interface implementation.
      */
     private val fingerprintUserVerifier: FingerprintUserVerifier,
-
-    /**
-     * An instance of a [PinUserVerifier] interface implementation.
-     */
-    private val pinUserVerifier: PinUserVerifier,
-
-    /**
-     * An instance of a [PinEnroller] interface implementation.
-     */
-    private val pinEnroller: PinEnroller,
-
-    /**
-     * An instance of a [AuthenticationAuthenticatorSelector] interface implementation.
-     */
-    private val authenticationAuthenticatorSelector: AuthenticationAuthenticatorSelector,
-
-    /**
-     * An instance of a [RegistrationAuthenticatorSelector] interface implementation.
-     */
-    private val registrationAuthenticatorSelector: RegistrationAuthenticatorSelector,
 
     /**
      * An instance of an [ErrorHandler] interface implementation. Received errors will be passed to this error

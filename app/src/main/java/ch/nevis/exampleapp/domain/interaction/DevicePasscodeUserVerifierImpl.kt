@@ -31,16 +31,16 @@ class DevicePasscodeUserVerifierImpl(
 
     //region DevicePasscodeUserVerifier
     override fun verifyDevicePasscode(
-        devicePasscodeUserVerificationContext: DevicePasscodeUserVerificationContext,
-        devicePasscodeUserVerificationHandler: DevicePasscodeUserVerificationHandler
+        context: DevicePasscodeUserVerificationContext,
+        handler: DevicePasscodeUserVerificationHandler
     ) {
         Timber.asTree().sdk("Please start device passcode user verification.")
         navigationDispatcher.requestNavigation(
             NavigationGraphDirections.actionGlobalVerifyUserFragment(
                 VerifyUserNavigationParameter(
                     VerifyUserViewMode.DEVICE_PASSCODE,
-                    devicePasscodeUserVerificationContext.authenticator().titleResId(),
-                    devicePasscodeUserVerificationHandler = devicePasscodeUserVerificationHandler
+                    context.authenticator().titleResId(),
+                    devicePasscodeUserVerificationHandler = handler
                 )
             )
         )

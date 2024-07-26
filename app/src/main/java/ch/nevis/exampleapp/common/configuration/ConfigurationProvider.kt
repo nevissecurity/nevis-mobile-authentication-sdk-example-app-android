@@ -24,5 +24,10 @@ interface ConfigurationProvider {
      * The [Configuration] object related to the environment.
      */
     val configuration: Configuration
+
+    /**
+     * The list of allowed authenticators.
+     */
+    val authenticatorAllowlist: List<String>
     //endregion
 }

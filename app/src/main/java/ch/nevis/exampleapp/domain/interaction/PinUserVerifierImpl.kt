@@ -31,10 +31,10 @@ class PinUserVerifierImpl(
 
     //region PinUserVerifier
     override fun verifyPin(
-        pinUserVerificationContext: PinUserVerificationContext,
-        pinUserVerificationHandler: PinUserVerificationHandler
+        context: PinUserVerificationContext,
+        handler: PinUserVerificationHandler
     ) {
-        if (pinUserVerificationContext.lastRecoverableError().isPresent) {
+        if (context.lastRecoverableError().isPresent) {
             Timber.asTree().sdk("PIN user verification failed. Please try again.")
         } else {
             Timber.asTree().sdk("Please start PIN user verification.")
@@ -44,10 +44,9 @@ class PinUserVerifierImpl(
             NavigationGraphDirections.actionGlobalPinFragment(
                 PinNavigationParameter(
                     PinViewMode.VERIFY_PIN,
-                    pinAuthenticatorProtectionStatus = pinUserVerificationContext.authenticatorProtectionStatus(),
-                    lastRecoverableError = pinUserVerificationContext.lastRecoverableError()
-                        .orElse(null),
-                    pinUserVerificationHandler = pinUserVerificationHandler
+                    pinAuthenticatorProtectionStatus = context.authenticatorProtectionStatus(),
+                    lastRecoverableError = context.lastRecoverableError().orElse(null),
+                    pinUserVerificationHandler = handler
                 )
             )
         )
