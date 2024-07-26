@@ -6,7 +6,7 @@
 
 package ch.nevis.exampleapp.ui.home
 
-import android.app.Application
+import android.content.Context
 import androidx.lifecycle.viewModelScope
 import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.common.configuration.ConfigurationProvider
@@ -37,6 +37,7 @@ import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVeri
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -49,11 +50,11 @@ import kotlin.coroutines.resume
  */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-
     /**
-     * The current Android [Application] instance.
+     * An Android [Context] object used for initializing [ch.nevis.mobile.sdk.api.MobileAuthenticationClient].
      */
-    private val application: Application,
+    @ApplicationContext
+    private val context: Context,
 
     /**
      * An instance of a [ConfigurationProvider] implementation.
@@ -147,7 +148,7 @@ class HomeViewModel @Inject constructor(
      */
     fun initClient() {
         MobileAuthenticationClientInitializer.initializer()
-            .application(application)
+            .context(context)
             .configuration(configurationProvider.configuration)
             .onSuccess {
                 clientProvider.save(it)
