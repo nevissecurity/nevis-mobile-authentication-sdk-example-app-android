@@ -8,8 +8,8 @@ package ch.nevis.exampleapp.ui.selectAccount
 
 import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.common.error.ErrorHandler
+import ch.nevis.exampleapp.dagger.ApplicationModule
 import ch.nevis.exampleapp.domain.client.ClientProvider
-import ch.nevis.exampleapp.domain.interaction.AuthenticationAuthenticatorSelector
 import ch.nevis.exampleapp.domain.interaction.OnErrorImpl
 import ch.nevis.exampleapp.domain.model.error.BusinessException
 import ch.nevis.exampleapp.domain.model.operation.Operation
@@ -19,13 +19,14 @@ import ch.nevis.exampleapp.ui.result.parameter.ResultNavigationParameter
 import ch.nevis.exampleapp.ui.selectAccount.parameter.SelectAccountNavigationParameter
 import ch.nevis.mobile.sdk.api.operation.pin.PinChanger
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelectionHandler
-import ch.nevis.mobile.sdk.api.operation.selection.AccountSelector
+import ch.nevis.mobile.sdk.api.operation.selection.AuthenticatorSelector
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * View model implementation for Select Account view.
@@ -42,6 +43,17 @@ class SelectAccountViewModel @Inject constructor(
      * An instance of a [NavigationDispatcher] interface implementation.
      */
     private val navigationDispatcher: NavigationDispatcher,
+
+    /**
+     * An instance of an [AuthenticatorSelector] interface implementation used during authentication.
+     */
+    @Named(ApplicationModule.AUTHENTICATION_AUTHENTICATOR_SELECTOR)
+    private val authenticatorSelector: AuthenticatorSelector,
+
+    /**
+     * An instance of a [PinUserVerifier] interface implementation.
+     */
+    private val pinUserVerifier: PinUserVerifier,
 
     /**
      * An instance of a [BiometricUserVerifier] interface implementation.
@@ -62,16 +74,6 @@ class SelectAccountViewModel @Inject constructor(
      * An instance of a [PinChanger] interface implementation.
      */
     private val pinChanger: PinChanger,
-
-    /**
-     * An instance of a [PinUserVerifier] interface implementation.
-     */
-    private val pinUserVerifier: PinUserVerifier,
-
-    /**
-     * An instance of a [AccountSelector] interface implementation.
-     */
-    private val authenticatorSelector: AuthenticationAuthenticatorSelector,
 
     /**
      * An instance of an [ErrorHandler] interface implementation. Received errors will be passed to this error

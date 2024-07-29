@@ -9,9 +9,10 @@ package ch.nevis.exampleapp.common.configuration
 import ch.nevis.mobile.sdk.api.Configuration
 
 /**
- * Default implementation of [ConfigurationProvider] abstract class.
+ * Default implementation of [ConfigurationProvider] interface.
  */
 class ConfigurationProviderImpl(
     override val environment: Environment,
-    override val configuration: Configuration
+    override val configuration: Configuration,
+    override val authenticatorAllowlist: List<String>
 ) : ConfigurationProvider

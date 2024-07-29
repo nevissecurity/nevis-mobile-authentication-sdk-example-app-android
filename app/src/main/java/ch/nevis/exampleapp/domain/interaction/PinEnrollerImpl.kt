@@ -30,10 +30,10 @@ class PinEnrollerImpl(
 
     //region PinEnroller
     override fun enrollPin(
-        pinEnrollmentContext: PinEnrollmentContext,
-        pinEnrollmentHandler: PinEnrollmentHandler
+        context: PinEnrollmentContext,
+        handler: PinEnrollmentHandler
     ) {
-        if (pinEnrollmentContext.lastRecoverableError().isPresent) {
+        if (context.lastRecoverableError().isPresent) {
             Timber.asTree().sdk("PIN enrollment failed. Please try again.")
         } else {
             Timber.asTree().sdk("Please start PIN enrollment.")
@@ -43,9 +43,8 @@ class PinEnrollerImpl(
             NavigationGraphDirections.actionGlobalPinFragment(
                 PinNavigationParameter(
                     PinViewMode.ENROLL_PIN,
-                    lastRecoverableError = pinEnrollmentContext.lastRecoverableError()
-                        .orElse(null),
-                    pinEnrollmentHandler = pinEnrollmentHandler
+                    lastRecoverableError = context.lastRecoverableError().orElse(null),
+                    pinEnrollmentHandler = handler
                 )
             )
         )

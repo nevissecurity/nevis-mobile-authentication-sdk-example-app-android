@@ -23,12 +23,19 @@ import ch.nevis.exampleapp.domain.deviceInformation.DeviceInformationFactoryImpl
 import ch.nevis.exampleapp.domain.interaction.*
 import ch.nevis.exampleapp.domain.log.SdkLogger
 import ch.nevis.exampleapp.domain.log.SdkLoggerImpl
+import ch.nevis.exampleapp.domain.validation.AuthenticatorValidator
+import ch.nevis.exampleapp.domain.validation.AuthenticatorValidatorImpl
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcherImpl
 import ch.nevis.mobile.sdk.api.Configuration
+import ch.nevis.mobile.sdk.api.localdata.Authenticator.BIOMETRIC_AUTHENTICATOR_AAID
+import ch.nevis.mobile.sdk.api.localdata.Authenticator.DEVICE_PASSCODE_AUTHENTICATOR_AAID
+import ch.nevis.mobile.sdk.api.localdata.Authenticator.FINGERPRINT_AUTHENTICATOR_AAID
+import ch.nevis.mobile.sdk.api.localdata.Authenticator.PIN_AUTHENTICATOR_AAID
 import ch.nevis.mobile.sdk.api.operation.pin.PinChanger
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnroller
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelector
+import ch.nevis.mobile.sdk.api.operation.selection.AuthenticatorSelector
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
@@ -41,6 +48,7 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.URI
+import javax.inject.Named
 import javax.inject.Singleton
 
 /**
@@ -49,6 +57,20 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class ApplicationModule {
+
+    //region Constants
+    companion object {
+        /**
+         * The unique name of authenticator selector implementation for Registration operation.
+         */
+        const val REGISTRATION_AUTHENTICATOR_SELECTOR = "REGISTRATION_AUTHENTICATOR_SELECTOR"
+
+        /**
+         * The unique name of authenticator selector implementation for Authentication operation.
+         */
+        const val AUTHENTICATION_AUTHENTICATOR_SELECTOR = "AUTHENTICATION_AUTHENTICATOR_SELECTOR"
+    }
+    //endregion
 
     //region Configuration
     @Suppress("DEPRECATION")
@@ -91,11 +113,20 @@ class ApplicationModule {
     }
 
     @Provides
+    fun provideAuthenticatorAllowlist(): List<String> = listOf(
+        PIN_AUTHENTICATOR_AAID,
+        FINGERPRINT_AUTHENTICATOR_AAID,
+        BIOMETRIC_AUTHENTICATOR_AAID,
+        DEVICE_PASSCODE_AUTHENTICATOR_AAID
+    )
+
+    @Provides
     @Singleton
     fun provideConfigurationProvider(application: Application): ConfigurationProvider =
         ConfigurationProviderImpl(
             Environment.AUTHENTICATION_CLOUD,
-            provideAuthenticationCloudConfiguration(application)
+            provideAuthenticationCloudConfiguration(application),
+            provideAuthenticatorAllowlist()
         )
     //endregion
 
@@ -131,6 +162,12 @@ class ApplicationModule {
     fun provideSettings(@ApplicationContext context: Context): Settings = SettingsImpl(context)
     //endregion
 
+    //region Validation
+    @Provides
+    @Singleton
+    fun provideAuthenticatorValidator(): AuthenticatorValidator = AuthenticatorValidatorImpl()
+    //endregion
+
     //region Interaction
     @Provides
     fun provideBiometricUserVerifier(navigationDispatcher: NavigationDispatcher): BiometricUserVerifier =
@@ -152,23 +189,35 @@ class ApplicationModule {
         AccountSelectorImpl(navigationDispatcher, errorHandler)
 
     @Provides
-    fun provideAuthenticationAuthenticatorSelector(
+    @Named(REGISTRATION_AUTHENTICATOR_SELECTOR)
+    fun provideRegistrationAuthenticatorSelector(
+        configurationProvider: ConfigurationProvider,
         navigationDispatcher: NavigationDispatcher,
+        authenticatorValidator: AuthenticatorValidator,
         settings: Settings
-    ): AuthenticationAuthenticatorSelector =
-        AuthenticationAuthenticatorSelectorImpl(
+    ): AuthenticatorSelector =
+        AuthenticatorSelectorImpl(
+            configurationProvider,
             navigationDispatcher,
-            settings
+            authenticatorValidator,
+            settings,
+            AuthenticatorSelectorOperation.REGISTRATION
         )
 
     @Provides
-    fun provideRegistrationAuthenticatorSelector(
+    @Named(AUTHENTICATION_AUTHENTICATOR_SELECTOR)
+    fun provideAuthenticationAuthenticatorSelector(
+        configurationProvider: ConfigurationProvider,
         navigationDispatcher: NavigationDispatcher,
+        authenticatorValidator: AuthenticatorValidator,
         settings: Settings
-    ): RegistrationAuthenticatorSelector =
-        RegistrationAuthenticatorSelectorImpl(
+    ): AuthenticatorSelector =
+        AuthenticatorSelectorImpl(
+            configurationProvider,
             navigationDispatcher,
-            settings
+            authenticatorValidator,
+            settings,
+            AuthenticatorSelectorOperation.AUTHENTICATION
         )
 
     @Provides

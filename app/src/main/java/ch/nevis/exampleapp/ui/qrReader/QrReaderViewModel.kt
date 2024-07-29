@@ -8,20 +8,21 @@ package ch.nevis.exampleapp.ui.qrReader
 
 import ch.nevis.exampleapp.common.error.ErrorHandler
 import ch.nevis.exampleapp.common.settings.Settings
+import ch.nevis.exampleapp.dagger.ApplicationModule
 import ch.nevis.exampleapp.domain.client.ClientProvider
 import ch.nevis.exampleapp.domain.deviceInformation.DeviceInformationFactory
-import ch.nevis.exampleapp.domain.interaction.AuthenticationAuthenticatorSelector
-import ch.nevis.exampleapp.domain.interaction.RegistrationAuthenticatorSelector
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.outOfBand.OutOfBandViewModel
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnroller
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelector
+import ch.nevis.mobile.sdk.api.operation.selection.AuthenticatorSelector
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * View model implementation of QR Reader view.
@@ -50,9 +51,31 @@ class QrReaderViewModel @Inject constructor(
     deviceInformationFactory: DeviceInformationFactory,
 
     /**
-     * An instance of a [AccountSelector] interface implementation.
+     * An instance of an [AccountSelector] interface implementation.
      */
     accountSelector: AccountSelector,
+
+    /**
+     * An instance of an [AuthenticatorSelector] interface implementation used during registration.
+     */
+    @Named(ApplicationModule.REGISTRATION_AUTHENTICATOR_SELECTOR)
+    registrationAuthenticatorSelector: AuthenticatorSelector,
+
+    /**
+     * An instance of a [AuthenticatorSelector] interface implementation used during authentication.
+     */
+    @Named(ApplicationModule.AUTHENTICATION_AUTHENTICATOR_SELECTOR)
+    authenticationAuthenticatorSelector: AuthenticatorSelector,
+
+    /**
+     * An instance of a [PinEnroller] interface implementation.
+     */
+    pinEnroller: PinEnroller,
+
+    /**
+     * An instance of a [PinUserVerifier] interface implementation.
+     */
+    pinUserVerifier: PinUserVerifier,
 
     /**
      * An instance of a [BiometricUserVerifier] interface implementation.
@@ -70,27 +93,7 @@ class QrReaderViewModel @Inject constructor(
     fingerprintUserVerifier: FingerprintUserVerifier,
 
     /**
-     * An instance of a [PinUserVerifier] interface implementation.
-     */
-    pinUserVerifier: PinUserVerifier,
-
-    /**
-     * An instance of a [PinEnroller] interface implementation.
-     */
-    pinEnroller: PinEnroller,
-
-    /**
-     * An instance of a [AuthenticationAuthenticatorSelector] interface implementation.
-     */
-    authenticationAuthenticatorSelector: AuthenticationAuthenticatorSelector,
-
-    /**
-     * An instance of a [RegistrationAuthenticatorSelector] interface implementation.
-     */
-    registrationAuthenticatorSelector: RegistrationAuthenticatorSelector,
-
-    /**
-     * An instance of a [ErrorHandler] implementation. Received errors will be passed to this error
+     * An instance of an [ErrorHandler] implementation. Received errors will be passed to this error
      * handler instance.
      */
     errorHandler: ErrorHandler
@@ -100,12 +103,12 @@ class QrReaderViewModel @Inject constructor(
     navigationDispatcher,
     settings,
     accountSelector,
+    registrationAuthenticatorSelector,
+    authenticationAuthenticatorSelector,
+    pinEnroller,
+    pinUserVerifier,
     biometricUserVerifier,
     devicePasscodeUserVerifier,
     fingerprintUserVerifier,
-    pinUserVerifier,
-    pinEnroller,
-    authenticationAuthenticatorSelector,
-    registrationAuthenticatorSelector,
     errorHandler
 )

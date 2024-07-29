@@ -31,16 +31,16 @@ class BiometricUserVerifierImpl(
 
     //region BiometricUserVerifier
     override fun verifyBiometric(
-        biometricUserVerificationContext: BiometricUserVerificationContext,
-        biometricUserVerificationHandler: BiometricUserVerificationHandler
+        context: BiometricUserVerificationContext,
+        handler: BiometricUserVerificationHandler
     ) {
         Timber.asTree().sdk("Please start biometric user verification.")
         navigationDispatcher.requestNavigation(
             NavigationGraphDirections.actionGlobalVerifyUserFragment(
                 VerifyUserNavigationParameter(
                     VerifyUserViewMode.BIOMETRIC,
-                    biometricUserVerificationContext.authenticator().titleResId(),
-                    biometricUserVerificationHandler = biometricUserVerificationHandler
+                    context.authenticator().titleResId(),
+                    biometricUserVerificationHandler = handler
                 )
             )
         )
