@@ -67,8 +67,8 @@ class ChangeDeviceInformationFragment : BaseFragment() {
     override fun updateView(viewData: ViewData) {
         super.updateView(viewData)
 
-        val changePinViewData = viewData as? ChangeDeviceInformationViewData ?: return
-        binding.currentNameTextView.text = changePinViewData.deviceInformation.name()
+        val changeDeviceInformationViewData = viewData as? ChangeDeviceInformationViewData ?: return
+        binding.currentNameTextView.text = changeDeviceInformationViewData.deviceInformation.name()
     }
     //endregion
 }

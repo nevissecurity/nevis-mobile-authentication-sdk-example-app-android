@@ -21,17 +21,24 @@ import ch.nevis.exampleapp.domain.client.ClientProviderImpl
 import ch.nevis.exampleapp.domain.deviceInformation.DeviceInformationFactory
 import ch.nevis.exampleapp.domain.deviceInformation.DeviceInformationFactoryImpl
 import ch.nevis.exampleapp.domain.interaction.*
+import ch.nevis.exampleapp.domain.interaction.password.*
+import ch.nevis.exampleapp.domain.interaction.pin.*
 import ch.nevis.exampleapp.domain.log.SdkLogger
 import ch.nevis.exampleapp.domain.log.SdkLoggerImpl
 import ch.nevis.exampleapp.domain.validation.AuthenticatorValidator
 import ch.nevis.exampleapp.domain.validation.AuthenticatorValidatorImpl
+import ch.nevis.exampleapp.domain.validation.PasswordPolicyImpl
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcherImpl
 import ch.nevis.mobile.sdk.api.Configuration
 import ch.nevis.mobile.sdk.api.localdata.Authenticator.BIOMETRIC_AUTHENTICATOR_AAID
 import ch.nevis.mobile.sdk.api.localdata.Authenticator.DEVICE_PASSCODE_AUTHENTICATOR_AAID
 import ch.nevis.mobile.sdk.api.localdata.Authenticator.FINGERPRINT_AUTHENTICATOR_AAID
+import ch.nevis.mobile.sdk.api.localdata.Authenticator.PASSWORD_AUTHENTICATOR_AAID
 import ch.nevis.mobile.sdk.api.localdata.Authenticator.PIN_AUTHENTICATOR_AAID
+import ch.nevis.mobile.sdk.api.operation.password.PasswordChanger
+import ch.nevis.mobile.sdk.api.operation.password.PasswordEnroller
+import ch.nevis.mobile.sdk.api.operation.password.PasswordPolicy
 import ch.nevis.mobile.sdk.api.operation.pin.PinChanger
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnroller
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelector
@@ -39,6 +46,7 @@ import ch.nevis.mobile.sdk.api.operation.selection.AuthenticatorSelector
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
+import ch.nevis.mobile.sdk.api.operation.userverification.PasswordUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 import dagger.Module
 import dagger.Provides
@@ -115,6 +123,7 @@ class ApplicationModule {
     @Provides
     fun provideAuthenticatorAllowlist(): List<String> = listOf(
         PIN_AUTHENTICATOR_AAID,
+        PASSWORD_AUTHENTICATOR_AAID,
         FINGERPRINT_AUTHENTICATOR_AAID,
         BIOMETRIC_AUTHENTICATOR_AAID,
         DEVICE_PASSCODE_AUTHENTICATOR_AAID
@@ -231,6 +240,28 @@ class ApplicationModule {
     @Provides
     fun providePinUserVerifier(navigationDispatcher: NavigationDispatcher): PinUserVerifier =
         PinUserVerifierImpl(navigationDispatcher)
+
+    @Provides
+    fun providePasswordChanger(
+        passwordPolicy: PasswordPolicy,
+        navigationDispatcher: NavigationDispatcher
+    ): PasswordChanger =
+        PasswordChangerImpl(passwordPolicy, navigationDispatcher)
+
+    @Provides
+    fun providePasswordEnroller(
+        passwordPolicy: PasswordPolicy,
+        navigationDispatcher: NavigationDispatcher
+    ): PasswordEnroller =
+        PasswordEnrollerImpl(passwordPolicy, navigationDispatcher)
+
+    @Provides
+    fun providePasswordUserVerifier(navigationDispatcher: NavigationDispatcher): PasswordUserVerifier =
+        PasswordUserVerifierImpl(navigationDispatcher)
+
+    @Provides
+    fun providePasswordPolicy(@ApplicationContext context: Context): PasswordPolicy =
+        PasswordPolicyImpl(context)
     //endregion
 
     //region Logger

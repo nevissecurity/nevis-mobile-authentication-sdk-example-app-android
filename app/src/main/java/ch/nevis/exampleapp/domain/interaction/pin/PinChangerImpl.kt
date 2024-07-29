@@ -4,20 +4,20 @@
  * Copyright © 2023. Nevis Security AG. All rights reserved.
  */
 
-package ch.nevis.exampleapp.domain.interaction
+package ch.nevis.exampleapp.domain.interaction.pin
 
 import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.logging.sdk
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
-import ch.nevis.exampleapp.ui.pin.model.PinViewMode
-import ch.nevis.exampleapp.ui.pin.parameter.PinNavigationParameter
+import ch.nevis.exampleapp.ui.credential.model.CredentialViewMode
+import ch.nevis.exampleapp.ui.credential.parameter.PinNavigationParameter
 import ch.nevis.mobile.sdk.api.operation.pin.PinChangeContext
 import ch.nevis.mobile.sdk.api.operation.pin.PinChangeHandler
 import ch.nevis.mobile.sdk.api.operation.pin.PinChanger
 import timber.log.Timber
 
 /**
- * Default implementation of [PinChanger] interface. It navigates to PIN view with the received
+ * Default implementation of [PinChanger] interface. Navigates to Credential view with the received
  * [PinChangeHandler], [ch.nevis.mobile.sdk.api.operation.pin.PinAuthenticatorProtectionStatus] and
  * [ch.nevis.mobile.sdk.api.operation.pin.PinChangeRecoverableError] objects.
  */
@@ -39,11 +39,11 @@ class PinChangerImpl(
         }
 
         navigationDispatcher.requestNavigation(
-            NavigationGraphDirections.actionGlobalPinFragment(
+            NavigationGraphDirections.actionGlobalCredentialFragment(
                 PinNavigationParameter(
-                    PinViewMode.CHANGE_PIN,
-                    context.authenticatorProtectionStatus(),
+                    CredentialViewMode.CHANGE,
                     lastRecoverableError = context.lastRecoverableError().orElse(null),
+                    pinAuthenticatorProtectionStatus = context.authenticatorProtectionStatus(),
                     pinChangeHandler = handler
                 )
             )

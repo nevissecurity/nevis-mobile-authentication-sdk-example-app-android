@@ -4,20 +4,20 @@
  * Copyright © 2023. Nevis Security AG. All rights reserved.
  */
 
-package ch.nevis.exampleapp.domain.interaction
+package ch.nevis.exampleapp.domain.interaction.pin
 
 import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.logging.sdk
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
-import ch.nevis.exampleapp.ui.pin.model.PinViewMode
-import ch.nevis.exampleapp.ui.pin.parameter.PinNavigationParameter
+import ch.nevis.exampleapp.ui.credential.model.CredentialViewMode
+import ch.nevis.exampleapp.ui.credential.parameter.PinNavigationParameter
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnroller
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnrollmentContext
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnrollmentHandler
 import timber.log.Timber
 
 /**
- * Default implementation of [PinEnroller] interface. It navigates to PIN view with the received
+ * Default implementation of [PinEnroller] interface. Navigates to Credential view with the received
  * [PinEnrollmentHandler] and [ch.nevis.mobile.sdk.api.operation.pin.PinEnrollmentError] objects.
  */
 class PinEnrollerImpl(
@@ -40,9 +40,9 @@ class PinEnrollerImpl(
         }
 
         navigationDispatcher.requestNavigation(
-            NavigationGraphDirections.actionGlobalPinFragment(
+            NavigationGraphDirections.actionGlobalCredentialFragment(
                 PinNavigationParameter(
-                    PinViewMode.ENROLL_PIN,
+                    CredentialViewMode.ENROLLMENT,
                     lastRecoverableError = context.lastRecoverableError().orElse(null),
                     pinEnrollmentHandler = handler
                 )

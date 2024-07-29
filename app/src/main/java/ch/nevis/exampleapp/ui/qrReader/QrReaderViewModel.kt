@@ -13,12 +13,14 @@ import ch.nevis.exampleapp.domain.client.ClientProvider
 import ch.nevis.exampleapp.domain.deviceInformation.DeviceInformationFactory
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.outOfBand.OutOfBandViewModel
+import ch.nevis.mobile.sdk.api.operation.password.PasswordEnroller
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnroller
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelector
 import ch.nevis.mobile.sdk.api.operation.selection.AuthenticatorSelector
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
+import ch.nevis.mobile.sdk.api.operation.userverification.PasswordUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -73,9 +75,19 @@ class QrReaderViewModel @Inject constructor(
     pinEnroller: PinEnroller,
 
     /**
+     * An instance of a [PasswordEnroller] interface implementation.
+     */
+    passwordEnroller: PasswordEnroller,
+
+    /**
      * An instance of a [PinUserVerifier] interface implementation.
      */
     pinUserVerifier: PinUserVerifier,
+
+    /**
+     * An instance of a [PasswordUserVerifier] interface implementation.
+     */
+    passwordUserVerifier: PasswordUserVerifier,
 
     /**
      * An instance of a [BiometricUserVerifier] interface implementation.
@@ -106,7 +118,9 @@ class QrReaderViewModel @Inject constructor(
     registrationAuthenticatorSelector,
     authenticationAuthenticatorSelector,
     pinEnroller,
+    passwordEnroller,
     pinUserVerifier,
+    passwordUserVerifier,
     biometricUserVerifier,
     devicePasscodeUserVerifier,
     fingerprintUserVerifier,

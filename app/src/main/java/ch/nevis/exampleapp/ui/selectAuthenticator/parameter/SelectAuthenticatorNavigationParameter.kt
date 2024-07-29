@@ -6,7 +6,6 @@
 
 package ch.nevis.exampleapp.ui.selectAuthenticator.parameter
 
-import ch.nevis.exampleapp.domain.model.operation.Operation
 import ch.nevis.exampleapp.ui.base.model.NavigationParameter
 import ch.nevis.exampleapp.ui.selectAuthenticator.model.AuthenticatorItem
 import ch.nevis.mobile.sdk.api.operation.selection.AuthenticatorSelectionHandler

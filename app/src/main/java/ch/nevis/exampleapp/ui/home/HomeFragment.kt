@@ -19,6 +19,7 @@ import ch.nevis.exampleapp.ui.base.BaseFragment
 import ch.nevis.exampleapp.ui.base.model.ViewData
 import ch.nevis.exampleapp.ui.home.model.HomeViewData
 import ch.nevis.exampleapp.ui.util.handleDispatchTokenResponse
+import ch.nevis.mobile.sdk.api.localdata.Authenticator
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -69,7 +70,11 @@ class HomeFragment : BaseFragment() {
         }
 
         binding.changePinButton.setOnClickListener {
-            viewModel.changePin()
+            viewModel.changeCredential(Authenticator.PIN_AUTHENTICATOR_AAID)
+        }
+
+        binding.changePasswordButton.setOnClickListener {
+            viewModel.changeCredential(Authenticator.PASSWORD_AUTHENTICATOR_AAID)
         }
 
         binding.changeDeviceInformationButton.setOnClickListener {
