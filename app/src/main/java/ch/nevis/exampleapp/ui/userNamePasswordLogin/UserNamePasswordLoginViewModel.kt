@@ -22,6 +22,7 @@ import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.result.parameter.ResultNavigationParameter
 import ch.nevis.mobile.sdk.api.authorization.AuthorizationProvider.CookieAuthorizationProvider
 import ch.nevis.mobile.sdk.api.authorization.Cookie
+import ch.nevis.mobile.sdk.api.operation.password.PasswordEnroller
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnroller
 import ch.nevis.mobile.sdk.api.operation.selection.AuthenticatorSelector
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
@@ -75,6 +76,11 @@ class UserNamePasswordLoginViewModel @Inject constructor(
      * An instance of a [PinEnroller] interface implementation.
      */
     private val pinEnroller: PinEnroller,
+
+    /**
+     * An instance of a [PasswordEnroller] interface implementation.
+     */
+    private val passwordEnroller: PasswordEnroller,
 
     /**
      * An instance of a [BiometricUserVerifier] interface implementation.
@@ -155,6 +161,7 @@ class UserNamePasswordLoginViewModel @Inject constructor(
                 .allowClass2Sensors(settings.allowClass2Sensors)
                 .authenticatorSelector(authenticatorSelector)
                 .pinEnroller(pinEnroller)
+                .passwordEnroller(passwordEnroller)
                 .biometricUserVerifier(biometricUserVerifier)
                 .devicePasscodeUserVerifier(devicePasscodeUserVerifier)
                 .fingerprintUserVerifier(fingerprintUserVerifier)

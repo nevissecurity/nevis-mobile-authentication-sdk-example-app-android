@@ -4,20 +4,20 @@
  * Copyright © 2023. Nevis Security AG. All rights reserved.
  */
 
-package ch.nevis.exampleapp.domain.interaction
+package ch.nevis.exampleapp.domain.interaction.pin
 
 import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.logging.sdk
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
-import ch.nevis.exampleapp.ui.pin.model.PinViewMode
-import ch.nevis.exampleapp.ui.pin.parameter.PinNavigationParameter
+import ch.nevis.exampleapp.ui.credential.model.CredentialViewMode
+import ch.nevis.exampleapp.ui.credential.parameter.PinNavigationParameter
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerificationContext
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerificationHandler
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 import timber.log.Timber
 
 /**
- * Default implementation of [PinUserVerifier] interface. It navigates to PIN view with the received
+ * Default implementation of [PinUserVerifier] interface. Navigates to Credential view with the received
  * [PinUserVerificationHandler], [ch.nevis.mobile.sdk.api.operation.pin.PinAuthenticatorProtectionStatus] and
  * [ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerificationError] objects.
  */
@@ -41,11 +41,11 @@ class PinUserVerifierImpl(
         }
 
         navigationDispatcher.requestNavigation(
-            NavigationGraphDirections.actionGlobalPinFragment(
+            NavigationGraphDirections.actionGlobalCredentialFragment(
                 PinNavigationParameter(
-                    PinViewMode.VERIFY_PIN,
-                    pinAuthenticatorProtectionStatus = context.authenticatorProtectionStatus(),
+                    CredentialViewMode.VERIFICATION,
                     lastRecoverableError = context.lastRecoverableError().orElse(null),
+                    pinAuthenticatorProtectionStatus = context.authenticatorProtectionStatus(),
                     pinUserVerificationHandler = handler
                 )
             )

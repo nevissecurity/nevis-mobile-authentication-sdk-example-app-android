@@ -17,12 +17,14 @@ import ch.nevis.exampleapp.ui.base.CancellableOperationViewModel
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.result.parameter.ResultNavigationParameter
 import ch.nevis.exampleapp.ui.selectAccount.parameter.SelectAccountNavigationParameter
+import ch.nevis.mobile.sdk.api.operation.password.PasswordChanger
 import ch.nevis.mobile.sdk.api.operation.pin.PinChanger
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelectionHandler
 import ch.nevis.mobile.sdk.api.operation.selection.AuthenticatorSelector
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
+import ch.nevis.mobile.sdk.api.operation.userverification.PasswordUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -56,6 +58,11 @@ class SelectAccountViewModel @Inject constructor(
     private val pinUserVerifier: PinUserVerifier,
 
     /**
+     * An instance of a [PasswordUserVerifier] interface implementation.
+     */
+    private val passwordUserVerifier: PasswordUserVerifier,
+
+    /**
      * An instance of a [BiometricUserVerifier] interface implementation.
      */
     private val biometricUserVerifier: BiometricUserVerifier,
@@ -74,6 +81,11 @@ class SelectAccountViewModel @Inject constructor(
      * An instance of a [PinChanger] interface implementation.
      */
     private val pinChanger: PinChanger,
+
+    /**
+     * An instance of a [PasswordChanger] interface implementation.
+     */
+    private val passwordChanger: PasswordChanger,
 
     /**
      * An instance of an [ErrorHandler] interface implementation. Received errors will be passed to this error
@@ -114,6 +126,7 @@ class SelectAccountViewModel @Inject constructor(
                 Operation.AUTHENTICATION -> inBandAuthentication(username)
                 Operation.DEREGISTRATION -> inBandAuthenticationForDeregistration(username)
                 Operation.CHANGE_PIN -> changePin(username)
+                Operation.CHANGE_PASSWORD -> changePassword(username)
                 Operation.OUT_OF_BAND_AUTHENTICATION -> outOfBandAuthentication(username)
                 else -> throw BusinessException.invalidState()
             }
@@ -146,6 +159,27 @@ class SelectAccountViewModel @Inject constructor(
     }
 
     /**
+     * Starts Password change.
+     *
+     * @param username The username that identifies the account the Password change must be started for.
+     */
+    private fun changePassword(username: String) {
+        val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
+        client.operations().passwordChange()
+            .username(username)
+            .passwordChanger(passwordChanger)
+            .onSuccess {
+                navigationDispatcher.requestNavigation(
+                    NavigationGraphDirections.actionGlobalResultFragment(
+                        ResultNavigationParameter.forSuccessfulOperation(Operation.CHANGE_PASSWORD)
+                    )
+                )
+            }
+            .onError(OnErrorImpl(Operation.CHANGE_PASSWORD, errorHandler))
+            .execute()
+    }
+
+    /**
      * Starts an in-band authentication.
      *
      * @param username The username that identifies the account the in-band authentication must be started for.
@@ -155,10 +189,11 @@ class SelectAccountViewModel @Inject constructor(
         client.operations().authentication()
             .username(username)
             .authenticatorSelector(authenticatorSelector)
+            .pinUserVerifier(pinUserVerifier)
+            .passwordUserVerifier(passwordUserVerifier)
             .biometricUserVerifier(biometricUserVerifier)
             .devicePasscodeUserVerifier(devicePasscodeUserVerifier)
             .fingerprintUserVerifier(fingerprintUserVerifier)
-            .pinUserVerifier(pinUserVerifier)
             .onSuccess {
                 navigationDispatcher.requestNavigation(
                     NavigationGraphDirections.actionGlobalResultFragment(
@@ -180,10 +215,11 @@ class SelectAccountViewModel @Inject constructor(
         client.operations().authentication()
             .username(username)
             .authenticatorSelector(authenticatorSelector)
+            .pinUserVerifier(pinUserVerifier)
+            .passwordUserVerifier(passwordUserVerifier)
             .biometricUserVerifier(biometricUserVerifier)
             .devicePasscodeUserVerifier(devicePasscodeUserVerifier)
             .fingerprintUserVerifier(fingerprintUserVerifier)
-            .pinUserVerifier(pinUserVerifier)
             .onSuccess {
                 client.operations().deregistration()
                     .username(username)

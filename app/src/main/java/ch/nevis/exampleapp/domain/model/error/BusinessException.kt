@@ -16,27 +16,37 @@ enum class BusinessExceptionType(
 ) {
 
     /**
-     * Registered accounts not found
+     * Registered accounts not found.
      */
     ACCOUNTS_NOT_FOUND(R.string.business_error_type_accounts_not_found),
 
     /**
-     * Client not initialized
+     * The PIN authenticator not found.
+     */
+    PIN_AUTHENTICATOR_NOT_FOUND(R.string.business_error_type_pin_authenticator_not_found),
+
+    /**
+     * The Password authenticator not found.
+     */
+    PASSWORD_AUTHENTICATOR_NOT_FOUND(R.string.business_error_type_password_authenticator_not_found),
+
+    /**
+     * Client not initialized.
      */
     CLIENT_NOT_INITIALIZED(R.string.business_error_type_client_not_initialized),
 
     /**
-     * Device information not found
+     * Device information not found.
      */
     DEVICE_INFORMATION_NOT_FOUND(R.string.business_error_type_device_information_not_found),
 
     /**
-     * Invalid state
+     * Invalid state.
      */
     INVALID_STATE(R.string.business_error_type_invalid_state),
 
     /**
-     * Password login failed
+     * Password login failed.
      */
     LOGIN_FAILED(R.string.business_error_type_login_failed)
 }
@@ -56,6 +66,16 @@ class BusinessException private constructor(
          * Helper static method to initialize a [BusinessException] with type [BusinessExceptionType.ACCOUNTS_NOT_FOUND].
          */
         fun accountsNotFound() = BusinessException(BusinessExceptionType.ACCOUNTS_NOT_FOUND)
+
+        /**
+         * Helper static method to initialize a [BusinessException] with type [BusinessExceptionType.PIN_AUTHENTICATOR_NOT_FOUND].
+         */
+        fun pinAuthenticatorNotFound() = BusinessException(BusinessExceptionType.PIN_AUTHENTICATOR_NOT_FOUND)
+
+        /**
+         * Helper static method to initialize a [BusinessException] with type [BusinessExceptionType.PASSWORD_AUTHENTICATOR_NOT_FOUND].
+         */
+        fun passwordAuthenticatorNotFound() = BusinessException(BusinessExceptionType.PASSWORD_AUTHENTICATOR_NOT_FOUND)
 
         /**
          * Helper static method to initialize a [BusinessException] with type [BusinessExceptionType.CLIENT_NOT_INITIALIZED].

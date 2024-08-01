@@ -238,7 +238,11 @@ The [HomeViewModel](app/src/main/java/ch/nevis/exampleapp/ui/home/HomeViewModel.
 
 #### Change PIN
 
-The change PIN operation is implemented in the [HomeViewModel](app/src/main/java/ch/nevis/exampleapp/ui/home/HomeViewModel.kt), [SelectAccountViewModel](app/src/main/java/ch/nevis/exampleapp/ui/selectAccount/SelectAccountViewModel.kt) and [PinViewModel](app/src/main/java/ch/nevis/exampleapp/ui/pin/PinViewModel.kt) classes with which you can modify the PIN of a registered PIN authenticator for a given user.
+The change PIN operation is implemented in the [HomeViewModel](app/src/main/java/ch/nevis/exampleapp/ui/home/HomeViewModel.kt), [SelectAccountViewModel](app/src/main/java/ch/nevis/exampleapp/ui/selectAccount/SelectAccountViewModel.kt) and [CredentialViewModel](app/src/main/java/ch/nevis/exampleapp/ui/credential/CredentialViewModel.kt) classes with which you can modify the PIN of a registered PIN authenticator for a given user.
+
+#### Change Password
+
+The change Password operation is implemented in the [HomeViewModel](app/src/main/java/ch/nevis/exampleapp/ui/home/HomeViewModel.kt), [SelectAccountViewModel](app/src/main/java/ch/nevis/exampleapp/ui/selectAccount/SelectAccountViewModel.kt) and [CredentialViewModel](app/src/main/java/ch/nevis/exampleapp/ui/credential/CredentialViewModel.kt) classes with which you can modify the password of a registered Password authenticator for a given user.
 
 #### Change device information
 

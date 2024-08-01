@@ -20,21 +20,25 @@ import ch.nevis.exampleapp.domain.interaction.OnErrorImpl
 import ch.nevis.exampleapp.domain.model.error.BusinessException
 import ch.nevis.exampleapp.domain.model.error.MobileAuthenticationClientException
 import ch.nevis.exampleapp.domain.model.operation.Operation
+import ch.nevis.exampleapp.domain.util.isUserEnrolled
 import ch.nevis.exampleapp.ui.home.model.HomeViewData
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.outOfBand.OutOfBandViewModel
 import ch.nevis.exampleapp.ui.result.parameter.ResultNavigationParameter
 import ch.nevis.exampleapp.ui.selectAccount.parameter.SelectAccountNavigationParameter
 import ch.nevis.mobile.sdk.api.MobileAuthenticationClientInitializer
-import ch.nevis.mobile.sdk.api.localdata.Account
 import ch.nevis.mobile.sdk.api.localdata.Authenticator
 import ch.nevis.mobile.sdk.api.operation.OperationError
+import ch.nevis.mobile.sdk.api.operation.password.PasswordChanger
+import ch.nevis.mobile.sdk.api.operation.password.PasswordEnroller
+import ch.nevis.mobile.sdk.api.operation.pin.PinChanger
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnroller
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelector
 import ch.nevis.mobile.sdk.api.operation.selection.AuthenticatorSelector
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
+import ch.nevis.mobile.sdk.api.operation.userverification.PasswordUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -66,6 +70,16 @@ class HomeViewModel @Inject constructor(
      * An instance of a [ClientProvider] implementation.
      */
     private val clientProvider: ClientProvider,
+
+    /**
+     * An instance of a [PinChanger] interface implementation.
+     */
+    private val pinChanger: PinChanger,
+
+    /**
+     * An instance of a [PasswordChanger] interface implementation.
+     */
+    private val passwordChanger: PasswordChanger,
 
     /**
      * An instance of a [NavigationDispatcher] interface implementation.
@@ -105,9 +119,19 @@ class HomeViewModel @Inject constructor(
     pinEnroller: PinEnroller,
 
     /**
+     * An instance of a [PasswordEnroller] interface implementation.
+     */
+    passwordEnroller: PasswordEnroller,
+
+    /**
      * An instance of a [PinUserVerifier] interface implementation.
      */
     pinUserVerifier: PinUserVerifier,
+
+    /**
+     * An instance of a [PasswordUserVerifier] interface implementation.
+     */
+    passwordUserVerifier: PasswordUserVerifier,
 
     /**
      * An instance of a [BiometricUserVerifier] interface implementation.
@@ -138,7 +162,9 @@ class HomeViewModel @Inject constructor(
     registrationAuthenticatorSelector,
     authenticationAuthenticatorSelector,
     pinEnroller,
+    passwordEnroller,
     pinUserVerifier,
+    passwordUserVerifier,
     biometricUserVerifier,
     devicePasscodeUserVerifier,
     fingerprintUserVerifier,
@@ -186,32 +212,61 @@ class HomeViewModel @Inject constructor(
     }
 
     /**
-     * Starts a change PIN operation.
+     * Starts credential changing.
+     *
+     * @param authenticatorType The type of the authenticator.
      */
-    fun changePin() {
+    fun changeCredential(authenticatorType: String) {
         try {
             val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
-            var accounts: Set<Account>? = null
-            client.localData().authenticators().forEach {
-                if (it.aaid() == Authenticator.PIN_AUTHENTICATOR_AAID) {
-                    accounts = it.registration().registeredAccounts()
-                }
-            }
-
-            if (accounts.isNullOrEmpty()) {
+            val accounts = client.localData().accounts()
+            if (accounts.isEmpty()) {
                 throw BusinessException.accountsNotFound()
             }
 
-            accounts?.also {
-                navigationDispatcher.requestNavigation(
-                    NavigationGraphDirections.actionGlobalSelectAccountFragment(
-                        SelectAccountNavigationParameter(
-                            Operation.CHANGE_PIN,
-                            it
+            val operation = when (authenticatorType) {
+                Authenticator.PIN_AUTHENTICATOR_AAID -> Operation.CHANGE_PIN
+                Authenticator.PASSWORD_AUTHENTICATOR_AAID -> Operation.CHANGE_PASSWORD
+                else -> throw BusinessException.invalidState()
+            }
+
+            val authenticatorNotFoundException = when (authenticatorType) {
+                Authenticator.PIN_AUTHENTICATOR_AAID -> BusinessException.pinAuthenticatorNotFound()
+                Authenticator.PASSWORD_AUTHENTICATOR_AAID -> BusinessException.passwordAuthenticatorNotFound()
+                else -> throw BusinessException.invalidState()
+            }
+
+            val authenticators = client.localData().authenticators()
+            if (authenticators.isEmpty()) {
+                throw authenticatorNotFoundException
+            }
+
+            val credentialAuthenticator = authenticators.firstOrNull { it.aaid() == authenticatorType }
+            if (credentialAuthenticator == null) {
+                throw authenticatorNotFoundException
+            }
+
+            val eligibleAccounts = accounts.filter {
+                credentialAuthenticator.isUserEnrolled(it.username(), false)
+            }.toSet()
+
+            when (eligibleAccounts.size) {
+                0 -> throw BusinessException.accountsNotFound()
+                1 -> {
+                    when (operation) {
+                        Operation.CHANGE_PIN -> startPinChange(eligibleAccounts.first().username())
+                        Operation.CHANGE_PASSWORD -> startPasswordChange(eligibleAccounts.first().username())
+                        else -> throw BusinessException.invalidState()
+                    }
+                }
+                else -> {
+                    navigationDispatcher.requestNavigation(
+                        NavigationGraphDirections.actionGlobalSelectAccountFragment(
+                            SelectAccountNavigationParameter(operation, eligibleAccounts)
                         )
                     )
-                )
-            } ?: throw BusinessException.invalidState()
+                }
+            }
         } catch (exception: Exception) {
             errorHandler.handle(exception)
         }
@@ -347,5 +402,48 @@ class HomeViewModel @Inject constructor(
             cancellableContinuation.resume(Unit)
         }
     }
+
+    /**
+     * Starts the PIN change operation.
+     *
+     * @param username The username of the account whose PIN must be changed.
+     */
+    private fun startPinChange(username: String) {
+        val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
+        client.operations().pinChange()
+            .username(username)
+            .pinChanger(pinChanger)
+            .onSuccess {
+                navigationDispatcher.requestNavigation(
+                    NavigationGraphDirections.actionGlobalResultFragment(
+                        ResultNavigationParameter.forSuccessfulOperation(Operation.CHANGE_PIN)
+                    )
+                )
+            }
+            .onError(OnErrorImpl(Operation.CHANGE_PIN, errorHandler))
+            .execute()
+    }
+
+    /**
+     * Starts the Password change operation.
+     *
+     * @param username The username of the account whose Password must be changed.
+     */
+    private fun startPasswordChange(username: String) {
+        val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
+        client.operations().passwordChange()
+            .username(username)
+            .passwordChanger(passwordChanger)
+            .onSuccess {
+                navigationDispatcher.requestNavigation(
+                    NavigationGraphDirections.actionGlobalResultFragment(
+                        ResultNavigationParameter.forSuccessfulOperation(Operation.CHANGE_PASSWORD)
+                    )
+                )
+            }
+            .onError(OnErrorImpl(Operation.CHANGE_PASSWORD, errorHandler))
+            .execute()
+    }
+
     //endregion
 }

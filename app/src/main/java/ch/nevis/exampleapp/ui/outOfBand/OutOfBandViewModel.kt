@@ -20,12 +20,14 @@ import ch.nevis.exampleapp.ui.result.parameter.ResultNavigationParameter
 import ch.nevis.mobile.sdk.api.operation.outofband.OutOfBandAuthentication
 import ch.nevis.mobile.sdk.api.operation.outofband.OutOfBandPayload
 import ch.nevis.mobile.sdk.api.operation.outofband.OutOfBandRegistration
+import ch.nevis.mobile.sdk.api.operation.password.PasswordEnroller
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnroller
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelector
 import ch.nevis.mobile.sdk.api.operation.selection.AuthenticatorSelector
 import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
+import ch.nevis.mobile.sdk.api.operation.userverification.PasswordUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 
 /**
@@ -75,9 +77,19 @@ abstract class OutOfBandViewModel(
     private val pinEnroller: PinEnroller,
 
     /**
+     * An instance of a [PasswordEnroller] interface implementation.
+     */
+    private val passwordEnroller: PasswordEnroller,
+
+    /**
      * An instance of a [PinUserVerifier] interface implementation.
      */
     private val pinUserVerifier: PinUserVerifier,
+
+    /**
+     * An instance of a [PasswordUserVerifier] interface implementation.
+     */
+    private val passwordUserVerifier: PasswordUserVerifier,
 
     /**
      * An instance of a [BiometricUserVerifier] interface implementation.
@@ -157,6 +169,7 @@ abstract class OutOfBandViewModel(
             .accountSelector(accountSelector)
             .authenticatorSelector(authenticationAuthenticatorSelector)
             .pinUserVerifier(pinUserVerifier)
+            .passwordUserVerifier(passwordUserVerifier)
             .fingerprintUserVerifier(fingerprintUserVerifier)
             .biometricUserVerifier(biometricUserVerifier)
             .devicePasscodeUserVerifier(devicePasscodeUserVerifier)
@@ -184,6 +197,7 @@ abstract class OutOfBandViewModel(
             .allowClass2Sensors(settings.allowClass2Sensors)
             .authenticatorSelector(registrationAuthenticatorSelector)
             .pinEnroller(pinEnroller)
+            .passwordEnroller(passwordEnroller)
             .biometricUserVerifier(biometricUserVerifier)
             .devicePasscodeUserVerifier(devicePasscodeUserVerifier)
             .fingerprintUserVerifier(fingerprintUserVerifier)
