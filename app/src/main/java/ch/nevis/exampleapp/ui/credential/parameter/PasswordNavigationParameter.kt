@@ -17,17 +17,19 @@ import kotlinx.parcelize.Parcelize
 
 /**
  * Navigation parameter of the Credential view in case of Password authenticator.
+ *
+ * @constructor Creates a new instance.
+ * @param credentialViewMode The mode, the Credential view intend to be used/initialized.
+ * @param lastRecoverableError The last recoverable error. It exists only if there was already a failed
+ *      Password operation attempt.
+ * @param passwordAuthenticatorProtectionStatus Status object of the Password authenticator.
+ * @param passwordChangeHandler An instance of a [PasswordChangeHandler] implementation.
+ * @param passwordEnrollmentHandler An instance of a [PasswordEnrollmentHandler] implementation.
+ * @param passwordUserVerificationHandler An instance of a [PasswordUserVerificationHandler] implementation.
  */
 @Parcelize
 data class PasswordNavigationParameter(
-    /**
-     * The mode, the Credential view intend to be used/initialized.
-     */
     override val credentialViewMode: CredentialViewMode,
-
-    /**
-     * The last recoverable error. It exists only if there was already a failed Password operation attempt.
-     */
     @IgnoredOnParcel
     override val lastRecoverableError: RecoverableError? = null,
 

@@ -17,11 +17,11 @@ import timber.log.Timber
 
 /**
  * Implementation of [ErrorHandler] interface for cases the user cancels an operation.
+ *
+ * @constructor Creates a new instance.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
 class CancelErrorHandlerImpl(
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher
 ) : ErrorHandler {
 

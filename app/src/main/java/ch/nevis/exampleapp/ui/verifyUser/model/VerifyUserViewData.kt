@@ -12,6 +12,10 @@ import ch.nevis.exampleapp.ui.base.model.ViewData
  * [ViewData] implementation for Verify User view and its view model. The view model composes
  * an instance of this [VerifyUserViewData] class and posts it to the Verify User view to
  * indicate that the view related data changed the view should be updated.
+ *
+ * @constructor Creates a new instance.
+ * @param errorMessage The error message that should be displayed on Verify User view.
+ * @param isFingerPrintVerification Flag that tells whether fingerprint verification is in progress.
  */
 data class VerifyUserViewData(
 

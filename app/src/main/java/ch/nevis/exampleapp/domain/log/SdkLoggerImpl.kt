@@ -10,7 +10,9 @@ import java.lang.ref.WeakReference
 import java.util.*
 
 /**
- * Default implementation of [SdkLogger] interface. It simply stores the logged messages in an [ArrayList] object.
+ * Default implementation of [SdkLogger] interface. It stores the logged messages in an [ArrayList] object.
+ *
+ * @constructor Creates a new instance.
  */
 class SdkLoggerImpl: SdkLogger {
 

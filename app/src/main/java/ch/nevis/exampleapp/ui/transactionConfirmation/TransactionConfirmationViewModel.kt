@@ -28,19 +28,14 @@ import javax.inject.Inject
  * passed to transaction confirmation as well view to be able to continue the operation with the account
  * selection. Select Account view itself is not out-of-band authentication specific and supports
  * multiple operations.
+ *
+ * @constructor Creates a new instance.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
+ * @param errorHandler An instance of a [ErrorHandler] interface implementation.
  */
 @HiltViewModel
 class TransactionConfirmationViewModel @Inject constructor(
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher,
-
-    /**
-     * An instance of an [ErrorHandler] interface implementation. Received errors will be passed to this error
-     * handler instance.
-     */
     private val errorHandler: ErrorHandler
 ) : CancellableOperationViewModel() {
 

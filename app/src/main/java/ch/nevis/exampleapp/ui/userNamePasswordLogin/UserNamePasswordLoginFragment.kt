@@ -20,6 +20,8 @@ import java.net.PasswordAuthentication
  * [androidx.fragment.app.Fragment] implementation of Username and Password Login view where the user
  * can enter a username and password and send it to start a login process. If the login was successful
  * an in-band registration operation is started automatically.
+ *
+ * @constructor Creates a new instance.
  */
 @AndroidEntryPoint
 class UserNamePasswordLoginFragment : BaseFragment() {
@@ -38,6 +40,7 @@ class UserNamePasswordLoginFragment : BaseFragment() {
     //endregion
 
     //region Fragment
+    /** @suppress */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,6 +49,7 @@ class UserNamePasswordLoginFragment : BaseFragment() {
         return binding.root
     }
 
+    /** @suppress */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -58,6 +62,7 @@ class UserNamePasswordLoginFragment : BaseFragment() {
         }
     }
 
+    /** @suppress */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

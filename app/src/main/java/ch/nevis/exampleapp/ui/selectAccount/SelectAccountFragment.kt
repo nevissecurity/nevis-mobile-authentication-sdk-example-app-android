@@ -25,6 +25,8 @@ import dagger.hilt.android.AndroidEntryPoint
 /**
  * [androidx.fragment.app.Fragment] implementation of Select Account view where the user
  * can one of her/his registered accounts for an operation.
+ *
+ * @constructor Creates a new instance.
  */
 @AndroidEntryPoint
 class SelectAccountFragment : BaseFragment(),
@@ -54,6 +56,7 @@ class SelectAccountFragment : BaseFragment(),
     //endregion
 
     //region Fragment
+    /** @suppress */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,6 +65,7 @@ class SelectAccountFragment : BaseFragment(),
         return binding.root
     }
 
+    /** @suppress */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val context = context ?: return
@@ -84,6 +88,7 @@ class SelectAccountFragment : BaseFragment(),
         }
     }
 
+    /** @suppress */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

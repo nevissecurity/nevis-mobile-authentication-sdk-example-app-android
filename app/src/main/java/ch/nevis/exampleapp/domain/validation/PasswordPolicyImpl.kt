@@ -17,15 +17,16 @@ import ch.nevis.mobile.sdk.api.util.Consumer
  * Implementation of [PasswordPolicy] interface.
  * This policy validates the password entered by the user during registration or password changing,
  * and allows only password that are different from the string `password`.
+ *
+ * @constructor Creates a new instance.
+ * @param context An Android [Context] object for [String] resource resolving.
  */
 class PasswordPolicyImpl(
-    /**
-     * An Android [Context] object for [String] resource resolving.
-     */
     private val context: Context,
 ) : PasswordPolicy {
 
     //region PasswordPolicy
+    /** @suppress */
     override fun validatePasswordForEnrollment(
         password: CharArray,
         onSuccess: Runnable,
@@ -41,6 +42,7 @@ class PasswordPolicyImpl(
         }
     }
 
+    /** @suppress */
     override fun validatePasswordForPasswordChange(
         password: CharArray,
         onSuccess: Runnable,
@@ -58,7 +60,6 @@ class PasswordPolicyImpl(
     //endregion
 
     //region Private Interface
-
     /**
      * Validates the password.
      *

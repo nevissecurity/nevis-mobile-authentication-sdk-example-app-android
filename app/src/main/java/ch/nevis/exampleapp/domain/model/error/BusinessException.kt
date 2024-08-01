@@ -12,6 +12,9 @@ import ch.nevis.exampleapp.R
  * Enumeration of business exception types.
  */
 enum class BusinessExceptionType(
+    /**
+     * The resource identifier used for the description.
+     */
     val resId: Int
 ) {
 
@@ -60,6 +63,9 @@ class BusinessException private constructor(
      */
     val type: BusinessExceptionType
 ) : Exception() {
+    /**
+     * Collection of available [BusinessException] types.
+     */
     companion object {
 
         /**

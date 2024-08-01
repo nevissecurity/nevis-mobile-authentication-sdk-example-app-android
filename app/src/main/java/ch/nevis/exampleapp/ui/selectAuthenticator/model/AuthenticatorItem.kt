@@ -12,7 +12,11 @@ import ch.nevis.mobile.sdk.api.localdata.Authenticator
 /**
  * Represents an authenticator that is listed and can be selected by the user on select authenticator view.
  *
- * @throws IllegalArgumentException when an unknown AAID is used.
+ * @constructor Creates a new instance.
+ * @param aaid The AAID of the authenticator.
+ * @param isPolicyCompliant The flag that tells whether the authenticator is server policy compliant.
+ * @param isUserEnrolled The flag that tells whether the user already enrolled the authenticator.
+ * @param titleResId String resource identifier of the title of the authenticator.
  */
 data class AuthenticatorItem(
     /**
@@ -21,12 +25,12 @@ data class AuthenticatorItem(
     val aaid: String,
 
     /**
-     * The flag that tells whether the authenticator is server policy compliant or not.
+     * The flag that tells whether the authenticator is server policy compliant.
      */
     val isPolicyCompliant: Boolean,
 
     /**
-     * The flag that tells whether the user already enrolled the authenticator or not.
+     * The flag that tells whether the user already enrolled the authenticator.
      */
     val isUserEnrolled: Boolean,
 
@@ -38,7 +42,10 @@ data class AuthenticatorItem(
 ) {
     /**
      * Tells that if this authenticator item is selectable on select authenticator view or not.
-     * The value is calculated based on [AuthenticatorItem.isPolicyCompliant] and [AuthenticatorItem.isUserEnrolled] flags.
+     * The value is calculated based on [AuthenticatorItem.isPolicyCompliant] and [AuthenticatorItem.isUserEnrolled]
+     * flags.
+     *
+     * @return A flag that tells whether the item is selectable.
      */
     fun isEnabled(): Boolean {
         return isPolicyCompliant && (

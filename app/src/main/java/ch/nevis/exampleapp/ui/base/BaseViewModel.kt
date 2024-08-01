@@ -16,10 +16,12 @@ import ch.nevis.exampleapp.ui.util.SingleLiveEvent
  * It provides a mechanism that ease the way how a view model may indicate to its owner view
  * that the view data was changed and the view should be updated based on the new [ViewData] object
  * that posted by the view model.
+ *
+ * @constructor Creates a new instance.
  */
 abstract class BaseViewModel : ViewModel() {
 
-    //region Properties.
+    //region Properties
     /**
      * Private, mutable backing property of the public [LiveData] property.
      */

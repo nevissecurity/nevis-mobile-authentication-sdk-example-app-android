@@ -52,106 +52,52 @@ import kotlin.coroutines.resume
 
 /**
  * View model implementation of Home view.
+ *
+ * @constructor Creates a new instance.
+ * @param context An Android [Context] object used for initializing [ch.nevis.mobile.sdk.api.MobileAuthenticationClient].
+ * @param configurationProvider An instance of a [ConfigurationProvider] implementation.
+ * @param clientProvider An instance of a [ClientProvider] implementation.
+ * @param pinChanger An instance of a [PinChanger] implementation.
+ * @param passwordChanger An instance of a [PasswordChanger] implementation.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] implementation.
+ * @param settings An instance of a [Settings] implementation.
+ * @param deviceInformationFactory An instance of a [DeviceInformationFactory] implementation.
+ * @param accountSelector An instance of a [AccountSelector] implementation.
+ * @param registrationAuthenticatorSelector An instance of an [AuthenticatorSelector] interface implementation
+ *      used during registration.
+ * @param authenticationAuthenticatorSelector An instance of an [AuthenticatorSelector] interface implementation
+ *      used during authentication.
+ * @param pinEnroller An instance of a [PinEnroller] implementation.
+ * @param pinUserVerifier An instance of a [PinUserVerifier] implementation.
+ * @param passwordUserVerifier An instance of a [PasswordUserVerifier] implementation.
+ * @param biometricUserVerifier An instance of a [BiometricUserVerifier] implementation.
+ * @param devicePasscodeUserVerifier An instance of a [DevicePasscodeUserVerifier] implementation.
+ * @param fingerprintUserVerifier An instance of a [FingerprintUserVerifier] implementation.
+ * @param errorHandler An instance of a [ErrorHandler] implementation.
  */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    /**
-     * An Android [Context] object used for initializing [ch.nevis.mobile.sdk.api.MobileAuthenticationClient].
-     */
     @ApplicationContext
     private val context: Context,
-
-    /**
-     * An instance of a [ConfigurationProvider] implementation.
-     */
     private val configurationProvider: ConfigurationProvider,
-
-    /**
-     * An instance of a [ClientProvider] implementation.
-     */
     private val clientProvider: ClientProvider,
-
-    /**
-     * An instance of a [PinChanger] interface implementation.
-     */
     private val pinChanger: PinChanger,
-
-    /**
-     * An instance of a [PasswordChanger] interface implementation.
-     */
     private val passwordChanger: PasswordChanger,
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher,
-
-    /**
-     * An instance of a [Settings] interface implementation.
-     */
     settings: Settings,
-
-    /**
-     * An instance of a [DeviceInformationFactory] implementation.
-     */
     deviceInformationFactory: DeviceInformationFactory,
-
-    /**
-     * An instance of an [AccountSelector] interface implementation.
-     */
     accountSelector: AccountSelector,
-
-    /**
-     * An instance of an [AuthenticatorSelector] interface implementation used during registration.
-     */
     @Named(ApplicationModule.REGISTRATION_AUTHENTICATOR_SELECTOR)
     registrationAuthenticatorSelector: AuthenticatorSelector,
-
-    /**
-     * An instance of an [AuthenticatorSelector] interface implementation used during authentication.
-     */
     @Named(ApplicationModule.AUTHENTICATION_AUTHENTICATOR_SELECTOR)
     authenticationAuthenticatorSelector: AuthenticatorSelector,
-
-    /**
-     * An instance of a [PinEnroller] interface implementation.
-     */
     pinEnroller: PinEnroller,
-
-    /**
-     * An instance of a [PasswordEnroller] interface implementation.
-     */
     passwordEnroller: PasswordEnroller,
-
-    /**
-     * An instance of a [PinUserVerifier] interface implementation.
-     */
     pinUserVerifier: PinUserVerifier,
-
-    /**
-     * An instance of a [PasswordUserVerifier] interface implementation.
-     */
     passwordUserVerifier: PasswordUserVerifier,
-
-    /**
-     * An instance of a [BiometricUserVerifier] interface implementation.
-     */
     biometricUserVerifier: BiometricUserVerifier,
-
-    /**
-     * An instance of a [DevicePasscodeUserVerifier] interface implementation.
-     */
     devicePasscodeUserVerifier: DevicePasscodeUserVerifier,
-
-    /**
-     * An instance of a [FingerprintUserVerifier] interface implementation.
-     */
     fingerprintUserVerifier: FingerprintUserVerifier,
-
-    /**
-     * An instance of an [ErrorHandler] interface implementation. Received errors will be passed to this error
-     * handler instance.
-     */
     private val errorHandler: ErrorHandler
 ) : OutOfBandViewModel(
     clientProvider,

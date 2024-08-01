@@ -30,6 +30,8 @@ import dagger.hilt.android.AndroidEntryPoint
  * passed to transaction confirmation as well view to be able to continue the operation with the account
  * selection. Select Account view itself is not out-of-band authentication specific and supports
  * multiple operations.
+ *
+ * @constructor Creates a new instance.
  */
 @AndroidEntryPoint
 class TransactionConfirmationFragment : BaseFragment() {
@@ -53,6 +55,7 @@ class TransactionConfirmationFragment : BaseFragment() {
     //endregion
 
     //region Fragment
+    /** @suppress */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -60,6 +63,7 @@ class TransactionConfirmationFragment : BaseFragment() {
         return binding.root
     }
 
+    /** @suppress */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -79,6 +83,7 @@ class TransactionConfirmationFragment : BaseFragment() {
         )
     }
 
+    /** @suppress */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

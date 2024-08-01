@@ -13,6 +13,9 @@ import ch.nevis.exampleapp.ui.base.model.ViewData
  * an instance of this [HomeViewData] class after the [ch.nevis.mobile.sdk.api.MobileAuthenticationClient]
  * initialization and posts it to the Home view to indicate that the view related data changed the view
  * should be updated.
+ *
+ * @constructor Creates a new instance.
+ * @param numberOfRegisteredAccounts The number of registered accounts known by [ch.nevis.mobile.sdk.api.MobileAuthenticationClient].
  */
 data class HomeViewData(
     /**

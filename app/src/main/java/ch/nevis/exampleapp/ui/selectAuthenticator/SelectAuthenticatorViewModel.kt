@@ -16,14 +16,12 @@ import javax.inject.Inject
 
 /**
  * View model implementation for Select Authenticator view.
+ *
+ * @constructor Creates a new instance.
+ * @param errorHandler An instance of an [ErrorHandler] interface implementation.
  */
 @HiltViewModel
 class SelectAuthenticatorViewModel @Inject constructor(
-
-    /**
-     * An instance of an [ErrorHandler] interface implementation. Received errors will be passed to this error
-     * handler instance.
-     */
     val errorHandler: ErrorHandler
 ) : CancellableOperationViewModel() {
 

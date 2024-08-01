@@ -20,16 +20,16 @@ import timber.log.Timber
 /**
  * Default implementation of [DevicePasscodeUserVerifier] interface. It navigates to the Verify User
  * view with the received [DevicePasscodeUserVerificationHandler] object.
+ *
+ * @constructor Creates a new instance.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
 class DevicePasscodeUserVerifierImpl(
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher
 ) : DevicePasscodeUserVerifier {
 
     //region DevicePasscodeUserVerifier
+    /** @suppress */
     override fun verifyDevicePasscode(
         context: DevicePasscodeUserVerificationContext,
         handler: DevicePasscodeUserVerificationHandler
@@ -46,6 +46,7 @@ class DevicePasscodeUserVerifierImpl(
         )
     }
 
+    /** @suppress */
     override fun onValidCredentialsProvided() {
         Timber.asTree()
             .sdk("Valid credentials provided during device passcode verification.")

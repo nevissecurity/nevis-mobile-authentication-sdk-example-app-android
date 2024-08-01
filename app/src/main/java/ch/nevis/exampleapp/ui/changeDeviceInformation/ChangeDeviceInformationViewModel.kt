@@ -21,23 +21,16 @@ import javax.inject.Inject
 
 /**
  * View model implementation of Change Device Information view.
+ *
+ * @constructor Creates a new instance.
+ * @param clientProvider An instance of a [ClientProvider] interface implementation.
+ * @param errorHandler An instance of an [ErrorHandler] interface implementation.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
 @HiltViewModel
 class ChangeDeviceInformationViewModel @Inject constructor(
-    /**
-     * An instance of a [ClientProvider] interface implementation.
-     */
     private val clientProvider: ClientProvider,
-
-    /**
-     * An instance of an [ErrorHandler] interface implementation. Received errors will be passed to this error
-     * handler instance.
-     */
     private val errorHandler: ErrorHandler,
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher
 ) : BaseViewModel() {
 

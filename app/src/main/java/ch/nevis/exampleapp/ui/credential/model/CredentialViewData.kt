@@ -17,6 +17,13 @@ import kotlinx.parcelize.IgnoredOnParcel
  * [ViewData] implementation for Credential view and its view model. The view model composes an instance
  * of this [CredentialViewData] class and posts it to the Credential view to indicate that the view related
  * data changed the view should be updated.
+ *
+ * @constructor Creates a new instance.
+ * @param credentialViewMode The mode, the Credential view intend to be used/initialized.
+ * @param credentialType The type of the credential.
+ * @param protectionInformation Authenticator protection information.
+ * @param lastRecoverableError The last recoverable error. It exists only if there was already a failed
+ *  PIN or Password operation attempt.
  */
 data class CredentialViewData(
     /**
@@ -35,7 +42,8 @@ data class CredentialViewData(
     val protectionInformation: CredentialProtectionInformation?,
 
     /**
-     * The last recoverable error. It exists only if there was already a failed PIN operation attempt.
+     * The last recoverable error. It exists only if there was already a failed PIN or Password operation
+     * attempt.
      */
     @IgnoredOnParcel
     val lastRecoverableError: RecoverableError? = null

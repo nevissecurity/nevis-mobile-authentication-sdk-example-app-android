@@ -14,6 +14,9 @@ import ch.nevis.mobile.sdk.api.localdata.DeviceInformation
  * an instance of this [ChangeDeviceInformationViewData] class after the current [DeviceInformation] was queried
  * from the [ch.nevis.mobile.sdk.api.MobileAuthenticationClient] and posts it to the Change Device Information
  * view to indicate that the view related data changed the view should be updated.
+ *
+ * @constructor Creates a new instance.
+ * @param deviceInformation The current [DeviceInformation] was queried from the [ch.nevis.mobile.sdk.api.MobileAuthenticationClient].
  */
 data class ChangeDeviceInformationViewData(
 

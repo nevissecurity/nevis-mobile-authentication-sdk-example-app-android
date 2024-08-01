@@ -21,20 +21,18 @@ import timber.log.Timber
  * Default implementation of [PasswordChanger] interface. Navigates to Credential view with the received
  * [PasswordChangeHandler], [ch.nevis.mobile.sdk.api.operation.password.PasswordAuthenticatorProtectionStatus]
  * and [ch.nevis.mobile.sdk.api.operation.password.PasswordChangeRecoverableError] objects.
+ *
+ * @constructor Creates a new instance.
+ * @param policy An instance of a [PasswordPolicy] interface implementation.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
 class PasswordChangerImpl(
-    /**
-     * An instance of a [PasswordPolicy] interface implementation.
-     */
     private val policy: PasswordPolicy,
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher
 ) : PasswordChanger {
 
     //region PasswordChanger
+    /** @suppress */
     override fun changePassword(
         context: PasswordChangeContext,
         handler: PasswordChangeHandler
@@ -58,6 +56,7 @@ class PasswordChangerImpl(
     }
 
     //  You can add custom password policy by overriding the `passwordPolicy` getter
+    /** @suppress */
     override fun passwordPolicy(): PasswordPolicy = policy
     //endregion
 }

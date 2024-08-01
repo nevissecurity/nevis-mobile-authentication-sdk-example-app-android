@@ -9,9 +9,13 @@ package ch.nevis.exampleapp.ui.transactionConfirmation.model
 import ch.nevis.exampleapp.ui.base.model.ViewData
 
 /**
- * [ViewData] implementation for Transaction Confirmation view and its view model. The view model composes
- * an instance of this [TransactionConfirmationViewData] class and posts it to the Transaction Confirmation view to
- * indicate that the view related data changed the view should be updated.
+ * [ViewData] implementation for Transaction Confirmation view and its view model. The view model
+ * composes an instance of this [TransactionConfirmationViewData] class and posts it to the Transaction
+ * Confirmation view to indicate that the view related data changed the view should be updated.
+ *
+ * @constructor Creates a new instance.
+ * @param transactionConfirmationData The transaction confirmation data/message that should be displayed
+ *      on Transaction Confirmation view.
  */
 data class TransactionConfirmationViewData(
     /**

@@ -38,73 +38,42 @@ import javax.inject.Named
 
 /**
  * View model implementation of UserName and Password Login view.
- */
+ *
+ * @constructor Creates a new instance.
+ * @param clientProvider An instance of a [ClientProvider] implementation.
+ * @param retrofit A [Retrofit] instance.
+ * @param deviceInformationFactory An instance of a [DeviceInformationFactory] implementation.
+ *      used during authentication.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] implementation.
+ * @param settings An instance of a [Settings] implementation.
+ * @param authenticatorSelector An instance of an [AuthenticatorSelector] interface implementation
+ *      used during registration.
+ * @param pinEnroller An instance of a [PinEnroller] implementation.
+ * @param biometricUserVerifier An instance of a [BiometricUserVerifier] implementation.
+ * @param devicePasscodeUserVerifier An instance of a [DevicePasscodeUserVerifier] implementation.
+ * @param fingerprintUserVerifier An instance of a [FingerprintUserVerifier] implementation.
+ * @param errorHandler An instance of a [ErrorHandler] implementation. */
 @HiltViewModel
 class UserNamePasswordLoginViewModel @Inject constructor(
-    /**
-     * An instance of a [ClientProvider] implementation.
-     */
     private val clientProvider: ClientProvider,
-
-    /**
-     * A [Retrofit] instance.
-     */
     private val retrofit: Retrofit,
-
-    /**
-     * An instance of a [DeviceInformationFactory] implementation.
-     */
     private val deviceInformationFactory: DeviceInformationFactory,
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher,
-
-    /**
-     * An instance of a [Settings] interface implementation.
-     */
     private val settings: Settings,
-
-    /**
-     * An instance of an [AuthenticatorSelector] interface implementation used during registration.
-     */
     @Named(ApplicationModule.REGISTRATION_AUTHENTICATOR_SELECTOR)
     private val authenticatorSelector: AuthenticatorSelector,
-
-    /**
-     * An instance of a [PinEnroller] interface implementation.
-     */
     private val pinEnroller: PinEnroller,
-
-    /**
-     * An instance of a [PasswordEnroller] interface implementation.
-     */
     private val passwordEnroller: PasswordEnroller,
-
-    /**
-     * An instance of a [BiometricUserVerifier] interface implementation.
-     */
     private val biometricUserVerifier: BiometricUserVerifier,
-
-    /**
-     * An instance of a [DevicePasscodeUserVerifier] interface implementation.
-     */
     private val devicePasscodeUserVerifier: DevicePasscodeUserVerifier,
-
-    /**
-     * An instance of a [FingerprintUserVerifier] interface implementation.
-     */
     private val fingerprintUserVerifier: FingerprintUserVerifier,
-
-    /**
-     * An instance of an [ErrorHandler] interface implementation. Received errors will be passed to this error
-     * handler instance.
-     */
     private val errorHandler: ErrorHandler
 ) : BaseViewModel() {
 
     //region Companion Object
+    /**
+     * Constants.
+     */
     companion object {
         private const val HEADER_SET_COOKIE = "Set-Cookie"
     }

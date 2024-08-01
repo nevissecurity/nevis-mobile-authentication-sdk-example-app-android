@@ -14,28 +14,28 @@ import ch.nevis.exampleapp.databinding.ItemAuthenticatorBinding
 import ch.nevis.exampleapp.ui.selectAuthenticator.model.AuthenticatorItem
 
 /**
- * An implementation of [RecyclerView.Adapter] abstract class that renders [AuthenticatorItem] objects into recycler items.
+ * An implementation of [RecyclerView.Adapter] abstract class that renders [AuthenticatorItem] objects
+ * into recycler items.
+ *
+ * @constructor Creates a new instance.
+ * @param authenticatorItems An [Array] that holds authenticator items those will be rendered by this adapter.
+ * @param authenticatorSelectedListener Reference for the listener implementation that will be notified
+ *      about authenticator selection.
  */
 class AuthenticatorsRecyclerViewAdapter(
-
-    /**
-     * An [Array] that holds authenticator items those will be rendered by this adapter.
-     */
     private val authenticatorItems: Array<AuthenticatorItem>,
-
-    /**
-     * Reference for the listener implementation that will be notified about authenticator selection.
-     */
     private val authenticatorSelectedListener: AuthenticatorSelectedListener
 ) : RecyclerView.Adapter<AuthenticatorsRecyclerViewAdapter.AuthenticatorViewHolder>() {
 
     //region RecyclerView.Adapter
+    /** @suppress */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuthenticatorViewHolder {
         val binding =
             ItemAuthenticatorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return AuthenticatorViewHolder(binding)
     }
 
+    /** @suppress */
     override fun onBindViewHolder(holder: AuthenticatorViewHolder, position: Int) {
         holder.binding.authenticatorSelectedListener = authenticatorSelectedListener
         val authenticatorItem = authenticatorItems[position]
@@ -57,12 +57,16 @@ class AuthenticatorsRecyclerViewAdapter(
         }
     }
 
+    /** @suppress */
     override fun getItemCount() = authenticatorItems.size
     //endregion
 
     //region AuthenticatorViewHolder
     /**
      * A [RecyclerView.ViewHolder] implementation that represents a authenticator.
+     *
+     * @constructor Creates a new instance.
+     * @param binding The binding.
      */
     class AuthenticatorViewHolder(val binding: ItemAuthenticatorBinding) :
         RecyclerView.ViewHolder(binding.root)

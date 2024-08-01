@@ -21,20 +21,18 @@ import timber.log.Timber
  * Default implementation of [PasswordEnroller] interface. Navigates to Credential view with the
  * received [PasswordEnrollmentHandler] and [ch.nevis.mobile.sdk.api.operation.password.PasswordEnrollmentError]
  * objects.
+ *
+ * @constructor Creates a new instance.
+ * @param policy An instance of a [PasswordPolicy] interface implementation.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
 class PasswordEnrollerImpl(
-    /**
-     * An instance of a [PasswordPolicy] interface implementation.
-     */
     private val policy: PasswordPolicy,
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher
 ) : PasswordEnroller {
 
     //region PasswordEnroller
+    /** @suppress */
     override fun enrollPassword(
         context: PasswordEnrollmentContext,
         handler: PasswordEnrollmentHandler
@@ -56,11 +54,13 @@ class PasswordEnrollerImpl(
         )
     }
 
+    /** @suppress */
     override fun onValidCredentialsProvided() {
         Timber.asTree().sdk("Valid credentials provided during Password enrollment.")
     }
 
     //  You can add custom password policy by overriding the `passwordPolicy` getter
+    /** @suppress */
     override fun passwordPolicy(): PasswordPolicy = policy
     //endregion
 }

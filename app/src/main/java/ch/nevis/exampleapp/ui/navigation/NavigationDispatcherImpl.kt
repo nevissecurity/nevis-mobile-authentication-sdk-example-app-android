@@ -13,6 +13,8 @@ import ch.nevis.exampleapp.ui.util.SingleLiveEvent
 
 /**
  * Default implementation of [NavigationDispatcher] interface.
+ *
+ * @constructor Creates a new instance.
  */
 class NavigationDispatcherImpl : NavigationDispatcher {
 
