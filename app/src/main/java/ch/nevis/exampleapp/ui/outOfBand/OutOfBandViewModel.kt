@@ -34,82 +34,39 @@ import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
  * Abstract, base class that provides out-of-band payload decoding, processing and out-of-band
  * authentication, registration operation execution related common code for view model sub-classes
  * those deal with out-of-band operations.
- */
+ *
+ * @constructor Creates a new instance.
+ * @param clientProvider An instance of a [ClientProvider] implementation.
+ * @param deviceInformationFactory An instance of a [DeviceInformationFactory] implementation.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] implementation.
+ * @param settings An instance of a [Settings] implementation.
+ * @param accountSelector An instance of a [AccountSelector] implementation.
+ * @param registrationAuthenticatorSelector An instance of an [AuthenticatorSelector] interface implementation
+ *      used during registration.
+ * @param authenticationAuthenticatorSelector An instance of an [AuthenticatorSelector] interface implementation
+ *      used during authentication.
+ * @param pinEnroller An instance of a [PinEnroller] implementation.
+ * @param pinUserVerifier An instance of a [PinUserVerifier] implementation.
+ * @param passwordUserVerifier An instance of a [PasswordUserVerifier] implementation.
+ * @param biometricUserVerifier An instance of a [BiometricUserVerifier] implementation.
+ * @param devicePasscodeUserVerifier An instance of a [DevicePasscodeUserVerifier] implementation.
+ * @param fingerprintUserVerifier An instance of a [FingerprintUserVerifier] implementation.
+ * @param errorHandler An instance of a [ErrorHandler] implementation. */
 abstract class OutOfBandViewModel(
-    /**
-     * An instance of a [ClientProvider] interface implementation.
-     */
     private val clientProvider: ClientProvider,
-
-    /**
-     * An instance of a [DeviceInformationFactory] interface implementation.
-     */
     private val deviceInformationFactory: DeviceInformationFactory,
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher,
-
-    /**
-     * An instance of a [Settings] interface implementation.
-     */
     private val settings: Settings,
-
-    /**
-     * An instance of a [AccountSelector] interface implementation.
-     */
     private val accountSelector: AccountSelector,
-
-    /**
-     * An instance of a [AuthenticatorSelector] interface implementation.
-     */
     private val registrationAuthenticatorSelector: AuthenticatorSelector,
-
-    /**
-     * An instance of a [AuthenticatorSelector] interface implementation.
-     */
     private val authenticationAuthenticatorSelector: AuthenticatorSelector,
-
-    /**
-     * An instance of a [PinEnroller] interface implementation.
-     */
     private val pinEnroller: PinEnroller,
-
-    /**
-     * An instance of a [PasswordEnroller] interface implementation.
-     */
     private val passwordEnroller: PasswordEnroller,
-
-    /**
-     * An instance of a [PinUserVerifier] interface implementation.
-     */
     private val pinUserVerifier: PinUserVerifier,
-
-    /**
-     * An instance of a [PasswordUserVerifier] interface implementation.
-     */
     private val passwordUserVerifier: PasswordUserVerifier,
-
-    /**
-     * An instance of a [BiometricUserVerifier] interface implementation.
-     */
     private val biometricUserVerifier: BiometricUserVerifier,
-
-    /**
-     * An instance of a [DevicePasscodeUserVerifier] interface implementation.
-     */
     private val devicePasscodeUserVerifier: DevicePasscodeUserVerifier,
-
-    /**
-     * An instance of a [FingerprintUserVerifier] interface implementation.
-     */
     private val fingerprintUserVerifier: FingerprintUserVerifier,
-
-    /**
-     * An instance of an [ErrorHandler] interface implementation. Received errors will be passed to this error
-     * handler instance.
-     */
     private val errorHandler: ErrorHandler
 ) : BaseViewModel() {
 

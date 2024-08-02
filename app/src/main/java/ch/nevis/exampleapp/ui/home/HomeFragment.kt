@@ -26,6 +26,8 @@ import dagger.hilt.android.AndroidEntryPoint
  * [androidx.fragment.app.Fragment] implementation of home view. This view is the start/home view of the application.
  * It can handle an out-of-band payload or Auth Cloud API registration, in-band authentication,
  * in-band registration. change PIN, change device information, or deregistration can be started from here.
+ *
+ * @constructor Creates a new instance.
  */
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
@@ -44,6 +46,7 @@ class HomeFragment : BaseFragment() {
     //endregion
 
     //region Fragment
+    /** @suppress */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,6 +55,7 @@ class HomeFragment : BaseFragment() {
         return binding.root
     }
 
+    /** @suppress */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
@@ -97,11 +101,13 @@ class HomeFragment : BaseFragment() {
         }
     }
 
+    /** @suppress */
     override fun onStart() {
         super.onStart()
         viewModel.initClient()
     }
 
+    /** @suppress */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

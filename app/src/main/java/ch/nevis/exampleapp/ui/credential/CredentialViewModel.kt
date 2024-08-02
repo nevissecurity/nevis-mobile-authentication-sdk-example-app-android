@@ -35,19 +35,15 @@ import javax.inject.Inject
 
 /**
  * View model implementation of Credential view.
+ *
+ * @constructor Creates a new instance.
+ * @param context An Android [Context] object for [String] resource resolving.
+ * @param errorHandler An instance of an [ErrorHandler] interface implementation.
  */
 @HiltViewModel
 class CredentialViewModel @Inject constructor(
-    /**
-     * An Android [Context] object for [String] resource resolving.
-     */
     @ApplicationContext
     private val context: Context,
-
-    /**
-     * An instance of an [ErrorHandler] interface implementation. Received errors will be passed to
-     * this error handler instance.
-     */
     private val errorHandler: ErrorHandler
 ) : CancellableOperationViewModel() {
 

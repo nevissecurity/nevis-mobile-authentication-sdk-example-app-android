@@ -24,6 +24,8 @@ import dagger.hilt.android.AndroidEntryPoint
  * This view shows the related error message in case of failed operations.
  * If the user presses OS back button or the confirm button on this view then the application
  * navigates back to Home view.
+ *
+ * @constructor Creates a new instance.
  */
 @AndroidEntryPoint
 class ErrorFragment : Fragment() {
@@ -42,6 +44,7 @@ class ErrorFragment : Fragment() {
     //endregion
 
     //region Fragment
+    /** @suppress */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,6 +53,7 @@ class ErrorFragment : Fragment() {
         return binding.root
     }
 
+    /** @suppress */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -67,6 +71,7 @@ class ErrorFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
+    /** @suppress */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -16,11 +16,11 @@ import java.util.*
 /**
  * Default implementation of [DeviceInformationFactory] interface.
  * It creates a new [DeviceInformation] using Android [Context] and returns it.
+ *
+ * @constructor Creates a new instance.
+ * @param context The Android [Context].
  */
 class DeviceInformationFactoryImpl(
-    /**
-     * The Android [Context].
-     */
     private val context: Context
 ) : DeviceInformationFactory {
 

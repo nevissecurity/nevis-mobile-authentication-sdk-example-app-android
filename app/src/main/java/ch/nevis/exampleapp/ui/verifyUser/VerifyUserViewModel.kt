@@ -23,14 +23,12 @@ import javax.inject.Inject
 
 /**
  * View model implementation of Verify User view.
+ *
+ * @constructor Creates a new instance.
+ * @param errorHandler An instance of an [ErrorHandler] interface implementation.
  */
 @HiltViewModel
 class VerifyUserViewModel @Inject constructor(
-
-    /**
-     * An instance of an [ErrorHandler] interface implementation. Received errors will be passed to this error
-     * handler instance.
-     */
     private val errorHandler: ErrorHandler
 ) : CancellableOperationViewModel() {
 

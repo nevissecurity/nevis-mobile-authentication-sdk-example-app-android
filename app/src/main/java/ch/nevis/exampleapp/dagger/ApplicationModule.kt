@@ -67,6 +67,9 @@ import javax.inject.Singleton
 class ApplicationModule {
 
     //region Constants
+    /**
+     * Collection of constants.
+     */
     companion object {
         /**
          * The unique name of authenticator selector implementation for Registration operation.
@@ -81,6 +84,12 @@ class ApplicationModule {
     //endregion
 
     //region Configuration
+    /**
+     * Provides Auth Cloud specific configuration.
+     *
+     * @param application The actual Android application.
+     * @return The Auth Cloud specific configuration.
+     */
     @Suppress("DEPRECATION")
     @SuppressLint("PackageManagerGetSignatures")
     @Provides
@@ -98,6 +107,12 @@ class ApplicationModule {
             .build()
     }
 
+    /**
+     * Provides Identity Suite specific configuration.
+     *
+     * @param application The actual Android application.
+     * @return The Identity Suite specific configuration.
+     */
     @Suppress("DEPRECATION")
     @SuppressLint("PackageManagerGetSignatures")
     @Provides
@@ -120,6 +135,11 @@ class ApplicationModule {
             .build()
     }
 
+    /**
+     * Provides the list of allowed authenticators.
+     *
+     * @return The list of allowed authenticators.
+     */
     @Provides
     fun provideAuthenticatorAllowlist(): List<String> = listOf(
         PIN_AUTHENTICATOR_AAID,
@@ -129,6 +149,12 @@ class ApplicationModule {
         DEVICE_PASSCODE_AUTHENTICATOR_AAID
     )
 
+    /**
+     * Provides the configuration provider.
+     *
+     * @param application The actual Android application.
+     * @return The configuration provider.
+     */
     @Provides
     @Singleton
     fun provideConfigurationProvider(application: Application): ConfigurationProvider =
@@ -140,12 +166,24 @@ class ApplicationModule {
     //endregion
 
     //region Client
+    /**
+     * Provides the client provider.
+     *
+     * @return The client provider.
+     */
     @Provides
     @Singleton
     fun provideClientProvider(): ClientProvider = ClientProviderImpl()
     //endregion
 
     //region Error Handling
+    /**
+     * Provides the error handler.
+     *
+     * @param context The Android [Context].
+     * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
+     * @return The error handler.
+     */
     @Provides
     @Singleton
     fun provideErrorHandler(
@@ -160,36 +198,77 @@ class ApplicationModule {
     //endregion
 
     //region Navigator
+    /**
+     * Provides the navigation dispatcher.
+     *
+     * @return The navigation dispatcher.
+     */
     @Provides
     @Singleton
     fun provideNavigator(): NavigationDispatcher = NavigationDispatcherImpl()
     //endregion
 
     //region Settings
+    /**
+     * Provides the application settings.
+     *
+     * @param context The Android [Context].
+     * @return The application settings.
+     */
     @Provides
     @Singleton
     fun provideSettings(@ApplicationContext context: Context): Settings = SettingsImpl(context)
     //endregion
 
     //region Validation
+    /**
+     * Provides the authenticator validator.
+     *
+     * @return The authenticator validator.
+     */
     @Provides
     @Singleton
     fun provideAuthenticatorValidator(): AuthenticatorValidator = AuthenticatorValidatorImpl()
     //endregion
 
     //region Interaction
+    /**
+     * Provides the biometric user verifier.
+     *
+     * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
+     * @return The biometric user verifier.
+     */
     @Provides
     fun provideBiometricUserVerifier(navigationDispatcher: NavigationDispatcher): BiometricUserVerifier =
         BiometricUserVerifierImpl(navigationDispatcher)
 
+    /**
+     * Provides the device passcode user verifier.
+     *
+     * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
+     * @return The device passcode user verifier.
+     */
     @Provides
     fun provideDevicePasscodeUserVerifier(navigationDispatcher: NavigationDispatcher): DevicePasscodeUserVerifier =
         DevicePasscodeUserVerifierImpl(navigationDispatcher)
 
+    /**
+     * Provides the fingerprint user verifier.
+     *
+     * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
+     * @return The fingerprint user verifier.
+     */
     @Provides
     fun provideFingerprintUserVerifier(navigationDispatcher: NavigationDispatcher): FingerprintUserVerifier =
         FingerprintUserVerifierImpl(navigationDispatcher)
 
+    /**
+     * Provides the account selector.
+     *
+     * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
+     * @param errorHandler An instance of a [ErrorHandler] interface implementation.
+     * @return The account selector.
+     */
     @Provides
     fun provideAccountSelector(
         navigationDispatcher: NavigationDispatcher,
@@ -197,6 +276,15 @@ class ApplicationModule {
     ): AccountSelector =
         AccountSelectorImpl(navigationDispatcher, errorHandler)
 
+    /**
+     * Provides the authenticator selector for registration operation.
+     *
+     * @param configurationProvider An instance of a [ConfigurationProvider] interface implementation.
+     * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
+     * @param authenticatorValidator An instance of an [AuthenticatorValidator] interface implementation.
+     * @param settings An instance of a [Settings] interface implementation.
+     * @return The authenticator selector.
+     */
     @Provides
     @Named(REGISTRATION_AUTHENTICATOR_SELECTOR)
     fun provideRegistrationAuthenticatorSelector(
@@ -213,6 +301,15 @@ class ApplicationModule {
             AuthenticatorSelectorOperation.REGISTRATION
         )
 
+    /**
+     * Provides the authenticator selector for authentication operation.
+     *
+     * @param configurationProvider An instance of a [ConfigurationProvider] interface implementation.
+     * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
+     * @param authenticatorValidator An instance of an [AuthenticatorValidator] interface implementation.
+     * @param settings An instance of a [Settings] interface implementation.
+     * @return The authenticator selector.
+     */
     @Provides
     @Named(AUTHENTICATION_AUTHENTICATOR_SELECTOR)
     fun provideAuthenticationAuthenticatorSelector(
@@ -229,18 +326,42 @@ class ApplicationModule {
             AuthenticatorSelectorOperation.AUTHENTICATION
         )
 
+    /**
+     * Provides the PIN changer.
+     *
+     * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
+     * @return The PIN changer.
+     */
     @Provides
     fun providePinChanger(navigationDispatcher: NavigationDispatcher): PinChanger =
         PinChangerImpl(navigationDispatcher)
 
+    /**
+     * Provides the PIN enroller.
+     *
+     * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
+     * @return The PIN enroller.
+     */
     @Provides
     fun providePinEnroller(navigationDispatcher: NavigationDispatcher): PinEnroller =
         PinEnrollerImpl(navigationDispatcher)
 
+    /**
+     * Provides the PIN user verifier.
+     *
+     * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
+     * @return The PIN user verifier.
+     */
     @Provides
     fun providePinUserVerifier(navigationDispatcher: NavigationDispatcher): PinUserVerifier =
         PinUserVerifierImpl(navigationDispatcher)
 
+    /**
+     * Provides the Password changer.
+     *
+     * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
+     * @return The Password changer.
+     */
     @Provides
     fun providePasswordChanger(
         passwordPolicy: PasswordPolicy,
@@ -248,6 +369,12 @@ class ApplicationModule {
     ): PasswordChanger =
         PasswordChangerImpl(passwordPolicy, navigationDispatcher)
 
+    /**
+     * Provides the Password enroller.
+     *
+     * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
+     * @return The Password enroller.
+     */
     @Provides
     fun providePasswordEnroller(
         passwordPolicy: PasswordPolicy,
@@ -255,22 +382,45 @@ class ApplicationModule {
     ): PasswordEnroller =
         PasswordEnrollerImpl(passwordPolicy, navigationDispatcher)
 
+    /**
+     * Provides the Password user verifier.
+     *
+     * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
+     * @return The Password user verifier.
+     */
     @Provides
     fun providePasswordUserVerifier(navigationDispatcher: NavigationDispatcher): PasswordUserVerifier =
         PasswordUserVerifierImpl(navigationDispatcher)
 
+    /**
+     * Provides the password policy.
+     *
+     * @param context The Android [Context].
+     * @return The password policy.
+     */
     @Provides
     fun providePasswordPolicy(@ApplicationContext context: Context): PasswordPolicy =
         PasswordPolicyImpl(context)
     //endregion
 
     //region Logger
+    /**
+     * Provides the sdk logger.
+     *
+     * @return The sdk logger.
+     */
     @Provides
     @Singleton
     fun provideSdkLogger(): SdkLogger = SdkLoggerImpl()
     //endregion
 
     //region Factory
+    /**
+     * Provides the device information factory.
+     *
+     * @param context The Android [Context].
+     * @return The device information factory.
+     */
     @Provides
     @Singleton
     fun provideDeviceInformationFactory(@ApplicationContext context: Context): DeviceInformationFactory =
@@ -278,6 +428,12 @@ class ApplicationModule {
     //endregion
 
     //region Retrofit
+    /**
+     * Provides the [Retrofit] implementation.
+     *
+     * @param configurationProvider An instance of a [ConfigurationProvider] interface implementation.
+     * @return The [Retrofit] implementation.
+     */
     @Provides
     fun provideRetrofit(configurationProvider: ConfigurationProvider): Retrofit =
         Retrofit.Builder().baseUrl(configurationProvider.configuration.baseUrl().toString())

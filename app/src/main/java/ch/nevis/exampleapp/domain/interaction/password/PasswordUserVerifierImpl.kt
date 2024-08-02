@@ -20,16 +20,16 @@ import timber.log.Timber
  * Default implementation of [PasswordUserVerifier] interface. Navigates to Credential view with the
  * received [PasswordUserVerificationHandler], [ch.nevis.mobile.sdk.api.operation.password.PasswordAuthenticatorProtectionStatus]
  * and [ch.nevis.mobile.sdk.api.operation.userverification.PasswordUserVerificationError] objects.
+ *
+ * @constructor Creates a new instance.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
 class PasswordUserVerifierImpl(
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher
 ) : PasswordUserVerifier {
 
     //region PasswordUserVerifier
+    /** @suppress */
     override fun verifyPassword(
         context: PasswordUserVerificationContext,
         handler: PasswordUserVerificationHandler
@@ -52,6 +52,7 @@ class PasswordUserVerifierImpl(
         )
     }
 
+    /** @suppress */
     override fun onValidCredentialsProvided() {
         Timber.asTree().sdk("Valid credentials provided during Password verification.")
     }

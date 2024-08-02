@@ -20,16 +20,16 @@ import timber.log.Timber
 /**
  * Default implementation of [BiometricUserVerifier] interface. It navigates to the Verify User
  * view with the received [BiometricUserVerificationHandler] object.
+ *
+ * @constructor Creates a new instance.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
 class BiometricUserVerifierImpl(
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher
 ) : BiometricUserVerifier {
 
     //region BiometricUserVerifier
+    /** @suppress */
     override fun verifyBiometric(
         context: BiometricUserVerificationContext,
         handler: BiometricUserVerificationHandler
@@ -46,6 +46,7 @@ class BiometricUserVerifierImpl(
         )
     }
 
+    /** @suppress */
     override fun onValidCredentialsProvided() {
         Timber.asTree()
             .sdk("Valid credentials provided during biometric verification.")

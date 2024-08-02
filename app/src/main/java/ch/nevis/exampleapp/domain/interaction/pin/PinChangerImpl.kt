@@ -20,14 +20,16 @@ import timber.log.Timber
  * Default implementation of [PinChanger] interface. Navigates to Credential view with the received
  * [PinChangeHandler], [ch.nevis.mobile.sdk.api.operation.pin.PinAuthenticatorProtectionStatus] and
  * [ch.nevis.mobile.sdk.api.operation.pin.PinChangeRecoverableError] objects.
+ *
+ * @constructor Creates a new instance.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
 class PinChangerImpl(
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher
 ) : PinChanger {
+
+    //region PinChanger
+    /** @suppress */
     override fun changePin(
         context: PinChangeContext,
         handler: PinChangeHandler
@@ -49,4 +51,5 @@ class PinChangerImpl(
             )
         )
     }
+    //endregion
 }

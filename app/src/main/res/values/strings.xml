@@ -86,7 +86,7 @@
     <string name="home_delete_authenticators_button_title">Delete Authenticators</string>
     <string name="home_in_band_registration_button_title">In-band Registration</string>
 
-    <string name="log_item">[%s] %s</string>
+    <string name="log_item">[%1$s] %2$s</string>
     <string name="log_item_date_format" translatable="false">HH:mm:ss</string>
 
     <string name="main_show_log">Show log</string>

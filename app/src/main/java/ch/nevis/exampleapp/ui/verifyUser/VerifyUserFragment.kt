@@ -27,6 +27,8 @@ import dagger.hilt.android.AndroidEntryPoint
 /**
  * Fragment implementation of Verify User view where the user can verify her-/himself with
  * fingerprint, face ID or device passcode.
+ *
+ * @constructor Creates a new instance.
  */
 @AndroidEntryPoint
 class VerifyUserFragment : BaseFragment() {
@@ -62,6 +64,7 @@ class VerifyUserFragment : BaseFragment() {
     //endregion
 
     //region Fragment
+    /** @suppress */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -70,6 +73,7 @@ class VerifyUserFragment : BaseFragment() {
         return binding.root
     }
 
+    /** @suppress */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -105,16 +109,19 @@ class VerifyUserFragment : BaseFragment() {
         )
     }
 
+    /** @suppress */
     override fun onResume() {
         super.onResume()
         viewModel.resumeOsListening()
     }
 
+    /** @suppress */
     override fun onPause() {
         super.onPause()
         viewModel.pauseOsListening()
     }
 
+    /** @suppress */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -6,12 +6,9 @@
 
 package ch.nevis.exampleapp.ui.selectAuthenticator
 
-import ch.nevis.mobile.sdk.api.localdata.Authenticator
-
-
 /**
- * Interface declaration of a listener that is used by [AuthenticatorsRecyclerViewAdapter] to notify the implementations
- * of this interface about authenticator selection.
+ * Interface declaration of a listener that is used by [AuthenticatorsRecyclerViewAdapter] to notify
+ * the implementations of this interface about authenticator selection.
  */
 interface AuthenticatorSelectedListener {
 

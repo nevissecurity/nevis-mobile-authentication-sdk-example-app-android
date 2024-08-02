@@ -21,6 +21,13 @@ import kotlinx.parcelize.Parcelize
  * passed to transaction confirmation as well view to be able to continue the operation with the account
  * selection. Select Account view itself is not out-of-band authentication specific and supports
  * multiple operations.
+ *
+ * @constructor Creates a new instance.
+ * @param operation The operation the account selection was requested for.
+ * @param accounts The list of available accounts the user can select from.
+ * @param transactionConfirmationData The transaction confirmation data/message that should be displayed
+ *      on Transaction Confirmation view.
+ * @param accountSelectionHandler An instance of an [AccountSelectionHandler] implementation.
  */
 @Parcelize
 data class TransactionConfirmationNavigationParameter(

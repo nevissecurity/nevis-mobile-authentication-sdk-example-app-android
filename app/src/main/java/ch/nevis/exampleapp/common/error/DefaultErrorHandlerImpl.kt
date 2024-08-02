@@ -18,16 +18,13 @@ import timber.log.Timber
 
 /**
  * Default implementation of [ErrorHandler] interface.
+ *
+ * @constructor Creates a new instance.
+ * @param context An Android [Context] object for [String] resource resolving.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
 class DefaultErrorHandlerImpl(
-    /**
-     * An Android [Context] object for [String] resource resolving.
-     */
     private val context: Context,
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher
 ) : ErrorHandler {
 

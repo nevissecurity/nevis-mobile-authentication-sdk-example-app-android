@@ -25,22 +25,18 @@ import timber.log.Timber
  * transaction confirmation data received in the [AccountSelectionContext] object and decides
  * if the next step is transaction confirmation or account selection. As an addition it also showcases
  * how to skip account selection if the received account list set has only one element.
+ *
+ * @constructor Creates a new instance.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
+ * @param errorHandler An instance of an [ErrorHandler] interface implementation.
  */
 class AccountSelectorImpl(
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher,
-
-    /**
-     * An instance of an [ErrorHandler] interface implementation. Received errors will be passed to this error
-     * handler instance.
-     */
     private val errorHandler: ErrorHandler
 ) : AccountSelector {
 
     //region AccountSelector
+    /** @suppress */
     override fun selectAccount(
         context: AccountSelectionContext,
         handler: AccountSelectionHandler
@@ -91,6 +87,12 @@ class AccountSelectorImpl(
     //endregion
 
     //region Private Interface
+    /**
+     * Validates the list of [Account]s.
+     *
+     * @param context The context containing the list of [Account]s.
+     * @return The list of valid [Account]s.
+     */
     private fun validAccounts(context: AccountSelectionContext): Set<Account> {
         val validAccounts = mutableSetOf<Account>()
         context.authenticators().forEach { authenticator ->

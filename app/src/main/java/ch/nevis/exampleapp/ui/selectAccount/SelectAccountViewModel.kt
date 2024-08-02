@@ -32,65 +32,32 @@ import javax.inject.Named
 
 /**
  * View model implementation for Select Account view.
- */
+ *
+ * @constructor Creates a new instance.
+ * @param clientProvider An instance of a [ClientProvider] implementation.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] implementation.
+ * @param authenticatorSelector An instance of an [AuthenticatorSelector] interface implementation.
+ * @param pinUserVerifier An instance of a [PinUserVerifier] implementation.
+ * @param passwordUserVerifier An instance of a [PasswordUserVerifier] implementation.
+ * @param biometricUserVerifier An instance of a [BiometricUserVerifier] implementation.
+ * @param devicePasscodeUserVerifier An instance of a [DevicePasscodeUserVerifier] implementation.
+ * @param fingerprintUserVerifier An instance of a [FingerprintUserVerifier] implementation.
+ * @param pinChanger An instance of a [PinChanger] implementation.
+ * @param passwordChanger An instance of a [PasswordChanger] implementation.
+ * @param errorHandler An instance of a [ErrorHandler] implementation. */
 @HiltViewModel
 class SelectAccountViewModel @Inject constructor(
-
-    /**
-     * An instance of a [ClientProvider] interface implementation.
-     */
     private val clientProvider: ClientProvider,
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher,
-
-    /**
-     * An instance of an [AuthenticatorSelector] interface implementation used during authentication.
-     */
     @Named(ApplicationModule.AUTHENTICATION_AUTHENTICATOR_SELECTOR)
     private val authenticatorSelector: AuthenticatorSelector,
-
-    /**
-     * An instance of a [PinUserVerifier] interface implementation.
-     */
     private val pinUserVerifier: PinUserVerifier,
-
-    /**
-     * An instance of a [PasswordUserVerifier] interface implementation.
-     */
     private val passwordUserVerifier: PasswordUserVerifier,
-
-    /**
-     * An instance of a [BiometricUserVerifier] interface implementation.
-     */
     private val biometricUserVerifier: BiometricUserVerifier,
-
-    /**
-     * An instance of a [DevicePasscodeUserVerifier] interface implementation.
-     */
     private val devicePasscodeUserVerifier: DevicePasscodeUserVerifier,
-
-    /**
-     * An instance of a [FingerprintUserVerifier] interface implementation.
-     */
     private val fingerprintUserVerifier: FingerprintUserVerifier,
-
-    /**
-     * An instance of a [PinChanger] interface implementation.
-     */
     private val pinChanger: PinChanger,
-
-    /**
-     * An instance of a [PasswordChanger] interface implementation.
-     */
     private val passwordChanger: PasswordChanger,
-
-    /**
-     * An instance of an [ErrorHandler] interface implementation. Received errors will be passed to this error
-     * handler instance.
-     */
     private val errorHandler: ErrorHandler
 ) : CancellableOperationViewModel() {
 
@@ -115,7 +82,8 @@ class SelectAccountViewModel @Inject constructor(
 
     /**
      * Selects account for the given operation and user. The supported operations are
-     * [Operation.AUTHENTICATION], [Operation.DEREGISTRATION], [Operation.CHANGE_PIN], [Operation.OUT_OF_BAND_AUTHENTICATION].
+     * [Operation.AUTHENTICATION], [Operation.DEREGISTRATION], [Operation.CHANGE_PIN],
+     * [Operation.CHANGE_PASSWORD] and [Operation.OUT_OF_BAND_AUTHENTICATION].
      *
      * @param operation The operation the account selected for.
      * @param username The username assigned to the selected account.

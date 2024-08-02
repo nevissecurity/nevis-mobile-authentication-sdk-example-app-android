@@ -18,6 +18,15 @@ import kotlinx.parcelize.Parcelize
 
 /**
  * Navigation parameter data class for Verify User view.
+ *
+ * @constructor Creates a new instance.
+ * @param verifyUserViewMode The mode, the Verify User view intend to be used/initialized.
+ * @param authenticatorTitleResId String resource identifier of the title of the authenticator.
+ * @param biometricUserVerificationHandler An instance of a [BiometricUserVerificationHandler] implementation.
+ * @param devicePasscodeUserVerificationHandler An instance of a [DevicePasscodeUserVerificationHandler] implementation.
+ * @param fingerprintUserVerificationHandler An instance of a [FingerprintUserVerificationHandler] implementation.
+ * @param fingerprintUserVerificationError A [FingerprintUserVerificationError] error object that may
+ *      occur during fingerprint user verification.
  */
 @Parcelize
 data class VerifyUserNavigationParameter(

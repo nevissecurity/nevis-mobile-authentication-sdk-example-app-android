@@ -19,16 +19,16 @@ import timber.log.Timber
 /**
  * Default implementation of [PinEnroller] interface. Navigates to Credential view with the received
  * [PinEnrollmentHandler] and [ch.nevis.mobile.sdk.api.operation.pin.PinEnrollmentError] objects.
+ *
+ * @constructor Creates a new instance.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
 class PinEnrollerImpl(
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher
 ) : PinEnroller {
 
     //region PinEnroller
+    /** @suppress */
     override fun enrollPin(
         context: PinEnrollmentContext,
         handler: PinEnrollmentHandler
@@ -50,6 +50,7 @@ class PinEnrollerImpl(
         )
     }
 
+    /** @suppress */
     override fun onValidCredentialsProvided() {
         Timber.asTree().sdk("Valid credentials provided during PIN enrollment.")
     }

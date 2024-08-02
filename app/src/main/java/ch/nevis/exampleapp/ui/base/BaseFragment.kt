@@ -33,10 +33,15 @@ import javax.inject.Inject
  * the view data was changed and the view must be updated. Once a [ViewData] is posted by the view model
  * the [BaseFragment.updateView] method is called and the view may run the necessary code that updates
  * the view.
+ *
+ * @constructor Creates a new instance.
  */
 abstract class BaseFragment : Fragment() {
 
     //region Companion Object
+    /**
+     * Constants.
+     */
     companion object {
         /**
          * Commonly used argument name that is used for navigation parameters during navigation.
@@ -59,6 +64,7 @@ abstract class BaseFragment : Fragment() {
     //endregion
 
     //region Fragment
+    /** @suppress */
     override fun onResume() {
         super.onResume()
 
@@ -71,6 +77,7 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
+    /** @suppress */
     override fun onPause() {
         super.onPause()
         navigationDispatcher.unsubscribe(viewLifecycleOwner)

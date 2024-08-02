@@ -20,16 +20,16 @@ import timber.log.Timber
 /**
  * Default implementation of [FingerprintUserVerifier] interface. It navigates to the Verify User
  * view with the received [FingerprintUserVerificationHandler] object.
+ *
+ * @constructor Creates a new instance.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
 class FingerprintUserVerifierImpl(
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher
 ) : FingerprintUserVerifier {
 
     //region FingerprintUserVerifier
+    /** @suppress */
     override fun verifyFingerprint(
         context: FingerprintUserVerificationContext,
         handler: FingerprintUserVerificationHandler
@@ -53,6 +53,7 @@ class FingerprintUserVerifierImpl(
         )
     }
 
+    /** @suppress */
     override fun onValidCredentialsProvided() {
         Timber.asTree()
             .sdk("Valid credentials provided during fingerprint verification.")

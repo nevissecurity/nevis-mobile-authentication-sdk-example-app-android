@@ -20,16 +20,16 @@ import timber.log.Timber
  * Default implementation of [PinUserVerifier] interface. Navigates to Credential view with the received
  * [PinUserVerificationHandler], [ch.nevis.mobile.sdk.api.operation.pin.PinAuthenticatorProtectionStatus] and
  * [ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerificationError] objects.
+ *
+ * @constructor Creates a new instance.
+ * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
 class PinUserVerifierImpl(
-
-    /**
-     * An instance of a [NavigationDispatcher] interface implementation.
-     */
     private val navigationDispatcher: NavigationDispatcher
 ) : PinUserVerifier {
 
     //region PinUserVerifier
+    /** @suppress */
     override fun verifyPin(
         context: PinUserVerificationContext,
         handler: PinUserVerificationHandler
@@ -52,6 +52,7 @@ class PinUserVerifierImpl(
         )
     }
 
+    /** @suppress */
     override fun onValidCredentialsProvided() {
         Timber.asTree().sdk("Valid credentials provided during PIN verification.")
     }

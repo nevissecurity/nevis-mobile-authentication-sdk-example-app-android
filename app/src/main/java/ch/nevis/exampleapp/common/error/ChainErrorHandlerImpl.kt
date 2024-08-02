@@ -9,14 +9,14 @@ package ch.nevis.exampleapp.common.error
 /**
  * Main implementation of the [ErrorHandler] interface that can delegate the handling of the errors to
  * other configured [ErrorHandler] instances.
+ *
+ * @constructor Creates a new instance.
+ * @param errorHandlerChain A [List] of [ErrorHandler] instances those can handle or bypass the given
+ *   error when [ErrorHandler.handle] is called. If the error is handled by an
+ *   [ErrorHandler], the error processing will be ended, the error will not be delegated to further
+ *   elements of the chain.
  */
 class ChainErrorHandlerImpl(
-
-    /**
-     * A [List] of [ErrorHandler] instances those can handle or bypass the given error when
-     * [ErrorHandler.handle] is called. If the error is handled by an [ErrorHandler], the error
-     * processing will be ended, the error will not be delegated to further elements of the chain.
-     */
     private val errorHandlerChain: List<ErrorHandler>
 ) : ErrorHandler {
 
