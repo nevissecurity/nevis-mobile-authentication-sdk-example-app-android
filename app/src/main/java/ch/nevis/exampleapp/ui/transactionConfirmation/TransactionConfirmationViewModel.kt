@@ -1,12 +1,11 @@
 /**
  * Nevis Mobile Authentication SDK Example App
  *
- * Copyright © 2023. Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2024. Nevis Security AG. All rights reserved.
  */
 
 package ch.nevis.exampleapp.ui.transactionConfirmation
 
-import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.common.error.ErrorHandler
 import ch.nevis.exampleapp.domain.model.error.BusinessException
 import ch.nevis.exampleapp.domain.model.operation.Operation
@@ -41,16 +40,9 @@ class TransactionConfirmationViewModel @Inject constructor(
 
     //region Properties
     /**
-     * The operation the account selection was requested for.
-     *
-     * This value will always be [Operation.OUT_OF_BAND_AUTHENTICATION].
+     * The previously selected account.
      */
-    private var operation: Operation? = null
-
-    /**
-     * The list of available accounts the user can select from.
-     */
-    private var accounts: Set<Account>? = null
+    private var account: Account? = null
 
     /**
      * An instance of an [AccountSelectionHandler]. Transaction confirmation data received only in case an out-of-band authentication is started
@@ -69,11 +61,10 @@ class TransactionConfirmationViewModel @Inject constructor(
      * @param parameter The [TransactionConfirmationNavigationParameter] that was received by the owner [TransactionConfirmationFragment].
      */
     fun updateViewModel(parameter: TransactionConfirmationNavigationParameter) {
-        this.operation = parameter.operation
-        this.accounts = parameter.accounts
+        this.account = parameter.account
         this.accountSelectionHandler = parameter.accountSelectionHandler
 
-        requestViewUpdate(TransactionConfirmationViewData(parameter.transactionConfirmationData))
+        requestViewUpdate(TransactionConfirmationViewData(parameter.transactionConfirmationMessage))
     }
 
     /**
@@ -81,25 +72,12 @@ class TransactionConfirmationViewModel @Inject constructor(
      */
     fun confirm() {
         try {
-            val accounts = this.accounts ?: throw BusinessException.invalidState()
-            val operation = this.operation ?: throw BusinessException.invalidState()
+            val account = this.account ?: throw BusinessException.invalidState()
             val accountSelectionHandler =
                 this.accountSelectionHandler ?: throw BusinessException.invalidState()
 
-            if (accounts.size == 1) {
-                accountSelectionHandler.username(accounts.first().username())
-                this.accountSelectionHandler = null
-            } else {
-                navigationDispatcher.requestNavigation(
-                    NavigationGraphDirections.actionGlobalSelectAccountFragment(
-                        SelectAccountNavigationParameter(
-                            operation,
-                            accounts,
-                            accountSelectionHandler
-                        )
-                    )
-                )
-            }
+            accountSelectionHandler.username(account.username())
+            this.accountSelectionHandler = null
         } catch (exception: Exception) {
             errorHandler.handle(exception)
         }

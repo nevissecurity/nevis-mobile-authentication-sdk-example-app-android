@@ -1,7 +1,7 @@
 /**
  * Nevis Mobile Authentication SDK Example App
  *
- * Copyright © 2023. Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2024. Nevis Security AG. All rights reserved.
  */
 
 package ch.nevis.exampleapp.ui.selectAccount
@@ -17,6 +17,8 @@ import ch.nevis.exampleapp.ui.base.CancellableOperationViewModel
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.result.parameter.ResultNavigationParameter
 import ch.nevis.exampleapp.ui.selectAccount.parameter.SelectAccountNavigationParameter
+import ch.nevis.exampleapp.ui.transactionConfirmation.parameter.TransactionConfirmationNavigationParameter
+import ch.nevis.mobile.sdk.api.localdata.Account
 import ch.nevis.mobile.sdk.api.operation.password.PasswordChanger
 import ch.nevis.mobile.sdk.api.operation.pin.PinChanger
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelectionHandler
@@ -67,6 +69,8 @@ class SelectAccountViewModel @Inject constructor(
      * Select Account view to ask the user to select one of the available accounts to be able to continue the operation.
      */
     private var accountSelectionHandler: AccountSelectionHandler? = null
+
+    private var transactionConfirmationMessage: String? = null
     //endregion
 
     //region Public Interface
@@ -78,6 +82,7 @@ class SelectAccountViewModel @Inject constructor(
      */
     fun updateViewModel(parameter: SelectAccountNavigationParameter) {
         accountSelectionHandler = parameter.accountSelectionHandler
+        transactionConfirmationMessage = parameter.message
     }
 
     /**
@@ -86,16 +91,23 @@ class SelectAccountViewModel @Inject constructor(
      * [Operation.CHANGE_PASSWORD] and [Operation.OUT_OF_BAND_AUTHENTICATION].
      *
      * @param operation The operation the account selected for.
-     * @param username The username assigned to the selected account.
+     * @param account The selected account.
      */
-    fun selectAccount(operation: Operation, username: String) {
+    fun selectAccount(operation: Operation, account: Account) {
         try {
+            transactionConfirmationMessage?.let {
+                // Transaction confirmation data is received from the SDK
+                // Show it to the user for confirmation or cancellation
+                // The AccountSelectionHandler will be invoked or cancelled there.
+                return confirm(it, account)
+            }
+
             when (operation) {
-                Operation.AUTHENTICATION -> inBandAuthentication(username)
-                Operation.DEREGISTRATION -> inBandAuthenticationForDeregistration(username)
-                Operation.CHANGE_PIN -> changePin(username)
-                Operation.CHANGE_PASSWORD -> changePassword(username)
-                Operation.OUT_OF_BAND_AUTHENTICATION -> outOfBandAuthentication(username)
+                Operation.AUTHENTICATION -> inBandAuthenticate(account)
+                Operation.DEREGISTRATION -> inBandAuthenticationForDeregistration(account)
+                Operation.CHANGE_PIN -> changePin(account)
+                Operation.CHANGE_PASSWORD -> changePassword(account)
+                Operation.OUT_OF_BAND_AUTHENTICATION -> outOfBandAuthentication(account)
                 else -> throw BusinessException.invalidState()
             }
         } catch (exception: Exception) {
@@ -108,12 +120,12 @@ class SelectAccountViewModel @Inject constructor(
     /**
      * Starts PIN change.
      *
-     * @param username The username that identifies the account the PIN change must be started for.
+     * @param account The account the PIN change must be started for.
      */
-    private fun changePin(username: String) {
+    private fun changePin(account: Account) {
         val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
         client.operations().pinChange()
-            .username(username)
+            .username(account.username())
             .pinChanger(pinChanger)
             .onSuccess {
                 navigationDispatcher.requestNavigation(
@@ -129,12 +141,12 @@ class SelectAccountViewModel @Inject constructor(
     /**
      * Starts Password change.
      *
-     * @param username The username that identifies the account the Password change must be started for.
+     * @param account The account the Password change must be started for.
      */
-    private fun changePassword(username: String) {
+    private fun changePassword(account: Account) {
         val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
         client.operations().passwordChange()
-            .username(username)
+            .username(account.username())
             .passwordChanger(passwordChanger)
             .onSuccess {
                 navigationDispatcher.requestNavigation(
@@ -148,14 +160,32 @@ class SelectAccountViewModel @Inject constructor(
     }
 
     /**
+     * Confirms the transaction.
+     *
+     * @param message: The transaction confirmation message that need to be confirmed or cancelled by the user.
+     * @param account: The current account.
+     */
+    private fun confirm(message: String, account: Account) {
+        navigationDispatcher.requestNavigation(
+            NavigationGraphDirections.actionGlobalTransactionConfirmationFragment(
+                TransactionConfirmationNavigationParameter(
+                    account = account,
+                    transactionConfirmationMessage = message,
+                    accountSelectionHandler = accountSelectionHandler
+                )
+            )
+        )
+    }
+
+    /**
      * Starts an in-band authentication.
      *
-     * @param username The username that identifies the account the in-band authentication must be started for.
+     * @param account: The account that must be used to authenticate.
      */
-    private fun inBandAuthentication(username: String) {
+    private fun inBandAuthenticate(account: Account) {
         val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
         client.operations().authentication()
-            .username(username)
+            .username(account.username())
             .authenticatorSelector(authenticatorSelector)
             .pinUserVerifier(pinUserVerifier)
             .passwordUserVerifier(passwordUserVerifier)
@@ -176,10 +206,11 @@ class SelectAccountViewModel @Inject constructor(
     /**
      * Starts an in-band authentication as a pre-step for an identity suite environment de-registration.
      *
-     * @param username The username that identifies the account the de-registration must be started for.
+     * @param account: The account to deregister.
      */
-    private fun inBandAuthenticationForDeregistration(username: String) {
+    private fun inBandAuthenticationForDeregistration(account: Account) {
         val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
+        val username = account.username()
         client.operations().authentication()
             .username(username)
             .authenticatorSelector(authenticatorSelector)
@@ -209,12 +240,12 @@ class SelectAccountViewModel @Inject constructor(
     /**
      * Continues an out-of-band authentication.
      *
-     * @param username The username that identifies the account the out-of-band authentication must be started for.
+     * @param account The account the out-of-band authentication must be started for.
      */
-    private fun outOfBandAuthentication(username: String) {
+    private fun outOfBandAuthentication(account: Account) {
         val accountSelectionHandler =
             this.accountSelectionHandler ?: throw BusinessException.invalidState()
-        accountSelectionHandler.username(username)
+        accountSelectionHandler.username(account.username())
         this.accountSelectionHandler = null
     }
     //endregion

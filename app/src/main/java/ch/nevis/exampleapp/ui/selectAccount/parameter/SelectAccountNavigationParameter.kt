@@ -1,7 +1,7 @@
 /**
  * Nevis Mobile Authentication SDK Example App
  *
- * Copyright © 2023. Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2024. Nevis Security AG. All rights reserved.
  */
 
 package ch.nevis.exampleapp.ui.selectAccount.parameter
@@ -41,5 +41,10 @@ data class SelectAccountNavigationParameter(
      * [SelectAccountNavigationParameter.operation] must be [Operation.OUT_OF_BAND_AUTHENTICATION].
      */
     @IgnoredOnParcel
-    val accountSelectionHandler: AccountSelectionHandler? = null
+    val accountSelectionHandler: AccountSelectionHandler? = null,
+
+    /**
+     * The message to confirm if there is any.
+     */
+    val message: String? = null,
 ) : NavigationParameter

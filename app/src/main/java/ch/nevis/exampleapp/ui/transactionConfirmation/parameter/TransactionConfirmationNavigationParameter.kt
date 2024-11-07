@@ -1,7 +1,7 @@
 /**
  * Nevis Mobile Authentication SDK Example App
  *
- * Copyright © 2023. Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2024. Nevis Security AG. All rights reserved.
  */
 
 package ch.nevis.exampleapp.ui.transactionConfirmation.parameter
@@ -23,9 +23,8 @@ import kotlinx.parcelize.Parcelize
  * multiple operations.
  *
  * @constructor Creates a new instance.
- * @param operation The operation the account selection was requested for.
- * @param accounts The list of available accounts the user can select from.
- * @param transactionConfirmationData The transaction confirmation data/message that should be displayed
+ * @param account The previously selected account.
+ * @param transactionConfirmationMessage The transaction confirmation data/message that should be displayed
  *      on Transaction Confirmation view.
  * @param accountSelectionHandler An instance of an [AccountSelectionHandler] implementation.
  */
@@ -33,22 +32,15 @@ import kotlinx.parcelize.Parcelize
 data class TransactionConfirmationNavigationParameter(
 
     /**
-     * The operation the account selection was requested for.
-     *
-     * This value will always be [Operation.OUT_OF_BAND_AUTHENTICATION].
-     */
-    val operation: Operation,
-
-    /**
-     * The list of available accounts the user can select from.
+     * The previously selected account.
      */
     @IgnoredOnParcel
-    val accounts: Set<Account>? = null,
+    val account: Account? = null,
 
     /**
      * The transaction confirmation data/message that should be displayed on Transaction Confirmation view.
      */
-    val transactionConfirmationData: String,
+    val transactionConfirmationMessage: String,
 
     /**
      * An instance of an [AccountSelectionHandler]. Transaction confirmation data received only in case an out-of-band authentication is started
