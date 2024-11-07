@@ -1,7 +1,7 @@
 /**
  * Nevis Mobile Authentication SDK Example App
  *
- * Copyright © 2023. Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2024. Nevis Security AG. All rights reserved.
  */
 
 package ch.nevis.exampleapp.ui.selectAccount
@@ -97,10 +97,7 @@ class SelectAccountFragment : BaseFragment(),
 
     //region AccountSelectedListener
     override fun onAccountSelected(account: Account) {
-        viewModel.selectAccount(
-            navigationArguments.parameter.operation,
-            account.username()
-        )
+        viewModel.selectAccount(navigationArguments.parameter.operation, account)
     }
     //endregion
 

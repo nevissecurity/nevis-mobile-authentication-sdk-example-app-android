@@ -45,36 +45,35 @@ class AccountSelectorImpl(
             .sdk("Please select one of the received available accounts!")
         try {
             val accounts = validAccounts(context)
-            if (accounts.isEmpty()) {
-                throw BusinessException.accountsNotFound()
-            }
-
             val transactionConfirmationData =
                 context.transactionConfirmationData().orElse(null)
-
-            transactionConfirmationData?.also {
-                navigationDispatcher.requestNavigation(
-                    NavigationGraphDirections.actionGlobalTransactionConfirmationFragment(
-                        TransactionConfirmationNavigationParameter(
-                            Operation.OUT_OF_BAND_AUTHENTICATION,
-                            accounts,
-                            it.decodeToString(),
-                            handler
-                        )
-                    )
-                )
-            } ?: run {
-                if (accounts.size == 1) {
+            when(accounts.size) {
+                0 -> throw BusinessException.accountsNotFound()
+                1 -> {
                     Timber.asTree()
                         .sdk("One account found, performing automatic selection!")
-                    handler.username(accounts.first().username())
-                } else {
+                    if (transactionConfirmationData != null) {
+                        navigationDispatcher.requestNavigation(
+                            NavigationGraphDirections.actionGlobalTransactionConfirmationFragment(
+                                TransactionConfirmationNavigationParameter(
+                                    account = accounts.first(),
+                                    transactionConfirmationMessage = transactionConfirmationData.decodeToString(),
+                                    accountSelectionHandler = handler
+                                )
+                            )
+                        )
+                    } else {
+                        handler.username(accounts.first().username())
+                    }
+                }
+                else -> {
                     navigationDispatcher.requestNavigation(
                         NavigationGraphDirections.actionGlobalSelectAccountFragment(
                             SelectAccountNavigationParameter(
                                 Operation.OUT_OF_BAND_AUTHENTICATION,
                                 accounts,
-                                handler
+                                handler,
+                                transactionConfirmationData?.decodeToString()
                             )
                         )
                     )
