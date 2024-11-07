@@ -1,7 +1,7 @@
 /**
  * Nevis Mobile Authentication SDK Example App
  *
- * Copyright © 2023. Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2024. Nevis Security AG. All rights reserved.
  */
 
 package ch.nevis.exampleapp.domain.interaction
@@ -57,7 +57,7 @@ class AccountSelectorImpl(
                     NavigationGraphDirections.actionGlobalTransactionConfirmationFragment(
                         TransactionConfirmationNavigationParameter(
                             Operation.OUT_OF_BAND_AUTHENTICATION,
-                            context.accounts(),
+                            accounts,
                             it.decodeToString(),
                             handler
                         )
@@ -73,7 +73,7 @@ class AccountSelectorImpl(
                         NavigationGraphDirections.actionGlobalSelectAccountFragment(
                             SelectAccountNavigationParameter(
                                 Operation.OUT_OF_BAND_AUTHENTICATION,
-                                context.accounts(),
+                                accounts,
                                 handler
                             )
                         )
