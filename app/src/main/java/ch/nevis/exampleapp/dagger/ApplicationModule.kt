@@ -1,7 +1,7 @@
 /**
  * Nevis Mobile Authentication SDK Example App
  *
- * Copyright © 2023. Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2024. Nevis Security AG. All rights reserved.
  */
 
 package ch.nevis.exampleapp.dagger
@@ -13,16 +13,28 @@ import android.content.pm.PackageManager
 import ch.nevis.exampleapp.common.configuration.ConfigurationProvider
 import ch.nevis.exampleapp.common.configuration.ConfigurationProviderImpl
 import ch.nevis.exampleapp.common.configuration.Environment
-import ch.nevis.exampleapp.common.error.*
+import ch.nevis.exampleapp.common.error.CancelErrorHandlerImpl
+import ch.nevis.exampleapp.common.error.ChainErrorHandlerImpl
+import ch.nevis.exampleapp.common.error.DefaultErrorHandlerImpl
+import ch.nevis.exampleapp.common.error.ErrorHandler
 import ch.nevis.exampleapp.common.settings.Settings
 import ch.nevis.exampleapp.common.settings.SettingsImpl
 import ch.nevis.exampleapp.domain.client.ClientProvider
 import ch.nevis.exampleapp.domain.client.ClientProviderImpl
 import ch.nevis.exampleapp.domain.deviceInformation.DeviceInformationFactory
 import ch.nevis.exampleapp.domain.deviceInformation.DeviceInformationFactoryImpl
-import ch.nevis.exampleapp.domain.interaction.*
-import ch.nevis.exampleapp.domain.interaction.password.*
-import ch.nevis.exampleapp.domain.interaction.pin.*
+import ch.nevis.exampleapp.domain.interaction.AccountSelectorImpl
+import ch.nevis.exampleapp.domain.interaction.AuthenticatorSelectorImpl
+import ch.nevis.exampleapp.domain.interaction.AuthenticatorSelectorOperation
+import ch.nevis.exampleapp.domain.interaction.BiometricUserVerifierImpl
+import ch.nevis.exampleapp.domain.interaction.DevicePasscodeUserVerifierImpl
+import ch.nevis.exampleapp.domain.interaction.FingerprintUserVerifierImpl
+import ch.nevis.exampleapp.domain.interaction.password.PasswordChangerImpl
+import ch.nevis.exampleapp.domain.interaction.password.PasswordEnrollerImpl
+import ch.nevis.exampleapp.domain.interaction.password.PasswordUserVerifierImpl
+import ch.nevis.exampleapp.domain.interaction.pin.PinChangerImpl
+import ch.nevis.exampleapp.domain.interaction.pin.PinEnrollerImpl
+import ch.nevis.exampleapp.domain.interaction.pin.PinUserVerifierImpl
 import ch.nevis.exampleapp.domain.log.SdkLogger
 import ch.nevis.exampleapp.domain.log.SdkLoggerImpl
 import ch.nevis.exampleapp.domain.validation.AuthenticatorValidator
@@ -124,6 +136,7 @@ class ApplicationModule {
         )
         return Configuration.builder()
             .packageInfo(packageInfo)
+            .facetId("android:apk-key-hash:ch.nevis.mobile.authentication.sdk.android.example")
             .baseUrl(URI.create("https://mycompany.com/"))
             .registrationRequestPath("/nevisfido/uaf/1.1/request/registration/")
             .registrationResponsePath("/nevisfido/uaf/1.1/registration/")
