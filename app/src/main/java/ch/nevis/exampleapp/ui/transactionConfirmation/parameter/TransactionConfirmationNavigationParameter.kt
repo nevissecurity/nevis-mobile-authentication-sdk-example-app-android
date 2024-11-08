@@ -6,7 +6,6 @@
 
 package ch.nevis.exampleapp.ui.transactionConfirmation.parameter
 
-import ch.nevis.exampleapp.domain.model.operation.Operation
 import ch.nevis.exampleapp.ui.base.model.NavigationParameter
 import ch.nevis.mobile.sdk.api.localdata.Account
 import ch.nevis.mobile.sdk.api.operation.selection.AccountSelectionHandler
@@ -46,7 +45,6 @@ data class TransactionConfirmationNavigationParameter(
      * An instance of an [AccountSelectionHandler]. Transaction confirmation data received only in case an out-of-band authentication is started
      * and we navigate to Transaction Confirmation view to ask the user to confirm or deny the operation based on the transaction confirmation data
      * before we continue the operation with account selection.
-     * [TransactionConfirmationNavigationParameter.operation] will always be [Operation.OUT_OF_BAND_AUTHENTICATION]
      */
     @IgnoredOnParcel
     val accountSelectionHandler: AccountSelectionHandler? = null

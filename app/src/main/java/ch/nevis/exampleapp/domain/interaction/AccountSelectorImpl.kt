@@ -45,7 +45,7 @@ class AccountSelectorImpl(
             .sdk("Please select one of the received available accounts!")
         try {
             val accounts = validAccounts(context)
-            val transactionConfirmationData =
+            val transactionConfirmationData: ByteArray? =
                 context.transactionConfirmationData().orElse(null)
             when(accounts.size) {
                 0 -> throw BusinessException.accountsNotFound()
@@ -70,10 +70,10 @@ class AccountSelectorImpl(
                     navigationDispatcher.requestNavigation(
                         NavigationGraphDirections.actionGlobalSelectAccountFragment(
                             SelectAccountNavigationParameter(
-                                Operation.OUT_OF_BAND_AUTHENTICATION,
-                                accounts,
-                                handler,
-                                transactionConfirmationData?.decodeToString()
+                                operation = Operation.OUT_OF_BAND_AUTHENTICATION,
+                                accounts = accounts,
+                                accountSelectionHandler = handler,
+                                message = transactionConfirmationData?.decodeToString()
                             )
                         )
                     )

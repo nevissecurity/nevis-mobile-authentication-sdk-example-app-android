@@ -42,7 +42,7 @@ class TransactionConfirmationViewModel @Inject constructor(
     /**
      * The previously selected account.
      */
-    private var account: Account? = null
+    private lateinit var account: Account
 
     /**
      * An instance of an [AccountSelectionHandler]. Transaction confirmation data received only in case an out-of-band authentication is started
@@ -61,7 +61,7 @@ class TransactionConfirmationViewModel @Inject constructor(
      * @param parameter The [TransactionConfirmationNavigationParameter] that was received by the owner [TransactionConfirmationFragment].
      */
     fun updateViewModel(parameter: TransactionConfirmationNavigationParameter) {
-        this.account = parameter.account
+        this.account = parameter.account ?: throw BusinessException.invalidState()
         this.accountSelectionHandler = parameter.accountSelectionHandler
 
         requestViewUpdate(TransactionConfirmationViewData(parameter.transactionConfirmationMessage))
@@ -72,7 +72,6 @@ class TransactionConfirmationViewModel @Inject constructor(
      */
     fun confirm() {
         try {
-            val account = this.account ?: throw BusinessException.invalidState()
             val accountSelectionHandler =
                 this.accountSelectionHandler ?: throw BusinessException.invalidState()
 
