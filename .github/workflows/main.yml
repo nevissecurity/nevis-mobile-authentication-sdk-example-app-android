@@ -9,6 +9,17 @@ on:
   workflow_dispatch:
 
 env:
+  KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  SIGNING_CONFIGS: ${{ secrets.SIGNING_CONFIGS }}
+  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+  FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+  GH_USERNAME: ${{ vars.GH_USERNAME }}
+  GH_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
+  HOST_NAME: ${{ vars.HOST_NAME }}
+  CUSTOM_URI_SCHEME: ${{ vars.CUSTOM_URI_SCHEME }}
+  SLACK_WEBHOOK_URL: ${{ vars.SLACK_WEBHOOK_URL }}
+
   JAVA_VERSION: '17'
   RUBY_VERSION: '3.1'
   CURRENT_BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -43,30 +54,24 @@ jobs:
         with:
           fileName: 'keystore-example-app.jks'
           fileDir: './etc'
-          encodedString: ${{ secrets.KEYSTORE_FILE }}
+          encodedString: ${{ env.KEYSTORE_FILE }}
 
       # Generate build number based on Git tag
       - name: Generate build number
         uses: onyxmueller/build-tag-number@v1
         with:
-          token: ${{secrets.GITHUB_TOKEN}}
+          token: ${{ env.GITHUB_TOKEN }}
 
       # Setup Git user to make Fastlane capable to create Git tags
       - uses: fregante/setup-git-user@v2
 
       # Build the Android app
       - name: Run Fastlane
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SIGNING_CONFIGS: ${{ secrets.SIGNING_CONFIGS }}
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
-          GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
-          GITHUB_PERSONAL_ACCESS_TOKEN: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         uses: maierj/fastlane-action@v3.1.0
         with:
           lane: 'main'
-          options: '{ "host_name": "${{ secrets.HOST_NAME }}",
-                      "custom_uri_scheme": "${{ secrets.CUSTOM_URI_SCHEME }}"
-                    }'
+          options: |
+            { 
+              "host_name": "${{ env.HOST_NAME }}",
+              "custom_uri_scheme": "${{ env.CUSTOM_URI_SCHEME }}"
+            }
