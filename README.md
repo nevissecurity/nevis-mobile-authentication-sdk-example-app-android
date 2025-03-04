@@ -258,4 +258,8 @@ The change Password operation is implemented in the [HomeViewModel](app/src/main
 
 During registration, the device information can be provided that contains the name identifying your device, and also the Firebase Cloud Messaging registration token. Updating both the name and the token is implemented in the [ChangeDeviceInformationViewModel](app/src/main/java/ch/nevis/exampleapp/ui/changeDeviceInformation/ChangeDeviceInformationViewModel.kt) class.
 
+### Error handling
+
+As this is an example app, we are directly showing the technical error occurring. Be aware that this is not to be considered best practice. Your own production app should handle the errors in a more appropriate manner such as providing translations for all your supported languages as well as simplifying the error message presented to the end-user in a way non-technical adverse people can understand and act upon them.
+
 © 2024 made with ❤ by Nevis
