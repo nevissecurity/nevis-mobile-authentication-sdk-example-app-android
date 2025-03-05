@@ -8,7 +8,6 @@ package ch.nevis.exampleapp.ui.transactionConfirmation
 
 import ch.nevis.exampleapp.common.error.ErrorHandler
 import ch.nevis.exampleapp.domain.model.error.BusinessException
-import ch.nevis.exampleapp.domain.model.operation.Operation
 import ch.nevis.exampleapp.ui.base.CancellableOperationViewModel
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.selectAccount.parameter.SelectAccountNavigationParameter
@@ -48,7 +47,6 @@ class TransactionConfirmationViewModel @Inject constructor(
      * An instance of an [AccountSelectionHandler]. Transaction confirmation data received only in case an out-of-band authentication is started
      * and we navigate to Transaction Confirmation view to ask the user to confirm or deny the operation based on the transaction confirmation data
      * before we continue the operation with account selection.
-     * [TransactionConfirmationViewModel.operation] will always be [Operation.OUT_OF_BAND_AUTHENTICATION]
      */
     private var accountSelectionHandler: AccountSelectionHandler? = null
     //endregion

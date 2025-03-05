@@ -37,7 +37,7 @@ android {
 
     defaultConfig {
         applicationId "ch.nevis.exampleapp"
-        minSdk 23
+        minSdk 24
         targetSdk 34
         versionCode readVersionCode(this)
         versionName readVersionName(this)
