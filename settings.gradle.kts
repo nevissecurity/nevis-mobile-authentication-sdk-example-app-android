@@ -7,4 +7,4 @@ pluginManagement {
 }
 
 rootProject.name = "nevis-mobile-authentication-example"
-include ':app'
+include(":app")

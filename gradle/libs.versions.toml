@@ -1,0 +1,50 @@
+[versions]
+agp-version = "8.6.1"
+kotlin-version = "1.9.23"
+dagger-hilt-version = "2.51.1"
+navigation-version = "2.8.1"
+dokka-version = "1.9.20"
+core-ktx-version = "1.13.1"
+appcompat-version = "1.7.0"
+material-version = "1.12.0"
+constraintlayout-version = "2.1.4"
+junit-version = "4.13.2"
+androidx-junit-version = "1.2.1"
+espresso-core-version = "3.6.1"
+mlkit-version = "17.3.0"
+camerax-version = "1.3.4"
+nevis-mobile-authentication-sdk-version = "3.9.+"
+timber-version = "4.7.1"
+retrofit-version = "2.9.0"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx-version" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat-version" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material-version" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout-version" }
+junit = { group = "junit", name = "junit", version.ref = "junit-version" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit-version" }
+androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core-version" }
+mlkit-barcode-scanning = { group = "com.google.mlkit", name = "barcode-scanning", version.ref = "mlkit-version" }
+androidx-camera-core = { group = "androidx.camera", name = "camera-core", version.ref = "camerax-version" }
+androidx-camera-camera2 = { group = "androidx.camera", name = "camera-camera2", version.ref = "camerax-version" }
+androidx-camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", version.ref = "camerax-version" }
+androidx-camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "camerax-version" }
+androidx-camera-extensions = { group = "androidx.camera", name = "camera-extensions", version.ref = "camerax-version" }
+dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger-hilt-version" }
+dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "dagger-hilt-version" }
+androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigation-version" }
+androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation-version" }
+nevis-mobile-authentication-sdk-android = { group = "ch.nevis", name = "nevis-mobile-authentication-sdk-android-debug", version.ref = "nevis-mobile-authentication-sdk-version" }
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber-version" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit-version" }
+retrofit-converter-json = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit-version" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp-version" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-version" }
+jetbrains-kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",  version.ref = "kotlin-version"  }
+jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin-version" }
+dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "dagger-hilt-version" }
+androidx-navigation-safeargs = { id = "androidx.navigation.safeargs", version.ref = "navigation-version" }
+jetbrains-dokka = { id = "org.jetbrains.dokka", version.ref = "dokka-version" }
