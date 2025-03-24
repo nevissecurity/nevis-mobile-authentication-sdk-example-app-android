@@ -16,9 +16,9 @@ fun readProperty(name: String): Any? {
 }
 
 fun readVersionCode(): Int {
-    val property = readProperty("VERSION_CODE") as? Int
+    val property = readProperty("VERSION_CODE") as? String
     if (property != null) {
-        return property
+        return property.toInt()
     }
     return 1
 }
