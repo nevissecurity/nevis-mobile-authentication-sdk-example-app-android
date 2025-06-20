@@ -11,6 +11,7 @@ import ch.nevis.exampleapp.logging.sdk
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.credential.model.CredentialViewMode
 import ch.nevis.exampleapp.ui.credential.parameter.PinNavigationParameter
+import ch.nevis.mobile.sdk.api.operation.pin.PinAuthenticatorProtectionStatus
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerificationContext
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerificationHandler
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
@@ -18,8 +19,7 @@ import timber.log.Timber
 
 /**
  * Default implementation of [PinUserVerifier] interface. Navigates to Credential view with the received
- * [PinUserVerificationHandler], [ch.nevis.mobile.sdk.api.operation.pin.PinAuthenticatorProtectionStatus] and
- * [ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerificationError] objects.
+ * [PinUserVerificationHandler] and the [PinAuthenticatorProtectionStatus] objects.
  *
  * @constructor Creates a new instance.
  * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
@@ -34,17 +34,12 @@ class PinUserVerifierImpl(
         context: PinUserVerificationContext,
         handler: PinUserVerificationHandler
     ) {
-        if (context.lastRecoverableError().isPresent) {
-            Timber.asTree().sdk("PIN user verification failed. Please try again.")
-        } else {
-            Timber.asTree().sdk("Please start PIN user verification.")
-        }
+        Timber.asTree().sdk("Please start PIN user verification.")
 
         navigationDispatcher.requestNavigation(
             NavigationGraphDirections.actionGlobalCredentialFragment(
                 PinNavigationParameter(
                     CredentialViewMode.VERIFICATION,
-                    lastRecoverableError = context.lastRecoverableError().orElse(null),
                     pinAuthenticatorProtectionStatus = context.authenticatorProtectionStatus(),
                     pinUserVerificationHandler = handler
                 )

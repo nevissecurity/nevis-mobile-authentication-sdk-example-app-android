@@ -1,7 +1,4 @@
-
-import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import java.io.FileInputStream
-import java.net.URL
 import java.util.Properties
 
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
@@ -67,61 +64,20 @@ allprojects {
     }
 }
 
-subprojects {
-    apply(plugin = "org.jetbrains.dokka")
-
-    tasks.dokkaHtml {
-        moduleName.set("${rootProject.name}-${project.name}")
+dokka {
+    dokkaPublications.html {
         outputDirectory.set(file("build/dokka/${project.name}"))
         failOnWarning.set(false)
         suppressInheritedMembers.set(true)
         suppressObviousFunctions.set(true)
-
-        dokkaSourceSets.configureEach {
-            reportUndocumented.set(true)
-            includes.from("module.md")
-            externalDocumentationLink(
-                url = URL("https://docs.nevis.net/mobilesdk/${getConfig("VERSION_API_REFERENCE")}/api-references/javadoc/"),
-                packageListUrl = URL("https://docs.nevis.net/mobilesdk/${getConfig("VERSION_API_REFERENCE")}/api-references/javadoc/element-list")
-            )
-        }
-
-        pluginsMapConfiguration.set(
-            mapOf(
-                "org.jetbrains.dokka.base.DokkaBase" to """{ "customStyleSheets": ["$customLogoFile"], "footerMessage": "$customFooterMessage"}"""
-            )
-        )
     }
 
-    tasks.withType<DokkaTaskPartial>().configureEach {
-        moduleName.set("${rootProject.name}-${project.name}")
-        failOnWarning.set(false)
-        suppressInheritedMembers.set(true)
-        suppressObviousFunctions.set(true)
-
-        dokkaSourceSets.configureEach {
-            reportUndocumented.set(true)
-            includes.from("module.md")
-            externalDocumentationLink(
-                url = URL("https://docs.nevis.net/mobilesdk/${getConfig("VERSION_API_REFERENCE")}/api-references/javadoc/"),
-                packageListUrl = URL("https://docs.nevis.net/mobilesdk/${getConfig("VERSION_API_REFERENCE")}/api-references/javadoc/element-list")
-            )
-        }
-
-        pluginsMapConfiguration.set(
-            mapOf(
-                "org.jetbrains.dokka.base.DokkaBase" to """{ "customStyleSheets": ["$customLogoFile"], "footerMessage": "$customFooterMessage"}"""
-            )
-        )
+    pluginsConfiguration.html {
+        customStyleSheets.from(customLogoFile)
+        footerMessage.set(customFooterMessage)
     }
 }
 
-afterEvaluate {
-    tasks.dokkaHtmlMultiModule {
-        pluginsMapConfiguration.set(
-            mapOf(
-                "org.jetbrains.dokka.base.DokkaBase" to """{ "customStyleSheets": ["$customLogoFile"], "footerMessage": "$customFooterMessage"}"""
-            )
-        )
-    }
+dependencies {
+    dokka(project(":app"))
 }
