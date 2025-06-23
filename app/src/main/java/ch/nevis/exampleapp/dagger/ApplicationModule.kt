@@ -6,10 +6,7 @@
 
 package ch.nevis.exampleapp.dagger
 
-import android.annotation.SuppressLint
-import android.app.Application
 import android.content.Context
-import android.content.pm.PackageManager
 import ch.nevis.exampleapp.common.configuration.ConfigurationProvider
 import ch.nevis.exampleapp.common.configuration.ConfigurationProviderImpl
 import ch.nevis.exampleapp.common.configuration.Environment
@@ -67,7 +64,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.net.URI
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -99,53 +95,26 @@ class ApplicationModule {
     /**
      * Provides Auth Cloud specific configuration.
      *
-     * @param application The actual Android application.
      * @return The Auth Cloud specific configuration.
      */
-    @Suppress("DEPRECATION")
-    @SuppressLint("PackageManagerGetSignatures")
     @Provides
     @Singleton
-    fun provideAuthenticationCloudConfiguration(application: Application): Configuration {
-        val packageInfo = application.packageManager.getPackageInfo(
-            application.packageName,
-            PackageManager.GET_SIGNATURES
-        )
+    fun provideAuthenticationCloudConfiguration(): Configuration {
         return Configuration.authCloudBuilder()
-            .packageInfo(packageInfo)
             .hostname("myinstance.mauth.nevis.cloud")
-            .facetId("android:apk-key-hash:ch.nevis.mobile.authentication.sdk.android.example")
-            .authenticationRetryIntervalInSeconds(15L)
             .build()
     }
 
     /**
      * Provides Identity Suite specific configuration.
      *
-     * @param application The actual Android application.
      * @return The Identity Suite specific configuration.
      */
-    @Suppress("DEPRECATION")
-    @SuppressLint("PackageManagerGetSignatures")
     @Provides
     @Singleton
-    fun provideIdentitySuiteConfiguration(application: Application): Configuration {
-        val packageInfo = application.packageManager.getPackageInfo(
-            application.packageName,
-            PackageManager.GET_SIGNATURES
-        )
-        return Configuration.builder()
-            .packageInfo(packageInfo)
-            .facetId("android:apk-key-hash:ch.nevis.mobile.authentication.sdk.android.example")
-            .baseUrl(URI.create("https://mycompany.com/"))
-            .registrationRequestPath("/nevisfido/uaf/1.1/request/registration/")
-            .registrationResponsePath("/nevisfido/uaf/1.1/registration/")
-            .authenticationRequestPath("/auth/fidouaf")
-            .authenticationResponsePath("/auth/fidouaf/authenticationresponse/")
-            .deregistrationRequestPath("/nevisfido/uaf/1.1/request/deregistration/")
-            .dispatchTargetResourcePath("/nevisfido/token/dispatch/targets/")
-            .deviceResourcePath("/nevisfido/devices/")
-            .authenticationRetryIntervalInSeconds(15L)
+    fun provideIdentitySuiteConfiguration(): Configuration {
+        return Configuration.admin4PatternBuilder()
+            .hostname("idsuite")
             .build()
     }
 
@@ -166,15 +135,14 @@ class ApplicationModule {
     /**
      * Provides the configuration provider.
      *
-     * @param application The actual Android application.
      * @return The configuration provider.
      */
     @Provides
     @Singleton
-    fun provideConfigurationProvider(application: Application): ConfigurationProvider =
+    fun provideConfigurationProvider(): ConfigurationProvider =
         ConfigurationProviderImpl(
             Environment.AUTHENTICATION_CLOUD,
-            provideAuthenticationCloudConfiguration(application),
+            provideAuthenticationCloudConfiguration(),
             provideAuthenticatorAllowlist()
         )
     //endregion

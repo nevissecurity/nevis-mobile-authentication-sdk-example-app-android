@@ -21,7 +21,7 @@ import kotlinx.parcelize.Parcelize
  * @constructor Creates a new instance.
  * @param credentialViewMode The mode, the Credential view intend to be used/initialized.
  * @param lastRecoverableError The last recoverable error. It exists only if there was already a failed
- *      Password operation attempt.
+ *      PIN operation attempt.
  * @param pinAuthenticatorProtectionStatus Status object of the PIN authenticator.
  * @param pinChangeHandler An instance of a [PinChangeHandler] implementation.
  * @param pinEnrollmentHandler An instance of a [PinEnrollmentHandler] implementation.

@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.kapt)
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.androidx.navigation.safeargs)
+    alias(libs.plugins.jetbrains.dokka) apply true
 }
 
 fun readProperty(name: String): Any? {
@@ -33,12 +34,12 @@ fun readVersionName(): String {
 
 android {
     namespace = "ch.nevis.exampleapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "ch.nevis.exampleapp"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = readVersionCode()
         versionName = readVersionName()
 
@@ -108,4 +109,17 @@ dependencies {
     // Retrofit (HTTP requests)
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.json)
+}
+
+dokka {
+    moduleName.set("${rootProject.name}-${project.name}")
+
+    dokkaSourceSets.configureEach {
+        reportUndocumented.set(true)
+        includes.from("module.md")
+        externalDocumentationLinks.register("nma-sdk") {
+            url("https://docs.nevis.net/mobilesdk/api-references/javadoc/")
+            packageListUrl("https://docs.nevis.net/mobilesdk/api-references/javadoc/element-list")
+        }
+    }
 }

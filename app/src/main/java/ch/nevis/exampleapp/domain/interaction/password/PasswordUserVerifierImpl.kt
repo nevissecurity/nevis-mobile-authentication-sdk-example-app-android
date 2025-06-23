@@ -11,6 +11,7 @@ import ch.nevis.exampleapp.logging.sdk
 import ch.nevis.exampleapp.ui.credential.model.CredentialViewMode
 import ch.nevis.exampleapp.ui.credential.parameter.PasswordNavigationParameter
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
+import ch.nevis.mobile.sdk.api.operation.password.PasswordAuthenticatorProtectionStatus
 import ch.nevis.mobile.sdk.api.operation.userverification.PasswordUserVerificationContext
 import ch.nevis.mobile.sdk.api.operation.userverification.PasswordUserVerificationHandler
 import ch.nevis.mobile.sdk.api.operation.userverification.PasswordUserVerifier
@@ -18,8 +19,7 @@ import timber.log.Timber
 
 /**
  * Default implementation of [PasswordUserVerifier] interface. Navigates to Credential view with the
- * received [PasswordUserVerificationHandler], [ch.nevis.mobile.sdk.api.operation.password.PasswordAuthenticatorProtectionStatus]
- * and [ch.nevis.mobile.sdk.api.operation.userverification.PasswordUserVerificationError] objects.
+ * received [PasswordUserVerificationHandler] and the [PasswordAuthenticatorProtectionStatus] objects.
  *
  * @constructor Creates a new instance.
  * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
@@ -34,17 +34,12 @@ class PasswordUserVerifierImpl(
         context: PasswordUserVerificationContext,
         handler: PasswordUserVerificationHandler
     ) {
-        if (context.lastRecoverableError().isPresent) {
-            Timber.asTree().sdk("Password user verification failed. Please try again.")
-        } else {
-            Timber.asTree().sdk("Please start Password user verification.")
-        }
+        Timber.asTree().sdk("Please start password user verification.")
 
         navigationDispatcher.requestNavigation(
             NavigationGraphDirections.actionGlobalCredentialFragment(
                 PasswordNavigationParameter(
                     CredentialViewMode.VERIFICATION,
-                    lastRecoverableError = context.lastRecoverableError().orElse(null),
                     passwordAuthenticatorProtectionStatus = context.authenticatorProtectionStatus(),
                     passwordUserVerificationHandler = handler
                 )

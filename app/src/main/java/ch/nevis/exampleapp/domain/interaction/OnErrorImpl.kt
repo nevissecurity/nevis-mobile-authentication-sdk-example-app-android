@@ -10,7 +10,7 @@ import ch.nevis.exampleapp.common.error.ErrorHandler
 import ch.nevis.exampleapp.domain.model.error.MobileAuthenticationClientException
 import ch.nevis.exampleapp.domain.model.operation.Operation
 import ch.nevis.mobile.sdk.api.MobileAuthenticationClientError
-import ch.nevis.mobile.sdk.api.util.Consumer
+import java.util.function.Consumer
 
 /**
  * A [MobileAuthenticationClientError] specific implementation of [Consumer] interface that is used as
