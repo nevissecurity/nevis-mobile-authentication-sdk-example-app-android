@@ -21,13 +21,20 @@ import ch.nevis.exampleapp.domain.model.error.BusinessException
 import ch.nevis.exampleapp.domain.model.error.MobileAuthenticationClientException
 import ch.nevis.exampleapp.domain.model.operation.Operation
 import ch.nevis.exampleapp.domain.util.isUserEnrolled
+import ch.nevis.exampleapp.logging.sdk
 import ch.nevis.exampleapp.ui.home.model.HomeViewData
+import ch.nevis.exampleapp.ui.home.model.SdkAttestationInformation
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.outOfBand.OutOfBandViewModel
 import ch.nevis.exampleapp.ui.result.parameter.ResultNavigationParameter
 import ch.nevis.exampleapp.ui.selectAccount.parameter.SelectAccountNavigationParameter
+import ch.nevis.mobile.sdk.api.MobileAuthenticationClient
 import ch.nevis.mobile.sdk.api.MobileAuthenticationClientInitializer
+import ch.nevis.mobile.sdk.api.devicecapabilities.FidoUafAttestationInformation.OnlySurrogateBasicSupported
+import ch.nevis.mobile.sdk.api.devicecapabilities.FidoUafAttestationInformation.OnlyDefaultMode
+import ch.nevis.mobile.sdk.api.devicecapabilities.FidoUafAttestationInformation.StrictMode
 import ch.nevis.mobile.sdk.api.localdata.Authenticator
+import ch.nevis.mobile.sdk.api.metadata.MetaData
 import ch.nevis.mobile.sdk.api.operation.OperationError
 import ch.nevis.mobile.sdk.api.operation.password.PasswordChanger
 import ch.nevis.mobile.sdk.api.operation.password.PasswordEnroller
@@ -46,6 +53,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Named
 import kotlin.coroutines.resume
@@ -119,15 +127,25 @@ class HomeViewModel @Inject constructor(
 
     //region Public Interface
     /**
-     * Starts initialization of [ch.nevis.mobile.sdk.api.MobileAuthenticationClient].
+     * Starts initialization of [MobileAuthenticationClient].
      */
     fun initClient() {
+        clientProvider.get()?.let {
+            Timber.asTree().sdk("Client already initialized.")
+            viewModelScope.launch {
+                updateHomeViewData(it)
+            }
+            return
+        }
         MobileAuthenticationClientInitializer.initializer()
             .context(context)
             .configuration(configurationProvider.configuration)
             .onSuccess {
+                Timber.asTree().sdk("Client initialization succeeded.")
                 clientProvider.save(it)
-                requestViewUpdate(HomeViewData(it.localData().accounts().size))
+                viewModelScope.launch {
+                    updateHomeViewData(it)
+                }
             }
             .onError(OnErrorImpl(Operation.INIT_CLIENT, errorHandler))
             .execute()
@@ -314,6 +332,25 @@ class HomeViewModel @Inject constructor(
     //endregion
 
     //region Private Interface
+
+    /**
+     * Updates the home view data.
+     *
+     * @param client The [MobileAuthenticationClient] instance.
+     */
+    private suspend fun updateHomeViewData(client: MobileAuthenticationClient) {
+        withContext(Dispatchers.IO) {
+            val homeViewData = HomeViewData(
+                client.localData().accounts().size,
+                MetaData.mobileAuthenticationVersion().toString(),
+                MetaData.applicationFacetId(context),
+                MetaData.signingCertificateSha256(context),
+                getAttestationInformation(client)
+            )
+            requestViewUpdate(homeViewData)
+        }
+    }
+
     /**
      * De-registers an account in case of Authentication Cloud environment.
      *
@@ -391,5 +428,46 @@ class HomeViewModel @Inject constructor(
             .execute()
     }
 
+    /**
+     * Retrieves the FIDO UAF attestation information.
+     *
+     * @param client The [MobileAuthenticationClient] instance.
+     * @return An instance of [SdkAttestationInformation] or null if the information could not be retrieved.
+     */
+    private suspend fun getAttestationInformation(client: MobileAuthenticationClient): SdkAttestationInformation? {
+        return suspendCancellableCoroutine { cancellableContinuation ->
+            client.deviceCapabilities().fidoUafAttestationInformationGetter()
+                .onSuccess { information ->
+                    when (information) {
+                        is OnlySurrogateBasicSupported -> {
+                            Timber.asTree()
+                                .sdk("Only surrogate basic attestation supported.")
+                            if (information.cause() != null) {
+                                Timber.asTree().sdk("Cause: ${information.cause()}")
+                            }
+                            cancellableContinuation.resume(SdkAttestationInformation.OnlySurrogateBasicSupported())
+                        }
+                        is OnlyDefaultMode -> {
+                            Timber.asTree().sdk("Full basic default attestation mode supported.")
+                            if (information.cause() != null) {
+                                Timber.asTree().sdk("Cause: ${information.cause()}")
+                            }
+                            cancellableContinuation.resume(SdkAttestationInformation.OnlyDefaultMode())
+                        }
+                        is StrictMode -> {
+                            Timber.asTree().sdk("Full basic strict attestation mode supported.")
+                            cancellableContinuation.resume(SdkAttestationInformation.StrictMode())
+                        }
+                        else -> throw IllegalStateException("Unsupported attestation information type.")
+                    }
+                }
+                .onError {
+                    Timber.asTree()
+                        .sdk("Getting FIDO UAF attestation information failed. Error: ${it.description()}")
+                    cancellableContinuation.resume(null)
+                }
+                .execute()
+        }
+    }
     //endregion
 }

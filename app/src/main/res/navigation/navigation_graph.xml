@@ -38,9 +38,8 @@
         tools:layout="@layout/fragment_home" />
     <action
         android:id="@+id/action_global_homeFragment"
-        app:destination="@id/homeFragment"
         app:launchSingleTop="true"
-        app:popUpTo="@id/navigation_graph" />
+        app:popUpTo="@id/homeFragment" />
 
     <fragment
         android:id="@+id/qrReaderFragment"
@@ -107,6 +106,7 @@
     <action
         android:id="@+id/action_global_changeDeviceInformationFragment"
         app:destination="@id/changeDeviceInformationFragment" />
+
     <fragment
         android:id="@+id/selectAccountFragment"
         android:name="ch.nevis.exampleapp.ui.selectAccount.SelectAccountFragment"
@@ -116,13 +116,19 @@
             android:name="parameter"
             app:argType="ch.nevis.exampleapp.ui.selectAccount.parameter.SelectAccountNavigationParameter" />
     </fragment>
-    <action android:id="@+id/action_global_selectAccountFragment" app:destination="@id/selectAccountFragment" />
+    <action
+        android:id="@+id/action_global_selectAccountFragment"
+        app:destination="@id/selectAccountFragment" />
+
     <fragment
         android:id="@+id/authCloudRegistrationFragment"
         android:name="ch.nevis.exampleapp.ui.authCloudRegistration.AuthCloudRegistrationFragment"
         android:label="fragment_auth_cloud_registration"
         tools:layout="@layout/fragment_auth_cloud_registration" />
-    <action android:id="@+id/action_global_authCloudRegistrationFragment" app:destination="@id/authCloudRegistrationFragment" />
+    <action
+        android:id="@+id/action_global_authCloudRegistrationFragment"
+        app:destination="@id/authCloudRegistrationFragment" />
+
     <fragment
         android:id="@+id/transactionConfirmationFragment"
         android:name="ch.nevis.exampleapp.ui.transactionConfirmation.TransactionConfirmationFragment"
@@ -132,5 +138,7 @@
             android:name="parameter"
             app:argType="ch.nevis.exampleapp.ui.transactionConfirmation.parameter.TransactionConfirmationNavigationParameter" />
     </fragment>
-    <action android:id="@+id/action_global_transactionConfirmationFragment" app:destination="@id/transactionConfirmationFragment" />
+    <action
+        android:id="@+id/action_global_transactionConfirmationFragment"
+        app:destination="@id/transactionConfirmationFragment" />
 </navigation>
