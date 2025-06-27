@@ -6,13 +6,16 @@
 
 package ch.nevis.exampleapp.ui.main
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import ch.nevis.exampleapp.domain.log.LogItem
 import ch.nevis.exampleapp.domain.log.SdkLogReceiver
 import ch.nevis.exampleapp.domain.log.SdkLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -38,14 +41,15 @@ class MainActivityViewModel @Inject constructor(
 
     //region Properties
     /**
-     * Log [LiveData] that is used to post new [LogItem] objects to observers.
+     * Internal [Channel] used to buffer and deliver [LogItem] events to observers.
      */
-    private val _log = MutableLiveData<LogItem>()
+    private val _log = Channel<LogItem>(Channel.BUFFERED)
 
     /**
-     * Log [LiveData] that is used to post new [LogItem] objects to observers.
+     * Hot [Flow] of [LogItem]s representing log events emitted by the application.
+     * Each collected value is a new log event.
      */
-    val log: LiveData<LogItem> = _log
+    val log: Flow<LogItem> = _log.receiveAsFlow()
     //endregion
 
     //region ViewModel
@@ -54,12 +58,17 @@ class MainActivityViewModel @Inject constructor(
 
         // Removing this view model from log receivers of the [SDKLogger].
         sdkLogger.removeLogReceiver(this)
+
+        // Close the channel of [LogItem] events.
+        _log.close()
     }
     //endregion
 
     //region LogReceiver
     override fun newLogItem(logItem: LogItem) {
-        _log.postValue(logItem)
+        viewModelScope.launch {
+            _log.send(logItem)
+        }
     }
     //endregion
 }

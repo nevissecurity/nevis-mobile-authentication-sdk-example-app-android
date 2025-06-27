@@ -16,10 +16,30 @@ import ch.nevis.exampleapp.ui.base.model.ViewData
  *
  * @constructor Creates a new instance.
  * @param numberOfRegisteredAccounts The number of registered accounts known by [ch.nevis.mobile.sdk.api.MobileAuthenticationClient].
+ * @param sdkVersion The version of Nevis Mobile Authentication SDK.
+ * @param facetId The application facet identifier.
+ * @param certificateFingerprint The certificate fingerprint.
+ * @param sdkAttestationInformation The attestation information.
  */
 data class HomeViewData(
     /**
      * The number of registered accounts known by [ch.nevis.mobile.sdk.api.MobileAuthenticationClient].
      */
-    val numberOfRegisteredAccounts: Int
+    val numberOfRegisteredAccounts: Int,
+    /**
+     * The version of Nevis Mobile Authentication SDK.
+     */
+    val sdkVersion: String,
+    /**
+     * The application facet identifier.
+     */
+    val facetId: String,
+    /**
+     * The certificate fingerprint.
+     */
+    val certificateFingerprint: String,
+    /**
+     * The attestation information.
+     */
+    val sdkAttestationInformation: SdkAttestationInformation?
 ) : ViewData

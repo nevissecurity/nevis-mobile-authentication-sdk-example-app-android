@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ch.nevis.exampleapp.NavigationGraphDirections
@@ -118,17 +119,52 @@ class HomeFragment : BaseFragment() {
     override fun updateView(viewData: ViewData) {
         super.updateView(viewData)
 
-        val homeViewData = viewData as? HomeViewData ?: return
-        binding.titleTextView.text = context?.getString(
-            R.string.home_registered_accounts,
-            homeViewData.numberOfRegisteredAccounts
-        )
+        if (viewData is HomeViewData) {
+            updateHomeView(viewData)
+        } else {
+            binding.sdkVersionValueTextView.text = context?.getString(R.string.home_unknown)
+            binding.facetIdValueTextView.text = context?.getString(R.string.home_unknown)
+            binding.certFingerprintValueTextView.text = context?.getString(R.string.home_unknown)
+        }
 
         // This is the point when we can be sure the client successfully initialized and
         // the dispatch token handling can be started.
         handleDispatchTokenResponse {
             viewModel.decodeOutOfBandPayload(it)
         }
+    }
+    //endregion
+
+    //region Private Interface
+    private fun updateHomeView(viewData: HomeViewData) {
+        binding.titleTextView.text = context?.getString(
+            R.string.home_registered_accounts,
+            viewData.numberOfRegisteredAccounts
+        )
+        binding.titleTextView.visibility = View.VISIBLE
+        binding.sdkVersionValueTextView.text = viewData.sdkVersion
+        binding.facetIdValueTextView.text = viewData.facetId
+        binding.certFingerprintValueTextView.text = viewData.certificateFingerprint
+
+        val context = context ?: return
+        val sdkAttestationInformation = viewData.sdkAttestationInformation ?: return
+
+        binding.attestationValueTextView.visibility = View.GONE
+
+        val successIcon = ContextCompat.getDrawable(context, R.drawable.success_icon)
+        val errorIcon = ContextCompat.getDrawable(context, R.drawable.error_icon)
+
+        val surrogateBasicIcon = if (sdkAttestationInformation.onlySurrogateBasicSupported) successIcon else errorIcon
+        binding.surrogateBasicTextView.setCompoundDrawablesWithIntrinsicBounds(surrogateBasicIcon, null, null, null)
+        binding.surrogateBasicTextView.visibility = View.VISIBLE
+
+        val fullBasicDefaultIcon = if (sdkAttestationInformation.onlyDefaultMode) successIcon else errorIcon
+        binding.fullBasicDefaultTextView.setCompoundDrawablesWithIntrinsicBounds(fullBasicDefaultIcon, null, null, null)
+        binding.fullBasicDefaultTextView.visibility = View.VISIBLE
+
+        val strictModeIcon = if (sdkAttestationInformation.strictMode) successIcon else errorIcon
+        binding.fullBasicStrictTextView.setCompoundDrawablesWithIntrinsicBounds(strictModeIcon, null, null, null)
+        binding.fullBasicStrictTextView.visibility = View.VISIBLE
     }
     //endregion
 }

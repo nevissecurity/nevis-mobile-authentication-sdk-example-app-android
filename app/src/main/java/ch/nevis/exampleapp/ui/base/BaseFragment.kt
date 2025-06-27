@@ -7,6 +7,8 @@
 package ch.nevis.exampleapp.ui.base
 
 import android.os.Build
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -65,15 +67,24 @@ abstract class BaseFragment : Fragment() {
 
     //region Fragment
     /** @suppress */
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Update the view immediately with the current view data if available.
+        viewModel.viewData.value?.let {
+            updateView(it)
+        }
+        // Observe the view data to update the view when the view model posts a new view data.
+        viewModel.viewData.observe(viewLifecycleOwner) {
+            updateView(it)
+        }
+    }
+
     override fun onResume() {
         super.onResume()
 
         navigationDispatcher.subscribe(viewLifecycleOwner) {
             handleNavigation(it)
-        }
-
-        viewModel.viewData.observe(viewLifecycleOwner) {
-            updateView(it)
         }
     }
 
