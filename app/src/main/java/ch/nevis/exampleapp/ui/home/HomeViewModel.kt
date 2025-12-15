@@ -33,6 +33,7 @@ import ch.nevis.mobile.sdk.api.MobileAuthenticationClientInitializer
 import ch.nevis.mobile.sdk.api.devicecapabilities.FidoUafAttestationInformation.OnlySurrogateBasicSupported
 import ch.nevis.mobile.sdk.api.devicecapabilities.FidoUafAttestationInformation.OnlyDefaultMode
 import ch.nevis.mobile.sdk.api.devicecapabilities.FidoUafAttestationInformation.StrictMode
+import ch.nevis.mobile.sdk.api.devicecapabilities.FidoUafAttestationInformation.StrictStrongBoxMode
 import ch.nevis.mobile.sdk.api.localdata.Authenticator
 import ch.nevis.mobile.sdk.api.metadata.MetaData
 import ch.nevis.mobile.sdk.api.operation.OperationError
@@ -457,6 +458,10 @@ class HomeViewModel @Inject constructor(
                         is StrictMode -> {
                             Timber.asTree().sdk("Full basic strict attestation mode supported.")
                             cancellableContinuation.resume(SdkAttestationInformation.StrictMode())
+                        }
+                        is StrictStrongBoxMode -> {
+                            Timber.asTree().sdk("Full basic strict-strongbox attestation mode supported.")
+                            cancellableContinuation.resume(SdkAttestationInformation.StrictStrongBoxMode())
                         }
                         else -> throw IllegalStateException("Unsupported attestation information type.")
                     }

@@ -165,6 +165,10 @@ class HomeFragment : BaseFragment() {
         val strictModeIcon = if (sdkAttestationInformation.strictMode) successIcon else errorIcon
         binding.fullBasicStrictTextView.setCompoundDrawablesWithIntrinsicBounds(strictModeIcon, null, null, null)
         binding.fullBasicStrictTextView.visibility = View.VISIBLE
+
+        val strictStrongBoxModeIcon = if (sdkAttestationInformation.strictStrongBoxMode) successIcon else errorIcon
+        binding.fullBasicStrictStrongBoxTextView.setCompoundDrawablesWithIntrinsicBounds(strictStrongBoxModeIcon, null, null, null)
+        binding.fullBasicStrictStrongBoxTextView.visibility = View.VISIBLE
     }
     //endregion
 }

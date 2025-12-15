@@ -13,7 +13,7 @@ androidx-junit-version = "1.2.1"
 espresso-core-version = "3.6.1"
 mlkit-version = "17.3.0"
 camerax-version = "1.4.2"
-nevis-mobile-authentication-sdk-version = "4.1.+"
+nevis-mobile-authentication-sdk-version = "4.2.+"
 timber-version = "4.7.1"
 retrofit-version = "2.9.0"
 

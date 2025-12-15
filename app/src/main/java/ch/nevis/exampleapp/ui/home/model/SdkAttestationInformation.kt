@@ -13,11 +13,13 @@ package ch.nevis.exampleapp.ui.home.model
  * @param onlySurrogateBasicSupported Indicates if only surrogate basic attestation is supported.
  * @param onlyDefaultMode Indicates if only default mode is supported.
  * @param strictMode Indicates if strict mode is supported.
+ * @param strictStrongBoxMode Indicates if strict-strongbox mode is supported.
  */
 sealed class SdkAttestationInformation(
     val onlySurrogateBasicSupported: Boolean,
     val onlyDefaultMode: Boolean,
-    val strictMode: Boolean
+    val strictMode: Boolean,
+    val strictStrongBoxMode: Boolean
 ) {
     /**
      * Represents the case when only surrogate basic attestation is supported by the device.
@@ -25,7 +27,8 @@ sealed class SdkAttestationInformation(
     class OnlySurrogateBasicSupported : SdkAttestationInformation(
         onlySurrogateBasicSupported = true,
         onlyDefaultMode = false,
-        strictMode = false
+        strictMode = false,
+        strictStrongBoxMode = false
     )
 
     /**
@@ -34,7 +37,8 @@ sealed class SdkAttestationInformation(
     class OnlyDefaultMode : SdkAttestationInformation(
         onlySurrogateBasicSupported = true,
         onlyDefaultMode = true,
-        strictMode = false
+        strictMode = false,
+        strictStrongBoxMode = false
     )
 
     /**
@@ -43,6 +47,17 @@ sealed class SdkAttestationInformation(
     class StrictMode : SdkAttestationInformation(
         onlySurrogateBasicSupported = true,
         onlyDefaultMode = true,
-        strictMode = true
+        strictMode = true,
+        strictStrongBoxMode = false
+    )
+
+    /**
+     * Represents the case when surrogate basic, default, strict and strict-strongbox attestation modes are all supported by the device.
+     */
+    class StrictStrongBoxMode : SdkAttestationInformation(
+        onlySurrogateBasicSupported = true,
+        onlyDefaultMode = true,
+        strictMode = true,
+        strictStrongBoxMode = true
     )
 }
