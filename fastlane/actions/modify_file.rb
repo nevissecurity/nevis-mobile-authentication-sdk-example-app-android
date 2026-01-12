@@ -95,7 +95,7 @@ module Fastlane
                         optional: true,
                         type: String,
                         default_value: "replace"
-                    ),
+                    )
                 ]
             end
 
