@@ -24,16 +24,11 @@ import timber.log.Timber
  * @constructor Creates a new instance.
  * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
-class PinChangerImpl(
-    private val navigationDispatcher: NavigationDispatcher
-) : PinChanger {
+class PinChangerImpl(private val navigationDispatcher: NavigationDispatcher) : PinChanger {
     //region PinChanger
 
     /** @suppress */
-    override fun changePin(
-        context: PinChangeContext,
-        handler: PinChangeHandler
-    ) {
+    override fun changePin(context: PinChangeContext, handler: PinChangeHandler) {
         if (context.lastRecoverableError().isPresent) {
             Timber.asTree().sdk("PIN change failed. Please try again.")
         } else {

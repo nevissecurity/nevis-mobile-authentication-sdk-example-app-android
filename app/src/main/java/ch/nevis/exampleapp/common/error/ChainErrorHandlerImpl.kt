@@ -16,9 +16,7 @@ package ch.nevis.exampleapp.common.error
  *   [ErrorHandler], the error processing will be ended, the error will not be delegated to further
  *   elements of the chain.
  */
-class ChainErrorHandlerImpl(
-    private val errorHandlerChain: List<ErrorHandler>
-) : ErrorHandler {
+class ChainErrorHandlerImpl(private val errorHandlerChain: List<ErrorHandler>) : ErrorHandler {
 
     //region ErrorHandler
     override fun handle(error: Throwable): Boolean {

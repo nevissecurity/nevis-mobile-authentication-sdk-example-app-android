@@ -21,9 +21,7 @@ import javax.inject.Inject
  * @param errorHandler An instance of an [ErrorHandler] interface implementation.
  */
 @HiltViewModel
-class SelectAuthenticatorViewModel @Inject constructor(
-    val errorHandler: ErrorHandler
-) : CancellableOperationViewModel() {
+class SelectAuthenticatorViewModel @Inject constructor(val errorHandler: ErrorHandler) : CancellableOperationViewModel() {
     //region Properties
 
     /**

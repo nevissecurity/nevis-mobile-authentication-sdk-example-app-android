@@ -24,16 +24,11 @@ import timber.log.Timber
  * @constructor Creates a new instance.
  * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
-class PinUserVerifierImpl(
-    private val navigationDispatcher: NavigationDispatcher
-) : PinUserVerifier {
+class PinUserVerifierImpl(private val navigationDispatcher: NavigationDispatcher) : PinUserVerifier {
     //region PinUserVerifier
 
     /** @suppress */
-    override fun verifyPin(
-        context: PinUserVerificationContext,
-        handler: PinUserVerificationHandler
-    ) {
+    override fun verifyPin(context: PinUserVerificationContext, handler: PinUserVerificationHandler) {
         Timber.asTree().sdk("Please start PIN user verification.")
 
         navigationDispatcher.requestNavigation(

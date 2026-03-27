@@ -23,9 +23,7 @@ class ClientProviderImpl : ClientProvider {
         this.client = client
     }
 
-    override fun get(): MobileAuthenticationClient? {
-        return client
-    }
+    override fun get(): MobileAuthenticationClient? = client
 
     override fun reset() {
         client = null

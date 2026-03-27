@@ -24,16 +24,11 @@ import timber.log.Timber
  * @constructor Creates a new instance.
  * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
-class BiometricUserVerifierImpl(
-    private val navigationDispatcher: NavigationDispatcher
-) : BiometricUserVerifier {
+class BiometricUserVerifierImpl(private val navigationDispatcher: NavigationDispatcher) : BiometricUserVerifier {
     //region BiometricUserVerifier
 
     /** @suppress */
-    override fun verifyBiometric(
-        context: BiometricUserVerificationContext,
-        handler: BiometricUserVerificationHandler
-    ) {
+    override fun verifyBiometric(context: BiometricUserVerificationContext, handler: BiometricUserVerificationHandler) {
         Timber.asTree().sdk("Please start biometric user verification.")
         navigationDispatcher.requestNavigation(
             NavigationGraphDirections.actionGlobalVerifyUserFragment(

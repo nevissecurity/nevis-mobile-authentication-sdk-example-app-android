@@ -26,17 +26,11 @@ import timber.log.Timber
  * @param policy An instance of a [PasswordPolicy] interface implementation.
  * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
-class PasswordChangerImpl(
-    private val policy: PasswordPolicy,
-    private val navigationDispatcher: NavigationDispatcher
-) : PasswordChanger {
+class PasswordChangerImpl(private val policy: PasswordPolicy, private val navigationDispatcher: NavigationDispatcher) : PasswordChanger {
     //region PasswordChanger
 
     /** @suppress */
-    override fun changePassword(
-        context: PasswordChangeContext,
-        handler: PasswordChangeHandler
-    ) {
+    override fun changePassword(context: PasswordChangeContext, handler: PasswordChangeHandler) {
         if (context.lastRecoverableError().isPresent) {
             Timber.asTree().sdk("Password change failed. Please try again.")
         } else {

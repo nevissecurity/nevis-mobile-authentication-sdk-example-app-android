@@ -24,16 +24,11 @@ import timber.log.Timber
  * @constructor Creates a new instance.
  * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
-class FingerprintUserVerifierImpl(
-    private val navigationDispatcher: NavigationDispatcher
-) : FingerprintUserVerifier {
+class FingerprintUserVerifierImpl(private val navigationDispatcher: NavigationDispatcher) : FingerprintUserVerifier {
     //region FingerprintUserVerifier
 
     /** @suppress */
-    override fun verifyFingerprint(
-        context: FingerprintUserVerificationContext,
-        handler: FingerprintUserVerificationHandler
-    ) {
+    override fun verifyFingerprint(context: FingerprintUserVerificationContext, handler: FingerprintUserVerificationHandler) {
         if (context.lastRecoverableError().isPresent) {
             Timber.asTree().sdk("Fingerprint user verification failed. Please try again.")
         } else {

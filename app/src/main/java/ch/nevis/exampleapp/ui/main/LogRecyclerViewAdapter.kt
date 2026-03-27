@@ -25,9 +25,7 @@ import java.text.SimpleDateFormat
  * @param context An Android [Context] object for resolving resources and to obtain a [LayoutInflater]
  *      instance.
  */
-class LogRecyclerViewAdapter(
-    private val context: Context
-) : RecyclerView.Adapter<LogRecyclerViewAdapter.LogViewHolder>() {
+class LogRecyclerViewAdapter(private val context: Context) : RecyclerView.Adapter<LogRecyclerViewAdapter.LogViewHolder>() {
     //region Properties
 
     /**
@@ -63,9 +61,8 @@ class LogRecyclerViewAdapter(
     //region RecyclerView.Adapter
 
     /** @suppress */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogViewHolder {
-        return LogViewHolder(layoutInflater.inflate(R.layout.item_log, parent, false))
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogViewHolder =
+        LogViewHolder(layoutInflater.inflate(R.layout.item_log, parent, false))
 
     /** @suppress */
     override fun onBindViewHolder(holder: LogViewHolder, position: Int) {
@@ -94,9 +91,7 @@ class LogRecyclerViewAdapter(
      * @constructor Creates a new instance.
      * @param itemView The item view provided by recycler view.
      */
-    inner class LogViewHolder(
-        itemView: View
-    ) : RecyclerView.ViewHolder(itemView) {
+    inner class LogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //region Properties
 
         /**

@@ -62,10 +62,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * Main Dagger Hilt configuration module of the example application.
@@ -100,11 +100,9 @@ class ApplicationModule {
      */
     @Provides
     @Singleton
-    fun provideAuthenticationCloudConfiguration(): Configuration {
-        return Configuration.authCloudBuilder()
-            .hostname("myinstance.mauth.nevis.cloud")
-            .build()
-    }
+    fun provideAuthenticationCloudConfiguration(): Configuration = Configuration.authCloudBuilder()
+        .hostname("myinstance.mauth.nevis.cloud")
+        .build()
 
     /**
      * Provides Identity Suite specific configuration.
@@ -113,11 +111,9 @@ class ApplicationModule {
      */
     @Provides
     @Singleton
-    fun provideIdentitySuiteConfiguration(): Configuration {
-        return Configuration.admin4PatternBuilder()
-            .hostname("idsuite")
-            .build()
-    }
+    fun provideIdentitySuiteConfiguration(): Configuration = Configuration.admin4PatternBuilder()
+        .hostname("idsuite")
+        .build()
 
     /**
      * Provides the list of allowed authenticators.
@@ -140,12 +136,11 @@ class ApplicationModule {
      */
     @Provides
     @Singleton
-    fun provideConfigurationProvider(): ConfigurationProvider =
-        ConfigurationProviderImpl(
-            Environment.AUTHENTICATION_CLOUD,
-            provideAuthenticationCloudConfiguration(),
-            provideAuthenticatorAllowlist()
-        )
+    fun provideConfigurationProvider(): ConfigurationProvider = ConfigurationProviderImpl(
+        Environment.AUTHENTICATION_CLOUD,
+        provideAuthenticationCloudConfiguration(),
+        provideAuthenticatorAllowlist()
+    )
     //endregion
 
     //region Client
@@ -171,15 +166,13 @@ class ApplicationModule {
      */
     @Provides
     @Singleton
-    fun provideErrorHandler(
-        @ApplicationContext context: Context,
-        navigationDispatcher: NavigationDispatcher
-    ): ErrorHandler = ChainErrorHandlerImpl(
-        listOf(
-            CancelErrorHandlerImpl(navigationDispatcher),
-            DefaultErrorHandlerImpl(context, navigationDispatcher)
+    fun provideErrorHandler(@ApplicationContext context: Context, navigationDispatcher: NavigationDispatcher): ErrorHandler =
+        ChainErrorHandlerImpl(
+            listOf(
+                CancelErrorHandlerImpl(navigationDispatcher),
+                DefaultErrorHandlerImpl(context, navigationDispatcher)
+            )
         )
-    )
     //endregion
 
     //region Navigator
@@ -259,10 +252,7 @@ class ApplicationModule {
      * @return The account selector.
      */
     @Provides
-    fun provideAccountSelector(
-        navigationDispatcher: NavigationDispatcher,
-        errorHandler: ErrorHandler
-    ): AccountSelector =
+    fun provideAccountSelector(navigationDispatcher: NavigationDispatcher, errorHandler: ErrorHandler): AccountSelector =
         AccountSelectorImpl(navigationDispatcher, errorHandler)
 
     /**
@@ -281,14 +271,13 @@ class ApplicationModule {
         navigationDispatcher: NavigationDispatcher,
         authenticatorValidator: AuthenticatorValidator,
         settings: Settings
-    ): AuthenticatorSelector =
-        AuthenticatorSelectorImpl(
-            configurationProvider,
-            navigationDispatcher,
-            authenticatorValidator,
-            settings,
-            AuthenticatorSelectorOperation.REGISTRATION
-        )
+    ): AuthenticatorSelector = AuthenticatorSelectorImpl(
+        configurationProvider,
+        navigationDispatcher,
+        authenticatorValidator,
+        settings,
+        AuthenticatorSelectorOperation.REGISTRATION
+    )
 
     /**
      * Provides the authenticator selector for authentication operation.
@@ -306,14 +295,13 @@ class ApplicationModule {
         navigationDispatcher: NavigationDispatcher,
         authenticatorValidator: AuthenticatorValidator,
         settings: Settings
-    ): AuthenticatorSelector =
-        AuthenticatorSelectorImpl(
-            configurationProvider,
-            navigationDispatcher,
-            authenticatorValidator,
-            settings,
-            AuthenticatorSelectorOperation.AUTHENTICATION
-        )
+    ): AuthenticatorSelector = AuthenticatorSelectorImpl(
+        configurationProvider,
+        navigationDispatcher,
+        authenticatorValidator,
+        settings,
+        AuthenticatorSelectorOperation.AUTHENTICATION
+    )
 
     /**
      * Provides the PIN changer.
@@ -322,8 +310,7 @@ class ApplicationModule {
      * @return The PIN changer.
      */
     @Provides
-    fun providePinChanger(navigationDispatcher: NavigationDispatcher): PinChanger =
-        PinChangerImpl(navigationDispatcher)
+    fun providePinChanger(navigationDispatcher: NavigationDispatcher): PinChanger = PinChangerImpl(navigationDispatcher)
 
     /**
      * Provides the PIN enroller.
@@ -332,8 +319,7 @@ class ApplicationModule {
      * @return The PIN enroller.
      */
     @Provides
-    fun providePinEnroller(navigationDispatcher: NavigationDispatcher): PinEnroller =
-        PinEnrollerImpl(navigationDispatcher)
+    fun providePinEnroller(navigationDispatcher: NavigationDispatcher): PinEnroller = PinEnrollerImpl(navigationDispatcher)
 
     /**
      * Provides the PIN user verifier.
@@ -342,8 +328,7 @@ class ApplicationModule {
      * @return The PIN user verifier.
      */
     @Provides
-    fun providePinUserVerifier(navigationDispatcher: NavigationDispatcher): PinUserVerifier =
-        PinUserVerifierImpl(navigationDispatcher)
+    fun providePinUserVerifier(navigationDispatcher: NavigationDispatcher): PinUserVerifier = PinUserVerifierImpl(navigationDispatcher)
 
     /**
      * Provides the Password changer.
@@ -352,10 +337,7 @@ class ApplicationModule {
      * @return The Password changer.
      */
     @Provides
-    fun providePasswordChanger(
-        passwordPolicy: PasswordPolicy,
-        navigationDispatcher: NavigationDispatcher
-    ): PasswordChanger =
+    fun providePasswordChanger(passwordPolicy: PasswordPolicy, navigationDispatcher: NavigationDispatcher): PasswordChanger =
         PasswordChangerImpl(passwordPolicy, navigationDispatcher)
 
     /**
@@ -365,10 +347,7 @@ class ApplicationModule {
      * @return The Password enroller.
      */
     @Provides
-    fun providePasswordEnroller(
-        passwordPolicy: PasswordPolicy,
-        navigationDispatcher: NavigationDispatcher
-    ): PasswordEnroller =
+    fun providePasswordEnroller(passwordPolicy: PasswordPolicy, navigationDispatcher: NavigationDispatcher): PasswordEnroller =
         PasswordEnrollerImpl(passwordPolicy, navigationDispatcher)
 
     /**
@@ -388,8 +367,7 @@ class ApplicationModule {
      * @return The password policy.
      */
     @Provides
-    fun providePasswordPolicy(@ApplicationContext context: Context): PasswordPolicy =
-        PasswordPolicyImpl(context)
+    fun providePasswordPolicy(@ApplicationContext context: Context): PasswordPolicy = PasswordPolicyImpl(context)
     //endregion
 
     //region Logger

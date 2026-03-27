@@ -22,10 +22,8 @@ import java.util.function.Consumer
  * @param errorHandler An instance of an [ErrorHandler] interface implementation. Received errors will
  *      be passed to this error handler instance.
  */
-class OnErrorImpl<E : MobileAuthenticationClientError>(
-    private val operation: Operation,
-    private val errorHandler: ErrorHandler
-) : Consumer<E> {
+class OnErrorImpl<E : MobileAuthenticationClientError>(private val operation: Operation, private val errorHandler: ErrorHandler) :
+    Consumer<E> {
     /** @suppress */
     override fun accept(error: E) {
         errorHandler.handle(

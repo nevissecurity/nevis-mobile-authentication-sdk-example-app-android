@@ -30,8 +30,8 @@ import ch.nevis.mobile.sdk.api.operation.userverification.PasswordUserVerificati
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerificationHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 /**
  * View model implementation of Credential view.
@@ -196,20 +196,18 @@ class CredentialViewModel @Inject constructor(
      * @param parameter The [CredentialNavigationParameter] that was received by the owner [CredentialFragment].
      * @return The created [CredentialProtectionInformation] instance.
      */
-    private fun getProtectionInfo(parameter: CredentialNavigationParameter): CredentialProtectionInformation? {
-        return when (parameter) {
-            is PinNavigationParameter -> {
-                parameter.pinAuthenticatorProtectionStatus?.let {
-                    getPinProtectionInfo(it)
-                }
+    private fun getProtectionInfo(parameter: CredentialNavigationParameter): CredentialProtectionInformation? = when (parameter) {
+        is PinNavigationParameter -> {
+            parameter.pinAuthenticatorProtectionStatus?.let {
+                getPinProtectionInfo(it)
             }
-            is PasswordNavigationParameter -> {
-                parameter.passwordAuthenticatorProtectionStatus?.let {
-                    getPasswordProtectionInfo(it)
-                }
-            }
-            else -> throw BusinessException.invalidState()
         }
+        is PasswordNavigationParameter -> {
+            parameter.passwordAuthenticatorProtectionStatus?.let {
+                getPasswordProtectionInfo(it)
+            }
+        }
+        else -> throw BusinessException.invalidState()
     }
 
     /**
@@ -219,8 +217,8 @@ class CredentialViewModel @Inject constructor(
      * @return The PIN authenticator specific [CredentialProtectionInformation] instance.
      */
     @SuppressLint("DefaultLocale")
-    private fun getPinProtectionInfo(protectionStatus: PinAuthenticatorProtectionStatus): CredentialProtectionInformation {
-        return when (protectionStatus) {
+    private fun getPinProtectionInfo(protectionStatus: PinAuthenticatorProtectionStatus): CredentialProtectionInformation =
+        when (protectionStatus) {
             is PinAuthenticatorProtectionStatus.Unlocked -> {
                 Timber.asTree().sdk("PIN authenticator is unlocked.")
                 CredentialProtectionInformation()
@@ -228,15 +226,17 @@ class CredentialViewModel @Inject constructor(
             is PinAuthenticatorProtectionStatus.LastAttemptFailed -> {
                 Timber.asTree().sdk("Last attempt failed using the PIN authenticator.")
                 Timber.asTree()
-                    .sdk(String.format(
-                        "Remaining tries: %d, cool down period: %d",
-                        protectionStatus.remainingRetries(),
-                        protectionStatus.coolDownTimeInSeconds())
+                    .sdk(
+                        String.format(
+                            "Remaining tries: %d, cool down period: %d",
+                            protectionStatus.remainingRetries(),
+                            protectionStatus.coolDownTimeInSeconds()
+                        )
                     )
                 CredentialProtectionInformation(
                     isLocked = protectionStatus.coolDownTimeInSeconds() > 0,
                     remainingRetries = protectionStatus.remainingRetries(),
-                    coolDownTime = protectionStatus.coolDownTimeInSeconds(),
+                    coolDownTime = protectionStatus.coolDownTimeInSeconds()
                 )
             }
             is PinAuthenticatorProtectionStatus.LockedOut -> {
@@ -248,7 +248,6 @@ class CredentialViewModel @Inject constructor(
             }
             else -> throw IllegalStateException("Unsupported PIN authenticator protection status.")
         }
-    }
 
     /**
      * Creates Password authenticator specific credential protection information.
@@ -257,8 +256,8 @@ class CredentialViewModel @Inject constructor(
      * @return The Password authenticator specific [CredentialProtectionInformation] instance.
      */
     @SuppressLint("DefaultLocale")
-    private fun getPasswordProtectionInfo(protectionStatus: PasswordAuthenticatorProtectionStatus): CredentialProtectionInformation {
-        return when (protectionStatus) {
+    private fun getPasswordProtectionInfo(protectionStatus: PasswordAuthenticatorProtectionStatus): CredentialProtectionInformation =
+        when (protectionStatus) {
             is PasswordAuthenticatorProtectionStatus.Unlocked -> {
                 Timber.asTree().sdk("Password authenticator is unlocked.")
                 CredentialProtectionInformation()
@@ -266,15 +265,17 @@ class CredentialViewModel @Inject constructor(
             is PasswordAuthenticatorProtectionStatus.LastAttemptFailed -> {
                 Timber.asTree().sdk("Last attempt failed using the Password authenticator.")
                 Timber.asTree()
-                    .sdk(String.format(
-                        "Remaining tries: %d, cool down period: %d",
-                        protectionStatus.remainingRetries(),
-                        protectionStatus.coolDownTimeInSeconds())
+                    .sdk(
+                        String.format(
+                            "Remaining tries: %d, cool down period: %d",
+                            protectionStatus.remainingRetries(),
+                            protectionStatus.coolDownTimeInSeconds()
+                        )
                     )
                 CredentialProtectionInformation(
                     isLocked = protectionStatus.coolDownTimeInSeconds() > 0,
                     remainingRetries = protectionStatus.remainingRetries(),
-                    coolDownTime = protectionStatus.coolDownTimeInSeconds(),
+                    coolDownTime = protectionStatus.coolDownTimeInSeconds()
                 )
             }
             is PasswordAuthenticatorProtectionStatus.LockedOut -> {
@@ -286,7 +287,6 @@ class CredentialViewModel @Inject constructor(
             }
             else -> throw IllegalStateException("Unsupported Password authenticator protection status.")
         }
-    }
     //endregion
 
     //region CancellableOperationViewModel

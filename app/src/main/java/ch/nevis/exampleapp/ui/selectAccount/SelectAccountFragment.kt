@@ -29,7 +29,8 @@ import dagger.hilt.android.AndroidEntryPoint
  * @constructor Creates a new instance.
  */
 @AndroidEntryPoint
-class SelectAccountFragment : BaseFragment(),
+class SelectAccountFragment :
+    BaseFragment(),
     AccountSelectedListener {
     //region Properties
 
@@ -58,10 +59,7 @@ class SelectAccountFragment : BaseFragment(),
     //region Fragment
 
     /** @suppress */
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentSelectAccountBinding.inflate(inflater, container, false)
         return binding.root
     }

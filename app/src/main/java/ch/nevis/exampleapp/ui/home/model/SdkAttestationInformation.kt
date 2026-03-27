@@ -24,40 +24,44 @@ sealed class SdkAttestationInformation(
     /**
      * Represents the case when only surrogate basic attestation is supported by the device.
      */
-    class OnlySurrogateBasicSupported : SdkAttestationInformation(
-        onlySurrogateBasicSupported = true,
-        onlyDefaultMode = false,
-        strictMode = false,
-        strictStrongBoxMode = false
-    )
+    class OnlySurrogateBasicSupported :
+        SdkAttestationInformation(
+            onlySurrogateBasicSupported = true,
+            onlyDefaultMode = false,
+            strictMode = false,
+            strictStrongBoxMode = false
+        )
 
     /**
      * Represents the case when both surrogate basic and default attestation modes are supported by the device.
      */
-    class OnlyDefaultMode : SdkAttestationInformation(
-        onlySurrogateBasicSupported = true,
-        onlyDefaultMode = true,
-        strictMode = false,
-        strictStrongBoxMode = false
-    )
+    class OnlyDefaultMode :
+        SdkAttestationInformation(
+            onlySurrogateBasicSupported = true,
+            onlyDefaultMode = true,
+            strictMode = false,
+            strictStrongBoxMode = false
+        )
 
     /**
      * Represents the case when surrogate basic, default, and strict attestation modes are all supported by the device.
      */
-    class StrictMode : SdkAttestationInformation(
-        onlySurrogateBasicSupported = true,
-        onlyDefaultMode = true,
-        strictMode = true,
-        strictStrongBoxMode = false
-    )
+    class StrictMode :
+        SdkAttestationInformation(
+            onlySurrogateBasicSupported = true,
+            onlyDefaultMode = true,
+            strictMode = true,
+            strictStrongBoxMode = false
+        )
 
     /**
      * Represents the case when surrogate basic, default, strict and strict-strongbox attestation modes are all supported by the device.
      */
-    class StrictStrongBoxMode : SdkAttestationInformation(
-        onlySurrogateBasicSupported = true,
-        onlyDefaultMode = true,
-        strictMode = true,
-        strictStrongBoxMode = true
-    )
+    class StrictStrongBoxMode :
+        SdkAttestationInformation(
+            onlySurrogateBasicSupported = true,
+            onlyDefaultMode = true,
+            strictMode = true,
+            strictStrongBoxMode = true
+        )
 }

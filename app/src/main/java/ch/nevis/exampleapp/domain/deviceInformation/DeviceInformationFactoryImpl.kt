@@ -20,14 +20,10 @@ import java.util.Date
  * @constructor Creates a new instance.
  * @param context The Android [Context].
  */
-class DeviceInformationFactoryImpl(
-    private val context: Context
-) : DeviceInformationFactory {
+class DeviceInformationFactoryImpl(private val context: Context) : DeviceInformationFactory {
 
     //region DeviceInformationFactory
-    override fun create(): DeviceInformation {
-        return DeviceInformation.builder().name(initDeviceInformationName()).build()
-    }
+    override fun create(): DeviceInformation = DeviceInformation.builder().name(initDeviceInformationName()).build()
     //endregion
 
     //region Private Interface

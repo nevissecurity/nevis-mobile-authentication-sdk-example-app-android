@@ -50,14 +50,14 @@ import ch.nevis.mobile.sdk.api.operation.userverification.PasswordUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Named
+import kotlin.coroutines.resume
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import javax.inject.Inject
-import javax.inject.Named
-import kotlin.coroutines.resume
 
 /**
  * View model implementation of Home view.
@@ -359,19 +359,17 @@ class HomeViewModel @Inject constructor(
      * @return A [OperationError] object if the de-registration failed or null if the de-registration
      * was successful.
      */
-    private suspend fun deregisterAccount(username: String): OperationError? {
-        return suspendCancellableCoroutine { cancellableContinuation ->
-            val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
-            client.operations().deregistration()
-                .username(username)
-                .onSuccess {
-                    cancellableContinuation.resume(null)
-                }
-                .onError {
-                    cancellableContinuation.resume(it)
-                }
-                .execute()
-        }
+    private suspend fun deregisterAccount(username: String): OperationError? = suspendCancellableCoroutine { cancellableContinuation ->
+        val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
+        client.operations().deregistration()
+            .username(username)
+            .onSuccess {
+                cancellableContinuation.resume(null)
+            }
+            .onError {
+                cancellableContinuation.resume(it)
+            }
+            .execute()
     }
 
     /**
@@ -379,12 +377,10 @@ class HomeViewModel @Inject constructor(
      *
      * @param username The username that identifies the account whose authenticators must be deleted locally.
      */
-    private suspend fun deleteAuthenticators(username: String) {
-        return suspendCancellableCoroutine { cancellableContinuation ->
-            val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
-            client.localData().deleteAuthenticator(username)
-            cancellableContinuation.resume(Unit)
-        }
+    private suspend fun deleteAuthenticators(username: String) = suspendCancellableCoroutine { cancellableContinuation ->
+        val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
+        client.localData().deleteAuthenticator(username)
+        cancellableContinuation.resume(Unit)
     }
 
     /**
@@ -435,8 +431,8 @@ class HomeViewModel @Inject constructor(
      * @param client The [MobileAuthenticationClient] instance.
      * @return An instance of [SdkAttestationInformation] or null if the information could not be retrieved.
      */
-    private suspend fun getAttestationInformation(client: MobileAuthenticationClient): SdkAttestationInformation? {
-        return suspendCancellableCoroutine { cancellableContinuation ->
+    private suspend fun getAttestationInformation(client: MobileAuthenticationClient): SdkAttestationInformation? =
+        suspendCancellableCoroutine { cancellableContinuation ->
             client.deviceCapabilities().fidoUafAttestationInformationGetter()
                 .onSuccess { information ->
                     when (information) {
@@ -473,6 +469,5 @@ class HomeViewModel @Inject constructor(
                 }
                 .execute()
         }
-    }
     //endregion
 }

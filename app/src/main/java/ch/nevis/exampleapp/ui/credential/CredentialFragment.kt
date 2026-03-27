@@ -63,10 +63,7 @@ class CredentialFragment : BaseFragment() {
     //region Fragment
 
     /** @suppress */
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentCredentialBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -137,11 +134,11 @@ class CredentialFragment : BaseFragment() {
             }
             setViewState(!protectionInformation.isLocked)
             protectionInformation.remainingRetries?.let { remainingRetries ->
-                    updateMessage(
-                        credentialViewData.credentialType,
-                        remainingRetries,
-                        protectionInformation.coolDownTime
-                    )
+                updateMessage(
+                    credentialViewData.credentialType,
+                    remainingRetries,
+                    protectionInformation.coolDownTime
+                )
                 if (protectionInformation.coolDownTime > 0) {
                     startCoolDownTimer(
                         credentialViewData.credentialType,
@@ -167,16 +164,22 @@ class CredentialFragment : BaseFragment() {
         binding.credentialTextInputLayout.setHint(credentialViewData.credentialTextFieldHint)
         when (credentialViewData.credentialType) {
             Authenticator.PIN_AUTHENTICATOR_AAID -> {
-                binding.oldCredentialTextInputEditText.inputType = (InputType.TYPE_CLASS_NUMBER or
-                        InputType.TYPE_NUMBER_VARIATION_PASSWORD)
-                binding.credentialTextInputEditText.inputType = (InputType.TYPE_CLASS_NUMBER or
-                        InputType.TYPE_NUMBER_VARIATION_PASSWORD)
+                binding.oldCredentialTextInputEditText.inputType = (
+                    InputType.TYPE_CLASS_NUMBER or
+                        InputType.TYPE_NUMBER_VARIATION_PASSWORD
+                    )
+                binding.credentialTextInputEditText.inputType = (
+                    InputType.TYPE_CLASS_NUMBER or
+                        InputType.TYPE_NUMBER_VARIATION_PASSWORD
+                    )
             }
             Authenticator.PASSWORD_AUTHENTICATOR_AAID -> {
                 binding.oldCredentialTextInputEditText.inputType =
                     (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
-                binding.credentialTextInputEditText.inputType = (InputType.TYPE_CLASS_TEXT or
-                        InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                binding.credentialTextInputEditText.inputType = (
+                    InputType.TYPE_CLASS_TEXT or
+                        InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    )
             }
         }
 

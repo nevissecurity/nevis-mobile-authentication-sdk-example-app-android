@@ -13,7 +13,9 @@ fun readProperty(name: String): Any? {
     if (project.hasProperty(name)) {
         return project.property(name)
     }
-    println("Getting project property failed, returning null. Set $name as a project property in your ${project.projectDir}/gradle.properties")
+    println(
+        "Getting project property failed, returning null. Set $name as a project property in your ${project.projectDir}/gradle.properties"
+    )
     return null
 }
 

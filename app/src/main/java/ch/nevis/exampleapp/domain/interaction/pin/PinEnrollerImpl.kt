@@ -23,16 +23,11 @@ import timber.log.Timber
  * @constructor Creates a new instance.
  * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
-class PinEnrollerImpl(
-    private val navigationDispatcher: NavigationDispatcher
-) : PinEnroller {
+class PinEnrollerImpl(private val navigationDispatcher: NavigationDispatcher) : PinEnroller {
     //region PinEnroller
 
     /** @suppress */
-    override fun enrollPin(
-        context: PinEnrollmentContext,
-        handler: PinEnrollmentHandler
-    ) {
+    override fun enrollPin(context: PinEnrollmentContext, handler: PinEnrollmentHandler) {
         if (context.lastRecoverableError().isPresent) {
             Timber.asTree().sdk("PIN enrollment failed. Please try again.")
         } else {

@@ -16,9 +16,7 @@ import timber.log.Timber
  * @constructor Creates a new instance.
  * @param sdkLogger An instance of an implementation of [SdkLogger] interface.
  */
-class ExampleAppTimberDebugTree(
-    private val sdkLogger: SdkLogger
-): Timber.DebugTree() {
+class ExampleAppTimberDebugTree(private val sdkLogger: SdkLogger) : Timber.DebugTree() {
 
     //region Constants
 

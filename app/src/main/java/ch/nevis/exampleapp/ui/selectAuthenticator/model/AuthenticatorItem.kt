@@ -44,11 +44,10 @@ data class AuthenticatorItem(
      *
      * @return A flag that tells whether the item is selectable.
      */
-    fun isEnabled(): Boolean {
-        return isPolicyCompliant && (
+    fun isEnabled(): Boolean = isPolicyCompliant &&
+        (
             aaid == Authenticator.PIN_AUTHENTICATOR_AAID ||
-            aaid == Authenticator.PASSWORD_AUTHENTICATOR_AAID ||
-            isUserEnrolled
-        )
-    }
+                aaid == Authenticator.PASSWORD_AUTHENTICATOR_AAID ||
+                isUserEnrolled
+            )
 }

@@ -42,5 +42,5 @@ data class SelectAccountNavigationParameter(
     /**
      * The message to confirm if there is any.
      */
-    val message: String? = null,
+    val message: String? = null
 ) : NavigationParameter

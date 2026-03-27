@@ -38,7 +38,9 @@ fun getConfig(name: String): String {
         return it
     }
 
-    println("Getting env variable failed, returning empty: set $name as environment variable or as system property in your ~/.gradle/gradle.properties")
+    println(
+        "Getting env variable failed, returning empty: set $name as environment variable or as system property in your ~/.gradle/gradle.properties"
+    )
     return ""
 }
 

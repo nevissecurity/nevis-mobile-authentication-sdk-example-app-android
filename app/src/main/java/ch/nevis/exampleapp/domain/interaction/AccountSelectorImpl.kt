@@ -30,24 +30,19 @@ import timber.log.Timber
  * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  * @param errorHandler An instance of an [ErrorHandler] interface implementation.
  */
-class AccountSelectorImpl(
-    private val navigationDispatcher: NavigationDispatcher,
-    private val errorHandler: ErrorHandler
-) : AccountSelector {
+class AccountSelectorImpl(private val navigationDispatcher: NavigationDispatcher, private val errorHandler: ErrorHandler) :
+    AccountSelector {
     //region AccountSelector
 
     /** @suppress */
-    override fun selectAccount(
-        context: AccountSelectionContext,
-        handler: AccountSelectionHandler
-    ) {
+    override fun selectAccount(context: AccountSelectionContext, handler: AccountSelectionHandler) {
         Timber.asTree()
             .sdk("Please select one of the received available accounts!")
         try {
             val accounts = validAccounts(context)
             val transactionConfirmationData: ByteArray? =
                 context.transactionConfirmationData().orElse(null)
-            when(accounts.size) {
+            when (accounts.size) {
                 0 -> throw BusinessException.accountsNotFound()
                 1 -> {
                     Timber.asTree()

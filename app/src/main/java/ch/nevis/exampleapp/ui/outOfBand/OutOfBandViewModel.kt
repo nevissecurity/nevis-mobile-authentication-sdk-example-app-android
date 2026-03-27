@@ -147,9 +147,7 @@ abstract class OutOfBandViewModel(
      *
      * @param outOfBandRegistration The [OutOfBandRegistration] operation to be executed.
      */
-    private fun register(
-        outOfBandRegistration: OutOfBandRegistration
-    ) {
+    private fun register(outOfBandRegistration: OutOfBandRegistration) {
         outOfBandRegistration
             .deviceInformation(deviceInformationFactory.create())
             .allowClass2Sensors(settings.allowClass2Sensors)

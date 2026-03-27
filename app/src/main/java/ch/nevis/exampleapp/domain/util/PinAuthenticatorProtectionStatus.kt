@@ -33,7 +33,11 @@ fun PinAuthenticatorProtectionStatus.message(context: Context): String {
                     if (coolDownTimeInSeconds() == 0L) {
                         return context.getString(R.string.pin_protection_status_retries_without_cool_down, remainingRetries())
                     } else {
-                        return context.getString(R.string.pin_protection_status_retries_with_cool_down, remainingRetries(), coolDownTimeInSeconds())
+                        return context.getString(
+                            R.string.pin_protection_status_retries_with_cool_down,
+                            remainingRetries(),
+                            coolDownTimeInSeconds()
+                        )
                     }
                 }
             }
