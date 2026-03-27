@@ -8,9 +8,9 @@ package ch.nevis.exampleapp.domain.interaction.pin
 
 import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.logging.sdk
-import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.credential.model.CredentialViewMode
 import ch.nevis.exampleapp.ui.credential.parameter.PinNavigationParameter
+import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.mobile.sdk.api.operation.pin.PinAuthenticatorProtectionStatus
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerificationContext
 import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerificationHandler
@@ -27,8 +27,8 @@ import timber.log.Timber
 class PinUserVerifierImpl(
     private val navigationDispatcher: NavigationDispatcher
 ) : PinUserVerifier {
-
     //region PinUserVerifier
+
     /** @suppress */
     override fun verifyPin(
         context: PinUserVerificationContext,

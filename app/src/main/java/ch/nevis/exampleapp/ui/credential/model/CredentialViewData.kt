@@ -30,17 +30,14 @@ data class CredentialViewData(
      * The mode, the Credential view intend to be used/initialized.
      */
     val credentialViewMode: CredentialViewMode,
-
     /**
      * The type of the credential.
      */
     val credentialType: String,
-
     /**
      * Authenticator protection information.
      */
     val protectionInformation: CredentialProtectionInformation?,
-
     /**
      * The last recoverable error. It exists only if there was already a failed PIN or Password operation
      * attempt.
@@ -48,7 +45,6 @@ data class CredentialViewData(
     @IgnoredOnParcel
     val lastRecoverableError: RecoverableError? = null
 ) : ViewData {
-
     /**
      * The identifier of String resource that should be used as title on the Credential view.
      * Its value depends on the actual [credentialViewMode] and [credentialType].

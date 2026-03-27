@@ -73,8 +73,8 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class ApplicationModule {
-
     //region Constants
+
     /**
      * Collection of constants.
      */
@@ -92,6 +92,7 @@ class ApplicationModule {
     //endregion
 
     //region Configuration
+
     /**
      * Provides Auth Cloud specific configuration.
      *
@@ -148,6 +149,7 @@ class ApplicationModule {
     //endregion
 
     //region Client
+
     /**
      * Provides the client provider.
      *
@@ -159,6 +161,7 @@ class ApplicationModule {
     //endregion
 
     //region Error Handling
+
     /**
      * Provides the error handler.
      *
@@ -180,6 +183,7 @@ class ApplicationModule {
     //endregion
 
     //region Navigator
+
     /**
      * Provides the navigation dispatcher.
      *
@@ -191,6 +195,7 @@ class ApplicationModule {
     //endregion
 
     //region Settings
+
     /**
      * Provides the application settings.
      *
@@ -203,6 +208,7 @@ class ApplicationModule {
     //endregion
 
     //region Validation
+
     /**
      * Provides the authenticator validator.
      *
@@ -214,6 +220,7 @@ class ApplicationModule {
     //endregion
 
     //region Interaction
+
     /**
      * Provides the biometric user verifier.
      *
@@ -386,6 +393,7 @@ class ApplicationModule {
     //endregion
 
     //region Logger
+
     /**
      * Provides the sdk logger.
      *
@@ -397,6 +405,7 @@ class ApplicationModule {
     //endregion
 
     //region Factory
+
     /**
      * Provides the device information factory.
      *
@@ -410,6 +419,7 @@ class ApplicationModule {
     //endregion
 
     //region Retrofit
+
     /**
      * Provides the [Retrofit] implementation.
      *

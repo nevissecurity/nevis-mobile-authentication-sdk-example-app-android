@@ -34,8 +34,8 @@ class AccountSelectorImpl(
     private val navigationDispatcher: NavigationDispatcher,
     private val errorHandler: ErrorHandler
 ) : AccountSelector {
-
     //region AccountSelector
+
     /** @suppress */
     override fun selectAccount(
         context: AccountSelectionContext,
@@ -86,6 +86,7 @@ class AccountSelectorImpl(
     //endregion
 
     //region Private Interface
+
     /**
      * Validates the list of [Account]s.
      *

@@ -30,8 +30,8 @@ class PasswordChangerImpl(
     private val policy: PasswordPolicy,
     private val navigationDispatcher: NavigationDispatcher
 ) : PasswordChanger {
-
     //region PasswordChanger
+
     /** @suppress */
     override fun changePassword(
         context: PasswordChangeContext,
@@ -56,6 +56,7 @@ class PasswordChangerImpl(
     }
 
     //  You can add custom password policy by overriding the `passwordPolicy` getter
+
     /** @suppress */
     override fun passwordPolicy(): PasswordPolicy = policy
     //endregion

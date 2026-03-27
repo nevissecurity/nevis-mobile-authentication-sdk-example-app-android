@@ -8,9 +8,9 @@ package ch.nevis.exampleapp.domain.interaction.pin
 
 import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.logging.sdk
-import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.credential.model.CredentialViewMode
 import ch.nevis.exampleapp.ui.credential.parameter.PinNavigationParameter
+import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnroller
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnrollmentContext
 import ch.nevis.mobile.sdk.api.operation.pin.PinEnrollmentHandler
@@ -26,8 +26,8 @@ import timber.log.Timber
 class PinEnrollerImpl(
     private val navigationDispatcher: NavigationDispatcher
 ) : PinEnroller {
-
     //region PinEnroller
+
     /** @suppress */
     override fun enrollPin(
         context: PinEnrollmentContext,

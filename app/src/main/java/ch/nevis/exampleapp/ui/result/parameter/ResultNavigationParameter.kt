@@ -26,19 +26,17 @@ data class ResultNavigationParameter(
      */
     @StringRes
     val titleResId: Int,
-
     /**
      * The related operation if there is any.
      */
     val operation: Operation? = null
 ) : NavigationParameter {
-
     //region Public Static Interface
+
     /**
      * Collection of public static methods.
      */
     companion object {
-
         /**
          * Creates a [ResultNavigationParameter] instance for general cancelled operation case.
          *

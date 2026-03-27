@@ -24,8 +24,8 @@ import javax.inject.Inject
 class SelectAuthenticatorViewModel @Inject constructor(
     val errorHandler: ErrorHandler
 ) : CancellableOperationViewModel() {
-
     //region Properties
+
     /**
      * An instance of an [AuthenticatorSelectionHandler] to be able to continue the operation that requested
      * the authenticator selection.
@@ -34,6 +34,7 @@ class SelectAuthenticatorViewModel @Inject constructor(
     //endregion
 
     //region Public Interface
+
     /**
      * Updates this view model instance based on the [SelectAuthenticatorNavigationParameter] that was received by
      * the owner [SelectAuthenticatorFragment]. This method must be called by the owner fragment.

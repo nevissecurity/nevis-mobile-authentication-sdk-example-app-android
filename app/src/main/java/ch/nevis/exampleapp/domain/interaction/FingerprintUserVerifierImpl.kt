@@ -27,8 +27,8 @@ import timber.log.Timber
 class FingerprintUserVerifierImpl(
     private val navigationDispatcher: NavigationDispatcher
 ) : FingerprintUserVerifier {
-
     //region FingerprintUserVerifier
+
     /** @suppress */
     override fun verifyFingerprint(
         context: FingerprintUserVerificationContext,

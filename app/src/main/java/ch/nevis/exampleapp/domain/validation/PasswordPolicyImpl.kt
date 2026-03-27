@@ -24,8 +24,8 @@ import java.util.function.Consumer
 class PasswordPolicyImpl(
     private val context: Context,
 ) : PasswordPolicy {
-
     //region PasswordPolicy
+
     /** @suppress */
     override fun validatePasswordForEnrollment(
         password: CharArray,
@@ -60,6 +60,7 @@ class PasswordPolicyImpl(
     //endregion
 
     //region Private Interface
+
     /**
      * Validates the password.
      *

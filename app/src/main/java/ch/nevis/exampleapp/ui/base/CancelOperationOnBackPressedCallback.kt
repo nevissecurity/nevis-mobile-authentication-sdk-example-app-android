@@ -18,8 +18,8 @@ import androidx.activity.OnBackPressedCallback
 open class CancelOperationOnBackPressedCallback(
     private val viewModel: CancellableOperationViewModel
 ) : OnBackPressedCallback(true) {
-
     //region OnBackPressedCallback
+
     /** @suppress */
     override fun handleOnBackPressed() {
         viewModel.cancelOperation()

@@ -32,8 +32,8 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class VerifyUserFragment : BaseFragment() {
-
     //region Properties
+
     /**
      * UI component bindings.
      */
@@ -64,6 +64,7 @@ class VerifyUserFragment : BaseFragment() {
     //endregion
 
     //region Fragment
+
     /** @suppress */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -33,7 +33,6 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import javax.inject.Inject
 
-
 /**
  * [androidx.fragment.app.Fragment] implementation of QR Reader view where the user can scan a QR code.
  *
@@ -41,8 +40,8 @@ import javax.inject.Inject
  */
 @AndroidEntryPoint
 class QrReaderFragment : BaseFragment(), BarcodesReceivedListener {
-
     //region Properties
+
     /**
      * UI component bindings.
      */
@@ -78,6 +77,7 @@ class QrReaderFragment : BaseFragment(), BarcodesReceivedListener {
     //endregion
 
     //region Fragment
+
     /** @suppress */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -120,6 +120,7 @@ class QrReaderFragment : BaseFragment(), BarcodesReceivedListener {
     //endregion
 
     //region Private Interface
+
     /**
      * Starts camera.
      *
@@ -164,7 +165,6 @@ class QrReaderFragment : BaseFragment(), BarcodesReceivedListener {
             } catch (exception: Exception) {
                 errorHandler.handle(exception)
             }
-
         }, ContextCompat.getMainExecutor(baseContext))
     }
 
@@ -181,7 +181,6 @@ class QrReaderFragment : BaseFragment(), BarcodesReceivedListener {
             ) == PackageManager.PERMISSION_GRANTED
         }
     }
-
 
     /**
      * Request permissions for camera usage.
@@ -229,6 +228,7 @@ class QrReaderFragment : BaseFragment(), BarcodesReceivedListener {
     //endregion
 
     //region Companion Object
+
     /**
      * Constants.
      */

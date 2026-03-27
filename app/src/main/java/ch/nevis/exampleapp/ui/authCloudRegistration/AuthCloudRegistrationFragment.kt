@@ -24,8 +24,8 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class AuthCloudRegistrationFragment : BaseFragment() {
-
     //region Properties
+
     /**
      * UI component bindings.
      */
@@ -39,6 +39,7 @@ class AuthCloudRegistrationFragment : BaseFragment() {
     //endregion
 
     //region Fragment
+
     /** @suppress */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

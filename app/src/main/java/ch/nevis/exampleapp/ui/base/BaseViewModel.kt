@@ -20,8 +20,8 @@ import ch.nevis.exampleapp.ui.util.SingleLiveEvent
  * @constructor Creates a new instance.
  */
 abstract class BaseViewModel : ViewModel() {
-
     //region Properties
+
     /**
      * Private, mutable backing property of the public [LiveData] property.
      */
@@ -35,6 +35,7 @@ abstract class BaseViewModel : ViewModel() {
     //endregion
 
     //region Public Interface
+
     /**
      * Requests a view update by posting a new [ViewData] object to the owner view of the view model.
      *

@@ -105,6 +105,7 @@ class CredentialViewModel @Inject constructor(
     private lateinit var credentialType: String
 
     //region Public Interface
+
     /**
      * Updates this view model instance based on the [CredentialNavigationParameter] that was received
      * by the owner [CredentialFragment]. This method must be called by the owner fragment.

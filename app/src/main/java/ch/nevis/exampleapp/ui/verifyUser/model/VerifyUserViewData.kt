@@ -18,12 +18,10 @@ import ch.nevis.exampleapp.ui.base.model.ViewData
  * @param isFingerPrintVerification Flag that tells whether fingerprint verification is in progress.
  */
 data class VerifyUserViewData(
-
     /**
      * The error message that should be displayed on Verify User view.
      */
     val errorMessage: String? = null,
-
     /**
      * Flag that tells whether fingerprint verification is in progress.
      */

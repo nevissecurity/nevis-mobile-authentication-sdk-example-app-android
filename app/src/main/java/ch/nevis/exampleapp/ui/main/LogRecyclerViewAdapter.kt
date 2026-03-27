@@ -28,8 +28,8 @@ import java.text.SimpleDateFormat
 class LogRecyclerViewAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<LogRecyclerViewAdapter.LogViewHolder>() {
-
     //region Properties
+
     /**
      * A [LayoutInflater] object for inflating view holders.
      */
@@ -48,6 +48,7 @@ class LogRecyclerViewAdapter(
     //endregion
 
     //region Public Interface
+
     /**
      * Adds a new log item to currently rendered log item list.
      *
@@ -60,6 +61,7 @@ class LogRecyclerViewAdapter(
     //endregion
 
     //region RecyclerView.Adapter
+
     /** @suppress */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogViewHolder {
         return LogViewHolder(layoutInflater.inflate(R.layout.item_log, parent, false))
@@ -84,6 +86,7 @@ class LogRecyclerViewAdapter(
     //endregion
 
     //region AuthenticatorViewHolder
+
     /**
      * A [RecyclerView.ViewHolder] implementation that represents a log item. It holds only a [TextView]
      * the log message will be set into.
@@ -94,8 +97,8 @@ class LogRecyclerViewAdapter(
     inner class LogViewHolder(
         itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
-
         //region Properties
+
         /**
          * A [TextView] the log message will be set into.
          */

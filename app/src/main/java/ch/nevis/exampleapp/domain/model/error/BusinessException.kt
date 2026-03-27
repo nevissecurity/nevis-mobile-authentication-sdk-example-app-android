@@ -17,7 +17,6 @@ enum class BusinessExceptionType(
      */
     val resId: Int
 ) {
-
     /**
      * Registered accounts not found.
      */
@@ -67,7 +66,6 @@ class BusinessException private constructor(
      * Collection of available [BusinessException] types.
      */
     companion object {
-
         /**
          * Helper static method to initialize a [BusinessException] with type [BusinessExceptionType.ACCOUNTS_NOT_FOUND].
          */

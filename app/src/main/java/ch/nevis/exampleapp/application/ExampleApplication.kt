@@ -18,7 +18,6 @@ import javax.inject.Inject
  */
 @HiltAndroidApp
 class ExampleApplication : Application() {
-
     /**
      * An injected instance of an implementation of [SdkLogger] interface.
      */
@@ -26,6 +25,7 @@ class ExampleApplication : Application() {
     lateinit var sdkLogger: SdkLogger
 
     //region Application
+
     /** @suppress */
     override fun onCreate() {
         super.onCreate()

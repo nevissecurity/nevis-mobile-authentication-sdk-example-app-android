@@ -36,8 +36,8 @@ class TransactionConfirmationViewModel @Inject constructor(
     private val navigationDispatcher: NavigationDispatcher,
     private val errorHandler: ErrorHandler
 ) : CancellableOperationViewModel() {
-
     //region Properties
+
     /**
      * The previously selected account.
      */
@@ -52,6 +52,7 @@ class TransactionConfirmationViewModel @Inject constructor(
     //endregion
 
     //region Public Interface
+
     /**
      * Updates this view model instance based on the [SelectAccountNavigationParameter] that was received by
      * the owner [TransactionConfirmationFragment]. This method must be called by the owner fragment.

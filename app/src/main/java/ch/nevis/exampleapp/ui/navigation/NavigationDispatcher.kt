@@ -27,7 +27,6 @@ import androidx.navigation.NavDirections
  * method and unsubscribes in [androidx.fragment.app.Fragment.onPause] method.
  */
 interface NavigationDispatcher {
-
     /**
      * Subscribes for [NavDirections] objects dispatched by this [NavigationDispatcher].
      *

@@ -36,8 +36,8 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class CredentialFragment : BaseFragment() {
-
     //region Properties
+
     /**
      * UI component bindings.
      */
@@ -61,6 +61,7 @@ class CredentialFragment : BaseFragment() {
     //endregion
 
     //region Fragment
+
     /** @suppress */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -183,7 +184,6 @@ class CredentialFragment : BaseFragment() {
             var errorMessage = lastRecoverableError.description()
             if (lastRecoverableError.cause().isPresent) {
                 errorMessage += " " + lastRecoverableError.cause().get().message
-
             }
 
             binding.credentialTextInputLayout.error = errorMessage

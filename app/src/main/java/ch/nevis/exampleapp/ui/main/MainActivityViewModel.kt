@@ -28,8 +28,8 @@ import javax.inject.Inject
 class MainActivityViewModel @Inject constructor(
     private val sdkLogger: SdkLogger
 ) : ViewModel(), SdkLogReceiver {
-
     //region Initialization
+
     /**
      * Initialization.
      */
@@ -40,6 +40,7 @@ class MainActivityViewModel @Inject constructor(
     //endregion
 
     //region Properties
+
     /**
      * Internal [Channel] used to buffer and deliver [LogItem] events to observers.
      */

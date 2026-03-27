@@ -13,8 +13,8 @@ import ch.nevis.mobile.sdk.api.Configuration
  * the configured environment and the related [Configuration] object as well.
  */
 interface ConfigurationProvider {
-
     //region Properties
+
     /**
      * The selected/configured [Environment] value.
      */

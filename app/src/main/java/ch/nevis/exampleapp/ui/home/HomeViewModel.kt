@@ -30,8 +30,8 @@ import ch.nevis.exampleapp.ui.result.parameter.ResultNavigationParameter
 import ch.nevis.exampleapp.ui.selectAccount.parameter.SelectAccountNavigationParameter
 import ch.nevis.mobile.sdk.api.MobileAuthenticationClient
 import ch.nevis.mobile.sdk.api.MobileAuthenticationClientInitializer
-import ch.nevis.mobile.sdk.api.devicecapabilities.FidoUafAttestationInformation.OnlySurrogateBasicSupported
 import ch.nevis.mobile.sdk.api.devicecapabilities.FidoUafAttestationInformation.OnlyDefaultMode
+import ch.nevis.mobile.sdk.api.devicecapabilities.FidoUafAttestationInformation.OnlySurrogateBasicSupported
 import ch.nevis.mobile.sdk.api.devicecapabilities.FidoUafAttestationInformation.StrictMode
 import ch.nevis.mobile.sdk.api.devicecapabilities.FidoUafAttestationInformation.StrictStrongBoxMode
 import ch.nevis.mobile.sdk.api.localdata.Authenticator
@@ -125,8 +125,8 @@ class HomeViewModel @Inject constructor(
     fingerprintUserVerifier,
     errorHandler
 ) {
-
     //region Public Interface
+
     /**
      * Starts initialization of [MobileAuthenticationClient].
      */

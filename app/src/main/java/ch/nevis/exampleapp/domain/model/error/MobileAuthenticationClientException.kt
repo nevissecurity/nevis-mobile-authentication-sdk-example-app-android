@@ -17,12 +17,10 @@ import ch.nevis.mobile.sdk.api.MobileAuthenticationClientError
  * @param error The [MobileAuthenticationClientError] object that represents the error.
  */
 class MobileAuthenticationClientException(
-
     /**
      * The [Operation] the error relates to or null if it cannot be determined.
      */
     val operation: Operation? = null,
-
     /**
      * The [MobileAuthenticationClientError] object that represents the error.
      */

@@ -11,7 +11,6 @@ package ch.nevis.exampleapp.domain.log
  * receive new SDK log items/messages.
  */
 interface SdkLogReceiver {
-
     /**
      * Triggered when a new log item/message logged.
      *

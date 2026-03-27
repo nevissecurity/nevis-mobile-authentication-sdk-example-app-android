@@ -19,7 +19,6 @@ import ch.nevis.mobile.sdk.api.localdata.DeviceInformation
  * @param deviceInformation The current [DeviceInformation] was queried from the [ch.nevis.mobile.sdk.api.MobileAuthenticationClient].
  */
 data class ChangeDeviceInformationViewData(
-
     /**
      * The current [DeviceInformation] was queried from the [ch.nevis.mobile.sdk.api.MobileAuthenticationClient].
      */

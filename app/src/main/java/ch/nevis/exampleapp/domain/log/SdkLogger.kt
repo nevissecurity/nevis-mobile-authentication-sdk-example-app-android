@@ -11,7 +11,6 @@ package ch.nevis.exampleapp.domain.log
  * and to be able to notify receivers about new messages
  */
 interface SdkLogger {
-
     /**
      * Adds a new receiver object to this logger. In case of a new message, all added receivers will be notified.
      *

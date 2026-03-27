@@ -21,7 +21,6 @@ data class PinAuthenticatorProtectionStatusLastAttemptFailedImpl(
      * The number of remaining retries available.
      */
     val remainingRetries: Int,
-
     /**
      * The time that must be passed before the user can try to provide credentials again.
      * If the value is 0, it means that no cool-down is required, and that a new password can be provided
@@ -29,8 +28,8 @@ data class PinAuthenticatorProtectionStatusLastAttemptFailedImpl(
      */
     val coolDownTimeInSeconds: Long
 ) : PinAuthenticatorProtectionStatus.LastAttemptFailed {
-
     //region PinAuthenticatorProtectionStatus.LastAttemptFailed
+
     /** @suppress */
     override fun remainingRetries(): Int = remainingRetries
 

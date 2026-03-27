@@ -11,7 +11,7 @@ import android.os.Build
 import ch.nevis.exampleapp.R
 import ch.nevis.mobile.sdk.api.localdata.DeviceInformation
 import java.text.DateFormat
-import java.util.*
+import java.util.Date
 
 /**
  * Default implementation of [DeviceInformationFactory] interface.

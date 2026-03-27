@@ -7,16 +7,16 @@
 package ch.nevis.exampleapp.domain.log
 
 import java.lang.ref.WeakReference
-import java.util.*
+import java.util.Date
 
 /**
  * Default implementation of [SdkLogger] interface. It stores the logged messages in an [ArrayList] object.
  *
  * @constructor Creates a new instance.
  */
-class SdkLoggerImpl: SdkLogger {
-
+class SdkLoggerImpl : SdkLogger {
     //region Properties
+
     /**
      * The SDK event log. A simple [ArrayList] that contains the log items.
      */

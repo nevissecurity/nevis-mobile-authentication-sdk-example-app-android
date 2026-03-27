@@ -35,6 +35,7 @@ class ChangeDeviceInformationViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     //region Public Interface
+
     /**
      * Gets the current device information stored by the client and requests a view update to
      * display it to the user.

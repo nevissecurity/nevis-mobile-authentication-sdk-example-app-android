@@ -21,6 +21,7 @@ class ExampleAppTimberDebugTree(
 ): Timber.DebugTree() {
 
     //region Constants
+
     /**
      * Constants.
      */

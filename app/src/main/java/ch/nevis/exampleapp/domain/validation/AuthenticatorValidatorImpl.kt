@@ -15,7 +15,6 @@ import ch.nevis.mobile.sdk.api.operation.selection.AuthenticatorSelectionContext
  * @constructor Creates a new instance.
  */
 class AuthenticatorValidatorImpl : AuthenticatorValidator {
-
     //region AuthenticatorValidator
     override fun validateForRegistration(
         context: AuthenticatorSelectionContext,

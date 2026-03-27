@@ -39,8 +39,8 @@ import javax.inject.Inject
  * @constructor Creates a new instance.
  */
 abstract class BaseFragment : Fragment() {
-
     //region Companion Object
+
     /**
      * Constants.
      */
@@ -53,6 +53,7 @@ abstract class BaseFragment : Fragment() {
     //endregion
 
     //region Properties
+
     /**
      * The abstract declaration of a view model. The implementations have to provide their own view model.
      */
@@ -66,6 +67,7 @@ abstract class BaseFragment : Fragment() {
     //endregion
 
     //region Fragment
+
     /** @suppress */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -97,6 +99,7 @@ abstract class BaseFragment : Fragment() {
     //endregion
 
     //region Public Interface
+
     /**
      * Updates the view based on the given [ViewData] implementation.
      *
@@ -135,6 +138,7 @@ abstract class BaseFragment : Fragment() {
     //endregion
 
     //region Private Interface
+
     /**
      * Handles the navigation request received via the [NavigationDispatcher] object this [BaseFragment]
      * subscribed for.

@@ -51,6 +51,7 @@ class DefaultErrorHandlerImpl(
     //endregion
 
     //region Private Interface
+
     /**
      * Gets/composes an error message based on the received error response.
      *

@@ -27,8 +27,8 @@ import timber.log.Timber
 class DevicePasscodeUserVerifierImpl(
     private val navigationDispatcher: NavigationDispatcher
 ) : DevicePasscodeUserVerifier {
-
     //region DevicePasscodeUserVerifier
+
     /** @suppress */
     override fun verifyDevicePasscode(
         context: DevicePasscodeUserVerificationContext,

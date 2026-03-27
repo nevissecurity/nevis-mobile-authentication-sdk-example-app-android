@@ -25,8 +25,8 @@ import java.net.PasswordAuthentication
  */
 @AndroidEntryPoint
 class UserNamePasswordLoginFragment : BaseFragment() {
-
     //region Properties
+
     /**
      * UI component bindings.
      */
@@ -40,6 +40,7 @@ class UserNamePasswordLoginFragment : BaseFragment() {
     //endregion
 
     //region Fragment
+
     /** @suppress */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

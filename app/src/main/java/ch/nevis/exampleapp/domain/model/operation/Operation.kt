@@ -17,7 +17,6 @@ enum class Operation(
      */
     val resId: Int
 ) {
-
     /**
      * Client initialization.
      */

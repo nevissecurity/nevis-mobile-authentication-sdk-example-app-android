@@ -30,8 +30,8 @@ class PasswordEnrollerImpl(
     private val policy: PasswordPolicy,
     private val navigationDispatcher: NavigationDispatcher
 ) : PasswordEnroller {
-
     //region PasswordEnroller
+
     /** @suppress */
     override fun enrollPassword(
         context: PasswordEnrollmentContext,
@@ -60,6 +60,7 @@ class PasswordEnrollerImpl(
     }
 
     //  You can add custom password policy by overriding the `passwordPolicy` getter
+
     /** @suppress */
     override fun passwordPolicy(): PasswordPolicy = policy
     //endregion

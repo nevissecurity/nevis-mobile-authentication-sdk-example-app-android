@@ -18,7 +18,6 @@ data class LoginEndPointResponse(
      * Status, result of the login end-point call.
      */
     val status: String,
-
     /**
      * The external identifier of the user that logged in.
      */

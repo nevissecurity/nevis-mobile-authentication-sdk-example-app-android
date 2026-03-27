@@ -14,7 +14,6 @@ import ch.nevis.mobile.sdk.api.MobileAuthenticationClient
  * @constructor Creates a new instance.
  */
 class ClientProviderImpl : ClientProvider {
-
     //region Properties
     private var client: MobileAuthenticationClient? = null
     //endregion

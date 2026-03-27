@@ -69,8 +69,8 @@ class UserNamePasswordLoginViewModel @Inject constructor(
     private val fingerprintUserVerifier: FingerprintUserVerifier,
     private val errorHandler: ErrorHandler
 ) : BaseViewModel() {
-
     //region Companion Object
+
     /**
      * Constants.
      */
@@ -80,6 +80,7 @@ class UserNamePasswordLoginViewModel @Inject constructor(
     //endregion
 
     //region Public Interface
+
     /**
      * Starts login process with given username/password pair.
      *
@@ -112,6 +113,7 @@ class UserNamePasswordLoginViewModel @Inject constructor(
     //endregion
 
     //region Private Interface
+
     /**
      * Starts in-band registration operation based on data/information received during the login
      * process.

@@ -31,8 +31,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SelectAccountFragment : BaseFragment(),
     AccountSelectedListener {
-
     //region Properties
+
     /**
      * UI component bindings.
      */
@@ -56,6 +56,7 @@ class SelectAccountFragment : BaseFragment(),
     //endregion
 
     //region Fragment
+
     /** @suppress */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

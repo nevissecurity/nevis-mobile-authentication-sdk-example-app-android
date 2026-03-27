@@ -34,13 +34,11 @@ data class VerifyUserNavigationParameter(
      * The mode, the Verify User view intend to be used/initialized.
      */
     val verifyUserViewMode: VerifyUserViewMode,
-
     /**
      * String resource identifier of the title of the authenticator.
      */
     @StringRes
     val authenticatorTitleResId: Int,
-
     /**
      * An instance of a [BiometricUserVerificationHandler] in case of an operation is started that requested
      * biometric user verification and we navigate to Verify User view to ask the user to verify herself/himself
@@ -50,7 +48,6 @@ data class VerifyUserNavigationParameter(
      */
     @IgnoredOnParcel
     val biometricUserVerificationHandler: BiometricUserVerificationHandler? = null,
-
     /**
      * An instance of a [DevicePasscodeUserVerificationHandler] in case of an operation is started that requested
      * device passcode user verification and we navigate to Verify User view to ask the user to verify herself/himself
@@ -60,7 +57,6 @@ data class VerifyUserNavigationParameter(
      */
     @IgnoredOnParcel
     val devicePasscodeUserVerificationHandler: DevicePasscodeUserVerificationHandler? = null,
-
     /**
      * An instance of a [FingerprintUserVerificationHandler] in case of an operation is started that requested
      * fingerprint user verification and we navigate to Verify User view to ask the user to verify herself/himself
@@ -70,7 +66,6 @@ data class VerifyUserNavigationParameter(
      */
     @IgnoredOnParcel
     val fingerprintUserVerificationHandler: FingerprintUserVerificationHandler? = null,
-
     /**
      * A [FingerprintUserVerificationError] error object that may occur during fingerprint user verification.
      *

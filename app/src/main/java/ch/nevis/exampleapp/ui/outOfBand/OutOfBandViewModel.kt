@@ -69,8 +69,8 @@ abstract class OutOfBandViewModel(
     private val fingerprintUserVerifier: FingerprintUserVerifier,
     private val errorHandler: ErrorHandler
 ) : BaseViewModel() {
-
     //region Public Interface
+
     /**
      * Starts decoding of out-of-band payload from the given dispatch token response.
      *
@@ -93,6 +93,7 @@ abstract class OutOfBandViewModel(
     //endregion
 
     //region Private Interface
+
     /**
      * Starts processing of out-of-band payload.
      *

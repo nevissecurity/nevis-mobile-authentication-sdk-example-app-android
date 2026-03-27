@@ -29,8 +29,8 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class ErrorFragment : Fragment() {
-
     //region Properties
+
     /**
      * UI component bindings.
      */
@@ -44,6 +44,7 @@ class ErrorFragment : Fragment() {
     //endregion
 
     //region Fragment
+
     /** @suppress */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

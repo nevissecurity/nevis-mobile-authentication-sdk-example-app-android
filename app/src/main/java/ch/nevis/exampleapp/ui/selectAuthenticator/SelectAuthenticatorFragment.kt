@@ -30,8 +30,8 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class SelectAuthenticatorFragment : BaseFragment(), AuthenticatorSelectedListener {
-
     //region Properties
+
     /**
      * UI component bindings.
      */
@@ -55,6 +55,7 @@ class SelectAuthenticatorFragment : BaseFragment(), AuthenticatorSelectedListene
     //endregion
 
     //region Fragment
+
     /** @suppress */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

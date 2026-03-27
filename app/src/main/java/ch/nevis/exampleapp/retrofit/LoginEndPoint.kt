@@ -17,7 +17,6 @@ import retrofit2.http.POST
  * Retrofit end-point interface for login.
  */
 interface LoginEndPoint {
-
     /**
      * Authenticates with the given username and password.
      *

@@ -13,7 +13,6 @@ package ch.nevis.exampleapp.ui.base
  * called in actual implementation of abstract `cancelOperation()` method of this class.
  */
 abstract class CancellableOperationViewModel : BaseViewModel() {
-
     /**
      * Cancels the current, running operation.
      */
