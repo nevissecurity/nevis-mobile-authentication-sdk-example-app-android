@@ -13,6 +13,7 @@ plugins {
     alias(libs.plugins.dagger.hilt.android) apply false
     alias(libs.plugins.androidx.navigation.safeargs) apply false
     alias(libs.plugins.jetbrains.dokka) apply true
+    alias(libs.plugins.ktlint) apply true
 }
 
 fun getConfig(name: String): String {

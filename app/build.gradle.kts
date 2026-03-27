@@ -5,7 +5,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.kapt)
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.androidx.navigation.safeargs)
-    alias(libs.plugins.jetbrains.dokka) apply true
+    alias(libs.plugins.jetbrains.dokka)
+    alias(libs.plugins.ktlint)
 }
 
 fun readProperty(name: String): Any? {
