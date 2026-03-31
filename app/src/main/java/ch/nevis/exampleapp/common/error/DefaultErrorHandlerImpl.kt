@@ -14,6 +14,8 @@ import ch.nevis.exampleapp.ui.error.parameter.ErrorNavigationParameter
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.mobile.sdk.api.MobileAuthenticationClientError
 import ch.nevis.mobile.sdk.api.operation.OperationError
+import ch.nevis.mobile.sdk.api.operation.password.PasswordChangeError
+import ch.nevis.mobile.sdk.api.operation.pin.PinChangeError
 import timber.log.Timber
 
 /**
@@ -65,6 +67,8 @@ class DefaultErrorHandlerImpl(private val context: Context, private val navigati
             is OperationError -> error.errorCode().description()
             is ch.nevis.mobile.sdk.api.operation.authcloudapi.AuthCloudApiError.OperationError -> error.errorCode()
                 .description()
+            is PinChangeError.UserNotResponsive -> "Pin change failed because of a time-out"
+            is PasswordChangeError.UserNotResponsive -> "Password change failed because of a time-out"
             else -> error.description()
         }
     }
