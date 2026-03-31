@@ -60,7 +60,7 @@ class UserNamePasswordLoginViewModel @Inject constructor(
     private val deviceInformationFactory: DeviceInformationFactory,
     private val navigationDispatcher: NavigationDispatcher,
     private val settings: Settings,
-    @Named(ApplicationModule.REGISTRATION_AUTHENTICATOR_SELECTOR)
+    @param:Named(ApplicationModule.REGISTRATION_AUTHENTICATOR_SELECTOR)
     private val authenticatorSelector: AuthenticatorSelector,
     private val pinEnroller: PinEnroller,
     private val passwordEnroller: PasswordEnroller,

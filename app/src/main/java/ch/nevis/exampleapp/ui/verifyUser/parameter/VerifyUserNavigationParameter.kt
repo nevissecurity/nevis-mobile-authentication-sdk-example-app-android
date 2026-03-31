@@ -37,7 +37,7 @@ data class VerifyUserNavigationParameter(
     /**
      * String resource identifier of the title of the authenticator.
      */
-    @StringRes
+    @field:StringRes
     val authenticatorTitleResId: Int,
     /**
      * An instance of a [BiometricUserVerificationHandler] in case of an operation is started that requested

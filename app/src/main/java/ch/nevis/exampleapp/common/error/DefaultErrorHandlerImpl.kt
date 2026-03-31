@@ -8,6 +8,7 @@ package ch.nevis.exampleapp.common.error
 
 import android.content.Context
 import ch.nevis.exampleapp.NavigationGraphDirections
+import ch.nevis.exampleapp.R
 import ch.nevis.exampleapp.domain.model.error.BusinessException
 import ch.nevis.exampleapp.domain.model.error.MobileAuthenticationClientException
 import ch.nevis.exampleapp.ui.error.parameter.ErrorNavigationParameter
@@ -67,8 +68,8 @@ class DefaultErrorHandlerImpl(private val context: Context, private val navigati
             is OperationError -> error.errorCode().description()
             is ch.nevis.mobile.sdk.api.operation.authcloudapi.AuthCloudApiError.OperationError -> error.errorCode()
                 .description()
-            is PinChangeError.UserNotResponsive -> "Pin change failed because of a time-out"
-            is PasswordChangeError.UserNotResponsive -> "Password change failed because of a time-out"
+            is PinChangeError.UserNotResponsive -> context.getString(R.string.pin_change_user_not_responsive_error)
+            is PasswordChangeError.UserNotResponsive -> context.getString(R.string.password_change_user_not_responsive_error)
             else -> error.description()
         }
     }

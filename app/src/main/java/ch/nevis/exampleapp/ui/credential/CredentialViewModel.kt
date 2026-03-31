@@ -42,7 +42,7 @@ import timber.log.Timber
  */
 @HiltViewModel
 class CredentialViewModel @Inject constructor(
-    @ApplicationContext
+    @param:ApplicationContext
     private val context: Context,
     private val errorHandler: ErrorHandler
 ) : CancellableOperationViewModel() {

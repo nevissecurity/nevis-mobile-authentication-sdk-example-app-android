@@ -51,7 +51,7 @@ import javax.inject.Named
 class SelectAccountViewModel @Inject constructor(
     private val clientProvider: ClientProvider,
     private val navigationDispatcher: NavigationDispatcher,
-    @Named(ApplicationModule.AUTHENTICATION_AUTHENTICATOR_SELECTOR)
+    @param:Named(ApplicationModule.AUTHENTICATION_AUTHENTICATOR_SELECTOR)
     private val authenticatorSelector: AuthenticatorSelector,
     private val pinUserVerifier: PinUserVerifier,
     private val passwordUserVerifier: PasswordUserVerifier,
