@@ -10,7 +10,6 @@ package ch.nevis.exampleapp.ui.verifyUser.model
  * Enumeration of available Verify User view modes.
  */
 enum class VerifyUserViewMode {
-
     /**
      * Fingerprint verification.
      */

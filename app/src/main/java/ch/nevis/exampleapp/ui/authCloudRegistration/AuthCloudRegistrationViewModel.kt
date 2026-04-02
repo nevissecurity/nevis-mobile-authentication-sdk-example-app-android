@@ -62,6 +62,7 @@ class AuthCloudRegistrationViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     //region Public Interface
+
     /**
      * Starts Auth Cloud API registration operation.
      *

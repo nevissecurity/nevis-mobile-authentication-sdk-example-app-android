@@ -11,7 +11,6 @@ package ch.nevis.exampleapp.ui.selectAuthenticator
  * the implementations of this interface about authenticator selection.
  */
 interface AuthenticatorSelectedListener {
-
     /**
      * Event method that is called when an authenticator is selected.
      *

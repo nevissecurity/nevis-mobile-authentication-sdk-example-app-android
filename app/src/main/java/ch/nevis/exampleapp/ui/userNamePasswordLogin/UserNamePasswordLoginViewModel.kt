@@ -29,12 +29,12 @@ import ch.nevis.mobile.sdk.api.operation.userverification.BiometricUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.DevicePasscodeUserVerifier
 import ch.nevis.mobile.sdk.api.operation.userverification.FingerprintUserVerifier
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import timber.log.Timber
 import java.net.PasswordAuthentication
 import javax.inject.Inject
 import javax.inject.Named
+import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import timber.log.Timber
 
 /**
  * View model implementation of UserName and Password Login view.
@@ -69,8 +69,8 @@ class UserNamePasswordLoginViewModel @Inject constructor(
     private val fingerprintUserVerifier: FingerprintUserVerifier,
     private val errorHandler: ErrorHandler
 ) : BaseViewModel() {
-
     //region Companion Object
+
     /**
      * Constants.
      */
@@ -80,6 +80,7 @@ class UserNamePasswordLoginViewModel @Inject constructor(
     //endregion
 
     //region Public Interface
+
     /**
      * Starts login process with given username/password pair.
      *
@@ -112,6 +113,7 @@ class UserNamePasswordLoginViewModel @Inject constructor(
     //endregion
 
     //region Private Interface
+
     /**
      * Starts in-band registration operation based on data/information received during the login
      * process.

@@ -6,7 +6,7 @@
 
 package ch.nevis.exampleapp.domain.log
 
-import java.util.*
+import java.util.Date
 
 /**
  * A data class that represents a log item.
@@ -16,12 +16,10 @@ import java.util.*
  * @param message Message part of the log item.
  */
 data class LogItem(
-
     /**
      * Date/timestamp part of the log item.
      */
     val date: Date,
-
     /**
      * Message part of the log item.
      */

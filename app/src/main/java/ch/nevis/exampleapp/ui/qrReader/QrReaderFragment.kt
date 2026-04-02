@@ -28,11 +28,10 @@ import ch.nevis.exampleapp.logging.sdk
 import ch.nevis.exampleapp.ui.base.BaseFragment
 import com.google.mlkit.vision.barcode.common.Barcode
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import javax.inject.Inject
-
+import timber.log.Timber
 
 /**
  * [androidx.fragment.app.Fragment] implementation of QR Reader view where the user can scan a QR code.
@@ -40,9 +39,11 @@ import javax.inject.Inject
  * @constructor Creates a new instance.
  */
 @AndroidEntryPoint
-class QrReaderFragment : BaseFragment(), BarcodesReceivedListener {
-
+class QrReaderFragment :
+    BaseFragment(),
+    BarcodesReceivedListener {
     //region Properties
+
     /**
      * UI component bindings.
      */
@@ -78,11 +79,9 @@ class QrReaderFragment : BaseFragment(), BarcodesReceivedListener {
     //endregion
 
     //region Fragment
+
     /** @suppress */
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentQrReaderBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -120,6 +119,7 @@ class QrReaderFragment : BaseFragment(), BarcodesReceivedListener {
     //endregion
 
     //region Private Interface
+
     /**
      * Starts camera.
      *
@@ -164,7 +164,6 @@ class QrReaderFragment : BaseFragment(), BarcodesReceivedListener {
             } catch (exception: Exception) {
                 errorHandler.handle(exception)
             }
-
         }, ContextCompat.getMainExecutor(baseContext))
     }
 
@@ -177,11 +176,11 @@ class QrReaderFragment : BaseFragment(), BarcodesReceivedListener {
         val baseContext = activity?.baseContext ?: return false
         return REQUIRED_PERMISSIONS.all {
             ContextCompat.checkSelfPermission(
-                baseContext, it
+                baseContext,
+                it
             ) == PackageManager.PERMISSION_GRANTED
         }
     }
-
 
     /**
      * Request permissions for camera usage.
@@ -195,9 +194,7 @@ class QrReaderFragment : BaseFragment(), BarcodesReceivedListener {
      *
      * @return The result pf permission check.
      */
-    private fun shouldShowRequestPermissionsRationale(): Boolean {
-        return REQUIRED_PERMISSIONS.any { shouldShowRequestPermissionRationale(it) }
-    }
+    private fun shouldShowRequestPermissionsRationale(): Boolean = REQUIRED_PERMISSIONS.any { shouldShowRequestPermissionRationale(it) }
 
     /**
      * Shows rational dialog to the user.
@@ -229,6 +226,7 @@ class QrReaderFragment : BaseFragment(), BarcodesReceivedListener {
     //endregion
 
     //region Companion Object
+
     /**
      * Constants.
      */

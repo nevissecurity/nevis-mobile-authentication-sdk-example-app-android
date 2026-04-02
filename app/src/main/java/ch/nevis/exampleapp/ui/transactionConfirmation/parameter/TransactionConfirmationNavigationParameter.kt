@@ -29,18 +29,15 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class TransactionConfirmationNavigationParameter(
-
     /**
      * The previously selected account.
      */
     @IgnoredOnParcel
     val account: Account? = null,
-
     /**
      * The transaction confirmation data/message that should be displayed on Transaction Confirmation view.
      */
     val transactionConfirmationMessage: String,
-
     /**
      * An instance of an [AccountSelectionHandler]. Transaction confirmation data received only in case an out-of-band authentication is started
      * and we navigate to Transaction Confirmation view to ask the user to confirm or deny the operation based on the transaction confirmation data

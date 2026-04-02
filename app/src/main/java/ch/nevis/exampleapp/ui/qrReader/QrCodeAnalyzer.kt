@@ -20,11 +20,9 @@ import com.google.mlkit.vision.common.InputImage
  * @param barcodesReceivedListener A [BarcodesReceivedListener] implementation that will be notified
  *      when barcode(s) are read/received.
  */
-class QrCodeAnalyzer(
-    private val barcodesReceivedListener: BarcodesReceivedListener
-) : ImageAnalysis.Analyzer {
-
+class QrCodeAnalyzer(private val barcodesReceivedListener: BarcodesReceivedListener) : ImageAnalysis.Analyzer {
     //region Properties
+
     /**
      * Options for barcode scanner initialization.
      */
@@ -42,6 +40,7 @@ class QrCodeAnalyzer(
     //endregion
 
     //region ImageAnalysis.Analyzer
+
     /** @suppress */
     @androidx.annotation.OptIn(androidx.camera.core.ExperimentalGetImage::class)
     override fun analyze(imageProxy: ImageProxy) {

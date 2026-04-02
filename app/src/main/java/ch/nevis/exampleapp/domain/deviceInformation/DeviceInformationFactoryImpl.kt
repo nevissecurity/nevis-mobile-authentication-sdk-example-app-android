@@ -11,7 +11,7 @@ import android.os.Build
 import ch.nevis.exampleapp.R
 import ch.nevis.mobile.sdk.api.localdata.DeviceInformation
 import java.text.DateFormat
-import java.util.*
+import java.util.Date
 
 /**
  * Default implementation of [DeviceInformationFactory] interface.
@@ -20,14 +20,10 @@ import java.util.*
  * @constructor Creates a new instance.
  * @param context The Android [Context].
  */
-class DeviceInformationFactoryImpl(
-    private val context: Context
-) : DeviceInformationFactory {
+class DeviceInformationFactoryImpl(private val context: Context) : DeviceInformationFactory {
 
     //region DeviceInformationFactory
-    override fun create(): DeviceInformation {
-        return DeviceInformation.builder().name(initDeviceInformationName()).build()
-    }
+    override fun create(): DeviceInformation = DeviceInformation.builder().name(initDeviceInformationName()).build()
     //endregion
 
     //region Private Interface

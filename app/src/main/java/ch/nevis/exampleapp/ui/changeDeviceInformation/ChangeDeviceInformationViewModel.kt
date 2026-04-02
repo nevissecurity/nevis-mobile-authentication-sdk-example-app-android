@@ -35,6 +35,7 @@ class ChangeDeviceInformationViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     //region Public Interface
+
     /**
      * Gets the current device information stored by the client and requests a view update to
      * display it to the user.
@@ -57,11 +58,7 @@ class ChangeDeviceInformationViewModel @Inject constructor(
      * @param fcmRegistrationToken The FCM registration token if it is known, otherwise null.
      * @param disablePushNotifications A flag that tells push notifications have to be disabled or not.
      */
-    fun changeDeviceInformation(
-        name: String,
-        fcmRegistrationToken: String? = null,
-        disablePushNotifications: Boolean = false
-    ) {
+    fun changeDeviceInformation(name: String, fcmRegistrationToken: String? = null, disablePushNotifications: Boolean = false) {
         if (name.isBlank()) {
             return
         }

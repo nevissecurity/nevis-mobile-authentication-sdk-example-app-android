@@ -17,8 +17,8 @@ import ch.nevis.exampleapp.ui.util.SingleLiveEvent
  * @constructor Creates a new instance.
  */
 class NavigationDispatcherImpl : NavigationDispatcher {
-
     //region Properties
+
     /**
      * Mutable backing property of the [LiveData] property.
      */

@@ -23,10 +23,7 @@ import timber.log.Timber
  * @param context An Android [Context] object for [String] resource resolving.
  * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
-class DefaultErrorHandlerImpl(
-    private val context: Context,
-    private val navigationDispatcher: NavigationDispatcher
-) : ErrorHandler {
+class DefaultErrorHandlerImpl(private val context: Context, private val navigationDispatcher: NavigationDispatcher) : ErrorHandler {
 
     //region ErrorHandler
     override fun handle(error: Throwable): Boolean {
@@ -51,6 +48,7 @@ class DefaultErrorHandlerImpl(
     //endregion
 
     //region Private Interface
+
     /**
      * Gets/composes an error message based on the received error response.
      *
@@ -71,8 +69,6 @@ class DefaultErrorHandlerImpl(
         }
     }
 
-    private fun getErrorMessage(throwable: Throwable): String {
-        return throwable.message ?: throwable.stackTraceToString()
-    }
+    private fun getErrorMessage(throwable: Throwable): String = throwable.message ?: throwable.stackTraceToString()
     //endregion
 }

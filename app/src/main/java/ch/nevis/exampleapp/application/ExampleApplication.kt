@@ -10,15 +10,14 @@ import android.app.Application
 import ch.nevis.exampleapp.domain.log.SdkLogger
 import ch.nevis.exampleapp.logging.ExampleAppTimberDebugTree
 import dagger.hilt.android.HiltAndroidApp
-import timber.log.Timber
 import javax.inject.Inject
+import timber.log.Timber
 
 /**
  * Simple sub-class of [Application] to enable Dagger Hilt capabilities and to initialize logging.
  */
 @HiltAndroidApp
 class ExampleApplication : Application() {
-
     /**
      * An injected instance of an implementation of [SdkLogger] interface.
      */
@@ -26,6 +25,7 @@ class ExampleApplication : Application() {
     lateinit var sdkLogger: SdkLogger
 
     //region Application
+
     /** @suppress */
     override fun onCreate() {
         super.onCreate()

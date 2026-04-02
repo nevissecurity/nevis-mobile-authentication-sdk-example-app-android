@@ -21,12 +21,10 @@ import ch.nevis.mobile.sdk.api.localdata.Account
  * @param accountSelectedListener Reference for the listener implementation that will be notified about
  *      account selection.
  */
-class AccountsRecyclerViewAdapter(
-    private val accounts: Array<Account>,
-    private val accountSelectedListener: AccountSelectedListener
-) : RecyclerView.Adapter<AccountsRecyclerViewAdapter.AccountViewHolder>() {
-
+class AccountsRecyclerViewAdapter(private val accounts: Array<Account>, private val accountSelectedListener: AccountSelectedListener) :
+    RecyclerView.Adapter<AccountsRecyclerViewAdapter.AccountViewHolder>() {
     //region RecyclerView.Adapter
+
     /** @suppress */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {
         val binding = ItemAccountBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -46,6 +44,7 @@ class AccountsRecyclerViewAdapter(
     //endregion
 
     //region AccountViewHolder
+
     /**
      * A [RecyclerView.ViewHolder] implementation that represents an account.
      *

@@ -24,16 +24,11 @@ import timber.log.Timber
  * @constructor Creates a new instance.
  * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
-class DevicePasscodeUserVerifierImpl(
-    private val navigationDispatcher: NavigationDispatcher
-) : DevicePasscodeUserVerifier {
-
+class DevicePasscodeUserVerifierImpl(private val navigationDispatcher: NavigationDispatcher) : DevicePasscodeUserVerifier {
     //region DevicePasscodeUserVerifier
+
     /** @suppress */
-    override fun verifyDevicePasscode(
-        context: DevicePasscodeUserVerificationContext,
-        handler: DevicePasscodeUserVerificationHandler
-    ) {
+    override fun verifyDevicePasscode(context: DevicePasscodeUserVerificationContext, handler: DevicePasscodeUserVerificationHandler) {
         Timber.asTree().sdk("Please start device passcode user verification.")
         navigationDispatcher.requestNavigation(
             NavigationGraphDirections.actionGlobalVerifyUserFragment(

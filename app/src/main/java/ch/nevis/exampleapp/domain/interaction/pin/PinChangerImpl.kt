@@ -8,9 +8,9 @@ package ch.nevis.exampleapp.domain.interaction.pin
 
 import ch.nevis.exampleapp.NavigationGraphDirections
 import ch.nevis.exampleapp.logging.sdk
-import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.exampleapp.ui.credential.model.CredentialViewMode
 import ch.nevis.exampleapp.ui.credential.parameter.PinNavigationParameter
+import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.mobile.sdk.api.operation.pin.PinChangeContext
 import ch.nevis.mobile.sdk.api.operation.pin.PinChangeHandler
 import ch.nevis.mobile.sdk.api.operation.pin.PinChanger
@@ -24,16 +24,11 @@ import timber.log.Timber
  * @constructor Creates a new instance.
  * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
-class PinChangerImpl(
-    private val navigationDispatcher: NavigationDispatcher
-) : PinChanger {
-
+class PinChangerImpl(private val navigationDispatcher: NavigationDispatcher) : PinChanger {
     //region PinChanger
+
     /** @suppress */
-    override fun changePin(
-        context: PinChangeContext,
-        handler: PinChangeHandler
-    ) {
+    override fun changePin(context: PinChangeContext, handler: PinChangeHandler) {
         if (context.lastRecoverableError().isPresent) {
             Timber.asTree().sdk("PIN change failed. Please try again.")
         } else {

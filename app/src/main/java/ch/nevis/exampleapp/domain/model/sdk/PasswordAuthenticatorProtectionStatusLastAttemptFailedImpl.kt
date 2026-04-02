@@ -21,7 +21,6 @@ data class PasswordAuthenticatorProtectionStatusLastAttemptFailedImpl(
      * The number of remaining retries available.
      */
     val remainingRetries: Int,
-
     /**
      * The time that must be passed before the user can try to provide credentials again.
      * If the value is 0, it means that no cool-down is required, and that a new password can be provided
@@ -29,8 +28,8 @@ data class PasswordAuthenticatorProtectionStatusLastAttemptFailedImpl(
      */
     val coolDownTimeInSeconds: Long
 ) : PasswordAuthenticatorProtectionStatus.LastAttemptFailed {
-
     //region PasswordAuthenticatorProtectionStatus.LastAttemptFailed
+
     /** @suppress */
     override fun remainingRetries(): Int = remainingRetries
 

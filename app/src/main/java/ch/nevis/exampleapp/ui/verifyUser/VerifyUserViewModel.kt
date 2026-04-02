@@ -28,11 +28,9 @@ import javax.inject.Inject
  * @param errorHandler An instance of an [ErrorHandler] interface implementation.
  */
 @HiltViewModel
-class VerifyUserViewModel @Inject constructor(
-    private val errorHandler: ErrorHandler
-) : CancellableOperationViewModel() {
-
+class VerifyUserViewModel @Inject constructor(private val errorHandler: ErrorHandler) : CancellableOperationViewModel() {
     //region Properties
+
     /**
      * The mode, the Verify User view intend to be used/initialized.
      */
@@ -85,6 +83,7 @@ class VerifyUserViewModel @Inject constructor(
     //endregion
 
     //region Public Interface
+
     /**
      * Updates this view model instance based on the [VerifyUserNavigationParameter] that was received by
      * the owner [VerifyUserFragment]. This method must be called by the owner fragment.
@@ -143,6 +142,7 @@ class VerifyUserViewModel @Inject constructor(
     //endregion
 
     //region Private Interface
+
     /**
      * Starts fingerprint authentication for an operation.
      */

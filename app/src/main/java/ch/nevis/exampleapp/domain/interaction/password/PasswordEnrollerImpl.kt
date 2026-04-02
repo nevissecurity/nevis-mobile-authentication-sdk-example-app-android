@@ -26,17 +26,11 @@ import timber.log.Timber
  * @param policy An instance of a [PasswordPolicy] interface implementation.
  * @param navigationDispatcher An instance of a [NavigationDispatcher] interface implementation.
  */
-class PasswordEnrollerImpl(
-    private val policy: PasswordPolicy,
-    private val navigationDispatcher: NavigationDispatcher
-) : PasswordEnroller {
-
+class PasswordEnrollerImpl(private val policy: PasswordPolicy, private val navigationDispatcher: NavigationDispatcher) : PasswordEnroller {
     //region PasswordEnroller
+
     /** @suppress */
-    override fun enrollPassword(
-        context: PasswordEnrollmentContext,
-        handler: PasswordEnrollmentHandler
-    ) {
+    override fun enrollPassword(context: PasswordEnrollmentContext, handler: PasswordEnrollmentHandler) {
         if (context.lastRecoverableError().isPresent) {
             Timber.asTree().sdk("Password enrollment failed. Please try again.")
         } else {
@@ -60,6 +54,7 @@ class PasswordEnrollerImpl(
     }
 
     //  You can add custom password policy by overriding the `passwordPolicy` getter
+
     /** @suppress */
     override fun passwordPolicy(): PasswordPolicy = policy
     //endregion

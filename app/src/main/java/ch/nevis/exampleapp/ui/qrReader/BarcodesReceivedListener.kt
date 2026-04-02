@@ -13,7 +13,6 @@ import com.google.mlkit.vision.barcode.common.Barcode
  * successfully are read.
  */
 interface BarcodesReceivedListener {
-
     /**
      * Notifies listeners about event barcode(s) are read, received.
      *

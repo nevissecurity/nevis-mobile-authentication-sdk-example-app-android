@@ -12,7 +12,6 @@ import ch.nevis.mobile.sdk.api.localdata.DeviceInformation
  * Factory interface for creating a new [DeviceInformation] object.
  */
 interface DeviceInformationFactory {
-
     /**
      * Creates a [DeviceInformation] instance.
      * @return The [DeviceInformation] instance.

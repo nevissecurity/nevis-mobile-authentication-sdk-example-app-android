@@ -25,7 +25,6 @@ import timber.log.Timber
  * Supported operations during authenticator selection.
  */
 enum class AuthenticatorSelectorOperation {
-
     /**
      * Registration operation.
      */
@@ -34,7 +33,7 @@ enum class AuthenticatorSelectorOperation {
     /**
      * Authentication operation.
      */
-    AUTHENTICATION,
+    AUTHENTICATION
 }
 
 /**
@@ -54,13 +53,10 @@ class AuthenticatorSelectorImpl(
     private val settings: Settings,
     private val operation: AuthenticatorSelectorOperation
 ) : AuthenticatorSelector {
-
     //region AuthenticatorSelector
+
     /** @suppress */
-    override fun selectAuthenticator(
-        context: AuthenticatorSelectionContext,
-        handler: AuthenticatorSelectionHandler
-    ) {
+    override fun selectAuthenticator(context: AuthenticatorSelectionContext, handler: AuthenticatorSelectionHandler) {
         Timber.asTree().sdk("Please select one of the received available authenticators!")
 
         val authenticators = when (operation) {

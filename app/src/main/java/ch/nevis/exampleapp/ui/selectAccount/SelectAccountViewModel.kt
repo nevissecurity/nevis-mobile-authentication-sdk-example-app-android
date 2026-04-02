@@ -62,8 +62,8 @@ class SelectAccountViewModel @Inject constructor(
     private val passwordChanger: PasswordChanger,
     private val errorHandler: ErrorHandler
 ) : CancellableOperationViewModel() {
-
     //region Properties
+
     /**
      * An instance of an [AccountSelectionHandler] in case an out-of-band authentication is started and we navigate to
      * Select Account view to ask the user to select one of the available accounts to be able to continue the operation.
@@ -74,6 +74,7 @@ class SelectAccountViewModel @Inject constructor(
     //endregion
 
     //region Public Interface
+
     /**
      * Updates this view model instance based on the [SelectAccountNavigationParameter] that was received by
      * the owner [SelectAccountFragment]. This method must be called by the owner fragment.
@@ -117,6 +118,7 @@ class SelectAccountViewModel @Inject constructor(
     //endregion
 
     //region Private interface
+
     /**
      * Starts PIN change.
      *

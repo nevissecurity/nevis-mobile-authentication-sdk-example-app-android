@@ -23,17 +23,14 @@ data class AuthenticatorItem(
      * The AAID of the authenticator.
      */
     val aaid: String,
-
     /**
      * The flag that tells whether the authenticator is server policy compliant.
      */
     val isPolicyCompliant: Boolean,
-
     /**
      * The flag that tells whether the user already enrolled the authenticator.
      */
     val isUserEnrolled: Boolean,
-
     /**
      * String resource identifier of the title of the authenticator.
      */
@@ -47,11 +44,10 @@ data class AuthenticatorItem(
      *
      * @return A flag that tells whether the item is selectable.
      */
-    fun isEnabled(): Boolean {
-        return isPolicyCompliant && (
+    fun isEnabled(): Boolean = isPolicyCompliant &&
+        (
             aaid == Authenticator.PIN_AUTHENTICATOR_AAID ||
-            aaid == Authenticator.PASSWORD_AUTHENTICATOR_AAID ||
-            isUserEnrolled
-        )
-    }
+                aaid == Authenticator.PASSWORD_AUTHENTICATOR_AAID ||
+                isUserEnrolled
+            )
 }

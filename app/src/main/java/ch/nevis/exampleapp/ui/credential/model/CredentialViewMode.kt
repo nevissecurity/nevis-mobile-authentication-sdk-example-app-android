@@ -10,7 +10,6 @@ package ch.nevis.exampleapp.ui.credential.model
  * Enumeration of available Credential view modes.
  */
 enum class CredentialViewMode {
-
     /**
      * Change mode.
      */

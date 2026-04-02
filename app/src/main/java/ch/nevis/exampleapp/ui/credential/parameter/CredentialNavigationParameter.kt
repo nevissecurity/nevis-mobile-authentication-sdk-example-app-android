@@ -8,8 +8,8 @@ import ch.nevis.mobile.sdk.api.operation.RecoverableError
  * Interface for Credential view navigation parameter.
  */
 abstract class CredentialNavigationParameter : NavigationParameter {
-
     //region Properties
+
     /**
      * The mode, the Credential view intend to be used/initialized.
      */

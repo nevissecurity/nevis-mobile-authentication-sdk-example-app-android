@@ -32,8 +32,8 @@ import dagger.hilt.android.AndroidEntryPoint
  */
 @AndroidEntryPoint
 class HomeFragment : BaseFragment() {
-
     //region Properties
+
     /**
      * UI component bindings.
      */
@@ -47,11 +47,9 @@ class HomeFragment : BaseFragment() {
     //endregion
 
     //region Fragment
+
     /** @suppress */
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }

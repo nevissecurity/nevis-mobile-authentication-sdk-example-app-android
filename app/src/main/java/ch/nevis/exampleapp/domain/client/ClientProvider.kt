@@ -12,7 +12,6 @@ import ch.nevis.mobile.sdk.api.MobileAuthenticationClient
  * Interface declaration of client provider that can store and provide a [MobileAuthenticationClient] instance.
  */
 interface ClientProvider {
-
     /**
      * Saves a [MobileAuthenticationClient] instance into the provider.
      *

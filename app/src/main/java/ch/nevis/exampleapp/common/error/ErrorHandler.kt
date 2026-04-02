@@ -10,7 +10,6 @@ package ch.nevis.exampleapp.common.error
  * Interface declaration of an error handler that can handle or bypass a given error.
  */
 interface ErrorHandler {
-
     /**
      * Handles or bypasses the given error.
      *

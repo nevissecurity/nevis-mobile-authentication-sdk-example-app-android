@@ -17,7 +17,6 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class ErrorNavigationParameter(
-
     /**
      * The error message to be displayed on Error view.
      */

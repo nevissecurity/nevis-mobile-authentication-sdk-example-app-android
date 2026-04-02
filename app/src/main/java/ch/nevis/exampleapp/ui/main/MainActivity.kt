@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -21,15 +22,14 @@ import ch.nevis.exampleapp.databinding.ActivityMainBinding
 import ch.nevis.exampleapp.ui.util.navigateToHome
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import androidx.core.view.isGone
 
 /**
  * The main, start activity of the application. When the application starts this activity will be created and started.
  */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
     //region Properties
+
     /**
      * UI component bindings.
      */
@@ -103,6 +103,7 @@ class MainActivity : AppCompatActivity() {
     //endregion
 
     //region Private Interface
+
     /**
      * Processes the received [Intent]. This function checks if the intent has a [Intent.ACTION_VIEW] action and the data URI
      * contains `dispatchTokenResponse` query parameter. If yes, the application navigates to the home view and passing

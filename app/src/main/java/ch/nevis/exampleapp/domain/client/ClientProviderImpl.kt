@@ -14,7 +14,6 @@ import ch.nevis.mobile.sdk.api.MobileAuthenticationClient
  * @constructor Creates a new instance.
  */
 class ClientProviderImpl : ClientProvider {
-
     //region Properties
     private var client: MobileAuthenticationClient? = null
     //endregion
@@ -24,9 +23,7 @@ class ClientProviderImpl : ClientProvider {
         this.client = client
     }
 
-    override fun get(): MobileAuthenticationClient? {
-        return client
-    }
+    override fun get(): MobileAuthenticationClient? = client
 
     override fun reset() {
         client = null

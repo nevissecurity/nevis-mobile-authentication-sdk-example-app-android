@@ -26,8 +26,8 @@ class AuthenticatorsRecyclerViewAdapter(
     private val authenticatorItems: Array<AuthenticatorItem>,
     private val authenticatorSelectedListener: AuthenticatorSelectedListener
 ) : RecyclerView.Adapter<AuthenticatorsRecyclerViewAdapter.AuthenticatorViewHolder>() {
-
     //region RecyclerView.Adapter
+
     /** @suppress */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AuthenticatorViewHolder {
         val binding =
@@ -62,13 +62,13 @@ class AuthenticatorsRecyclerViewAdapter(
     //endregion
 
     //region AuthenticatorViewHolder
+
     /**
      * A [RecyclerView.ViewHolder] implementation that represents a authenticator.
      *
      * @constructor Creates a new instance.
      * @param binding The binding.
      */
-    class AuthenticatorViewHolder(val binding: ItemAuthenticatorBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    class AuthenticatorViewHolder(val binding: ItemAuthenticatorBinding) : RecyclerView.ViewHolder(binding.root)
     //endregion
 }

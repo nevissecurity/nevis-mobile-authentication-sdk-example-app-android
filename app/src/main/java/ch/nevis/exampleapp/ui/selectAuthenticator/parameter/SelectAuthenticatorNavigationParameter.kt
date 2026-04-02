@@ -26,7 +26,6 @@ data class SelectAuthenticatorNavigationParameter(
      */
     @IgnoredOnParcel
     val authenticatorItems: Set<AuthenticatorItem>? = null,
-
     /**
      * An instance of an [AuthenticatorSelectionHandler] in case an operation started that need authentication selection
      * and we navigate to Select Authenticator view to ask the user to select one of the available authenticators to be able
