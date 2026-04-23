@@ -17,3 +17,6 @@ insert_final_newline = true
 [*.{kt,kts}]
 ktlint_code_style = android_studio
 max_line_length = 140
+
+# Force IntelliJ IDEA to use strict alphabetical layout of ktlint
+ij_kotlin_imports_layout = *,^
