@@ -86,7 +86,7 @@ import timber.log.Timber
  */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    @ApplicationContext
+    @param:ApplicationContext
     private val context: Context,
     private val configurationProvider: ConfigurationProvider,
     private val clientProvider: ClientProvider,
@@ -439,16 +439,12 @@ class HomeViewModel @Inject constructor(
                         is OnlySurrogateBasicSupported -> {
                             Timber.asTree()
                                 .sdk("Only surrogate basic attestation supported.")
-                            if (information.cause() != null) {
-                                Timber.asTree().sdk("Cause: ${information.cause()}")
-                            }
+                            Timber.asTree().sdk("Cause: ${information.cause()}")
                             cancellableContinuation.resume(SdkAttestationInformation.OnlySurrogateBasicSupported())
                         }
                         is OnlyDefaultMode -> {
                             Timber.asTree().sdk("Full basic default attestation mode supported.")
-                            if (information.cause() != null) {
-                                Timber.asTree().sdk("Cause: ${information.cause()}")
-                            }
+                            Timber.asTree().sdk("Cause: ${information.cause()}")
                             cancellableContinuation.resume(SdkAttestationInformation.OnlyDefaultMode())
                         }
                         is StrictMode -> {

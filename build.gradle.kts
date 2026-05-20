@@ -9,7 +9,7 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.jetbrains.kotlin.android) apply false
     alias(libs.plugins.jetbrains.kotlin.parcelize) apply false
-    alias(libs.plugins.jetbrains.kotlin.kapt) apply false
+    alias(libs.plugins.jetbrains.ksp) apply false
     alias(libs.plugins.dagger.hilt.android) apply false
     alias(libs.plugins.androidx.navigation.safeargs) apply false
     alias(libs.plugins.jetbrains.dokka) apply true
