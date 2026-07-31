@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023. Nevis Security AG. All rights reserved.
@@ -12,7 +12,7 @@ import androidx.navigation.NavDirections
 /**
  * Interface declaration of a navigation dispatcher. The purpose of this interface and its implementation
  * is to provide a possibility for [LifecycleOwner] instances, typically [androidx.fragment.app.Fragment]
- * instances to receive navigation requests from outside of their scope. Once a [LifecycleOwner] subscribes,
+ * instances to receive navigation requests from outside their scope. Once a [LifecycleOwner] subscribes,
  * it will receive the [NavDirections] objects requested using the [NavigationDispatcher.requestNavigation]
  * by any object that has the instance of the implementation of [NavigationDispatcher]. Of course the navigation
  * must be requested from the same [NavigationDispatcher] the [LifecycleOwner] object subscribed for.
@@ -36,7 +36,7 @@ interface NavigationDispatcher {
     fun subscribe(viewLifecycleOwner: LifecycleOwner, block: (NavDirections) -> Unit)
 
     /**
-     * Unsubscribes from this this [NavigationDispatcher] instance.
+     * Unsubscribes from this [NavigationDispatcher] instance.
      *
      * @param viewLifecycleOwner The [LifecycleOwner] that unsubscribes from this [NavigationDispatcher] instance.
      */

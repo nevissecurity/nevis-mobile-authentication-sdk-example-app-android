@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023. Nevis Security AG. All rights reserved.
@@ -28,7 +28,7 @@ import javax.inject.Inject
  * requests. This way it is ensured only one, the currently visible view is subscribed to
  * the [NavigationDispatcher].
  * - _View updates_: All implementation of this class must provide a view model instance that is a
- * sub-class of [BaseViewModel]. [BaseViewModel] provides an [androidx.lifecycle.LiveData] property called
+ * subclass of [BaseViewModel]. [BaseViewModel] provides an [androidx.lifecycle.LiveData] property called
  * `viewData`. [ch.nevis.exampleapp.ui.base.BaseFragment] starts observing this property in
  * [androidx.fragment.app.Fragment.onResume] method and stops observing it in
  * [androidx.fragment.app.Fragment.onPause]. This way the view models can indicate to the views that
@@ -131,7 +131,7 @@ abstract class BaseFragment : Fragment() {
      * @param parameter The new [NavigationParameter] instance for the view.
      * @return A [Boolean] flag that tells if the view handled the given [NavigationParameter]
      * object or not. Returns `true` if the view was able to handle the parameter, otherwise the view
-     * must return `false` to indicate that the parameter is not acceptable for the current view and
+     * must return `false` to indicate that the parameter is not acceptable for the current view, and
      * it must be forwarded to another view.
      */
     open fun updateViewParameter(parameter: NavigationParameter): Boolean = false

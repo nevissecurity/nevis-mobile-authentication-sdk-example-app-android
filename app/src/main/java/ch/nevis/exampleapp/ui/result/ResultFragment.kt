@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023. Nevis Security AG. All rights reserved.
@@ -22,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 /**
  * [androidx.fragment.app.Fragment] implementation of Result view.
  *
- * This view shows the result of an operation in case the operation was successfully completed or it
+ * This view shows the result of an operation in case the operation was successfully completed, or it
  * was cancelled. In case of failed operations the [ch.nevis.exampleapp.ui.error.ErrorFragment] is
  * used.
  * If the user presses OS back button or the confirm button on this view then the application

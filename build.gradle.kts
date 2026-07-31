@@ -1,7 +1,7 @@
 import java.io.FileInputStream
 import java.util.Properties
 
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+// Top-level build file where you can add configuration options common to all subprojects/modules.
 val customFooterMessage = "© 2025 made with ❤️ by Nevis"
 val customLogoFile = "$projectDir/logo-style.css"
 

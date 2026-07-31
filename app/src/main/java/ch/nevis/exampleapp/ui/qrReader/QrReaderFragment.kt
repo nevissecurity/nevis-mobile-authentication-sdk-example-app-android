@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023. Nevis Security AG. All rights reserved.
@@ -137,7 +137,7 @@ class QrReaderFragment :
             val preview = Preview.Builder()
                 .build()
                 .also {
-                    it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
+                    it.surfaceProvider = binding.viewFinder.surfaceProvider
                 }
 
             // Select back camera as a default

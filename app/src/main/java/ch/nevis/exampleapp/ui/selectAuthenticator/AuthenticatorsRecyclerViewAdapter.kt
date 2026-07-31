@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023. Nevis Security AG. All rights reserved.
@@ -64,7 +64,7 @@ class AuthenticatorsRecyclerViewAdapter(
     //region AuthenticatorViewHolder
 
     /**
-     * A [RecyclerView.ViewHolder] implementation that represents a authenticator.
+     * A [RecyclerView.ViewHolder] implementation that represents an authenticator.
      *
      * @constructor Creates a new instance.
      * @param binding The binding.

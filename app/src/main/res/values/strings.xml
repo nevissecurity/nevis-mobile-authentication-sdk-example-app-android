@@ -9,7 +9,7 @@
     <string name="business_error_type_accounts_not_found">There are no registered accounts.</string>
     <string name="business_error_type_pin_authenticator_not_found">Pin authenticator not found.</string>
     <string name="business_error_type_password_authenticator_not_found">Password authenticator not found.</string>
-    <string name="business_error_type_client_not_initialized">The SDK client has not beet initialized.</string>
+    <string name="business_error_type_client_not_initialized">The SDK client has not been initialized.</string>
     <string name="business_error_type_device_information_not_found">There is not registered device information.</string>
     <string name="business_error_type_invalid_state">Invalid application state.</string>
     <string name="business_error_type_login_failed">Login failed.</string>

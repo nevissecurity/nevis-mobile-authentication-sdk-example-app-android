@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023. Nevis Security AG. All rights reserved.
@@ -30,9 +30,6 @@ class MainActivityViewModel @Inject constructor(private val sdkLogger: SdkLogger
     SdkLogReceiver {
     //region Initialization
 
-    /**
-     * Initialization.
-     */
     init {
         // At initialization time we add this view model to the [SDKLogger] as a log receiver.
         sdkLogger.addLogReceiver(this)

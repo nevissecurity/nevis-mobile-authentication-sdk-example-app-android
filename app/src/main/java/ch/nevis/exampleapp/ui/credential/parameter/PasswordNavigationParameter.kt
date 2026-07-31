@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2024. Nevis Security AG. All rights reserved.
@@ -38,7 +38,7 @@ data class PasswordNavigationParameter(
     @IgnoredOnParcel
     val passwordAuthenticatorProtectionStatus: PasswordAuthenticatorProtectionStatus? = null,
     /**
-     * An instance of a [PasswordChangeHandler] in case a Password change operation is started and we
+     * An instance of a [PasswordChangeHandler] in case a Password change operation is started, and we
      * navigate to Credential view to ask the user to enter the old and new passwords to be able to
      * continue the operation.
      * [PasswordNavigationParameter.credentialViewMode] must be [CredentialViewMode.CHANGE].
@@ -47,7 +47,7 @@ data class PasswordNavigationParameter(
     val passwordChangeHandler: PasswordChangeHandler? = null,
     /**
      * An instance of a [PasswordEnrollmentHandler] in case a Password enrollment is started as part
-     * of a registration operation and we navigate to Credential view to ask the user to enter, define
+     * of a registration operation, and we navigate to Credential view to ask the user to enter, define
      * the password to be able to continue the operation.
      * [PasswordNavigationParameter.credentialViewMode] must be [CredentialViewMode.ENROLLMENT].
      */
@@ -55,7 +55,7 @@ data class PasswordNavigationParameter(
     val passwordEnrollmentHandler: PasswordEnrollmentHandler? = null,
     /**
      * An instance of a [PasswordUserVerificationHandler] in case a Password verification is started
-     * as part of an authentication operation and we navigate to Credential view to ask the user to
+     * as part of an authentication operation, and we navigate to Credential view to ask the user to
      * enter the password to be able to continue the operation.
      * [PasswordNavigationParameter.credentialViewMode] must be [CredentialViewMode.VERIFICATION].
      */
