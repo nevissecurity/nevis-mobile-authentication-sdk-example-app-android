@@ -55,7 +55,7 @@ class CredentialFragment : BaseFragment() {
     private val navigationArguments: CredentialFragmentArgs by navArgs()
 
     /**
-     * A [CountDownTimer] instance that is used to disable the screen for a cool downtime period if necessary.
+     * A [CountDownTimer] instance that is used to disable the screen for a cooldown period if necessary.
      */
     private var timer: CountDownTimer? = null
     //endregion

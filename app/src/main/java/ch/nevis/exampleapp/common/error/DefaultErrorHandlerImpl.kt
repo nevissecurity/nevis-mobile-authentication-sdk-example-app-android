@@ -15,6 +15,7 @@ import ch.nevis.exampleapp.ui.error.parameter.ErrorNavigationParameter
 import ch.nevis.exampleapp.ui.navigation.NavigationDispatcher
 import ch.nevis.mobile.sdk.api.MobileAuthenticationClientError
 import ch.nevis.mobile.sdk.api.operation.OperationError
+import ch.nevis.mobile.sdk.api.operation.authcloudapi.AuthCloudApiError
 import ch.nevis.mobile.sdk.api.operation.password.PasswordChangeError
 import ch.nevis.mobile.sdk.api.operation.pin.PinChangeError
 import timber.log.Timber
@@ -69,7 +70,7 @@ class DefaultErrorHandlerImpl(private val context: Context, private val navigati
         return when (error) {
             is OperationError -> error.errorCode().description()
 
-            is ch.nevis.mobile.sdk.api.operation.authcloudapi.AuthCloudApiError.OperationError -> error.errorCode()
+            is AuthCloudApiError.OperationError -> error.errorCode()
                 .description()
 
             is PinChangeError.UserNotResponsive -> context.getString(R.string.pin_change_user_not_responsive_error)

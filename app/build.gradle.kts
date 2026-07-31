@@ -1,6 +1,8 @@
 import java.io.FileInputStream
 import java.util.Properties
+import kotlin.apply
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
     alias(libs.plugins.android.application)
@@ -38,6 +40,11 @@ fun readVersionName(): String {
     return ""
 }
 
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties().apply {
+    if (keystorePropertiesFile.exists()) FileInputStream(keystorePropertiesFile).use { load(it) }
+}
+
 android {
     namespace = "ch.nevis.exampleapp"
     compileSdk = 36
@@ -50,6 +57,19 @@ android {
         versionName = readVersionName()
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    if (keystorePropertiesFile.exists()) {
+        signingConfigs {
+            create("signing") {
+                storeFile = file(keystoreProperties["storeFile"] as String)
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+                storePassword = keystoreProperties["storePassword"] as String
+                enableV1Signing = true
+                enableV2Signing = true
+            }
+        }
     }
 
     buildTypes {
@@ -80,21 +100,13 @@ kotlin {
     }
 }
 
-fun readKtlintVersion(): String {
-    val properties = Properties().apply {
-        load(FileInputStream(File(rootProject.rootDir, "ktlint-plugins.properties")))
-    }
-    return properties.getProperty("ktlint-version")
-}
-
 ktlint {
-    version.set(readKtlintVersion())
     android.set(true)
     ignoreFailures.set(false)
     outputToConsole.set(true)
     reporters {
-        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
-        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML)
+        reporter(ReporterType.PLAIN)
+        reporter(ReporterType.HTML)
     }
 }
 
