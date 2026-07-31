@@ -1,3 +1,5 @@
+import java.io.FileInputStream
+import java.util.Properties
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -78,7 +80,15 @@ kotlin {
     }
 }
 
+fun readKtlintVersion(): String {
+    val properties = Properties().apply {
+        load(FileInputStream(File(rootProject.rootDir, "ktlint-plugins.properties")))
+    }
+    return properties.getProperty("ktlint-version")
+}
+
 ktlint {
+    version.set(readKtlintVersion())
     android.set(true)
     ignoreFailures.set(false)
     outputToConsole.set(true)
