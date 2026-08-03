@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023. Nevis Security AG. All rights reserved.
@@ -217,6 +217,7 @@ class HomeViewModel @Inject constructor(
 
             when (eligibleAccounts.size) {
                 0 -> throw BusinessException.accountsNotFound()
+
                 1 -> {
                     when (operation) {
                         Operation.CHANGE_PIN -> startPinChange(eligibleAccounts.first().username())
@@ -224,6 +225,7 @@ class HomeViewModel @Inject constructor(
                         else -> throw BusinessException.invalidState()
                     }
                 }
+
                 else -> {
                     navigationDispatcher.requestNavigation(
                         NavigationGraphDirections.actionGlobalSelectAccountFragment(
@@ -242,7 +244,7 @@ class HomeViewModel @Inject constructor(
      *
      * **NOTE**: The de-registration process is executed differently for Authentication Cloud and
      * Identity Suite environments.
-     * - In case of Authentication Cloud all of the registered accounts will be de-registered one by one.
+     * - In case of Authentication Cloud all the registered accounts will be de-registered one by one.
      * - In case of Identity Suite only one account can be de-registered at a time, this is the reason the
      * user will be asked to select the account first she/he wants to de-register.
      */
@@ -442,19 +444,23 @@ class HomeViewModel @Inject constructor(
                             Timber.asTree().sdk("Cause: ${information.cause()}")
                             cancellableContinuation.resume(SdkAttestationInformation.OnlySurrogateBasicSupported())
                         }
+
                         is OnlyDefaultMode -> {
                             Timber.asTree().sdk("Full basic default attestation mode supported.")
                             Timber.asTree().sdk("Cause: ${information.cause()}")
                             cancellableContinuation.resume(SdkAttestationInformation.OnlyDefaultMode())
                         }
+
                         is StrictMode -> {
                             Timber.asTree().sdk("Full basic strict attestation mode supported.")
                             cancellableContinuation.resume(SdkAttestationInformation.StrictMode())
                         }
+
                         is StrictStrongBoxMode -> {
                             Timber.asTree().sdk("Full basic strict-strongbox attestation mode supported.")
                             cancellableContinuation.resume(SdkAttestationInformation.StrictStrongBoxMode())
                         }
+
                         else -> throw IllegalStateException("Unsupported attestation information type.")
                     }
                 }

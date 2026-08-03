@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023. Nevis Security AG. All rights reserved.
@@ -32,7 +32,7 @@ import ch.nevis.mobile.sdk.api.operation.userverification.PinUserVerifier
 
 /**
  * Abstract, base class that provides out-of-band payload decoding, processing and out-of-band
- * authentication, registration operation execution related common code for view model sub-classes
+ * authentication, registration operation execution related common code for view model subclasses
  * those deal with out-of-band operations.
  *
  * @constructor Creates a new instance.

@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023. Nevis Security AG. All rights reserved.
@@ -27,7 +27,7 @@ data class SelectAuthenticatorNavigationParameter(
     @IgnoredOnParcel
     val authenticatorItems: Set<AuthenticatorItem>? = null,
     /**
-     * An instance of an [AuthenticatorSelectionHandler] in case an operation started that need authentication selection
+     * An instance of an [AuthenticatorSelectionHandler] in case an operation started that need authentication selection,
      * and we navigate to Select Authenticator view to ask the user to select one of the available authenticators to be able
      * to continue the operation.
      */

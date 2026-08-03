@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023-2024. Nevis Security AG. All rights reserved.
@@ -55,7 +55,7 @@ class CredentialFragment : BaseFragment() {
     private val navigationArguments: CredentialFragmentArgs by navArgs()
 
     /**
-     * A [CountDownTimer] instance that is used to disable the screen for a cool down time period if necessary.
+     * A [CountDownTimer] instance that is used to disable the screen for a cooldown period if necessary.
      */
     private var timer: CountDownTimer? = null
     //endregion
@@ -173,6 +173,7 @@ class CredentialFragment : BaseFragment() {
                         InputType.TYPE_NUMBER_VARIATION_PASSWORD
                     )
             }
+
             Authenticator.PASSWORD_AUTHENTICATOR_AAID -> {
                 binding.oldCredentialTextInputEditText.inputType =
                     (InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)
@@ -256,11 +257,13 @@ class CredentialFragment : BaseFragment() {
                         remainingRetries = remainingRetries,
                         coolDownTimeInSeconds = coolDownTime
                     ).message(it)
+
                 Authenticator.PASSWORD_AUTHENTICATOR_AAID ->
                     PasswordAuthenticatorProtectionStatusLastAttemptFailedImpl(
                         remainingRetries = remainingRetries,
                         coolDownTimeInSeconds = coolDownTime
                     ).message(it)
+
                 else -> String()
             }
         }

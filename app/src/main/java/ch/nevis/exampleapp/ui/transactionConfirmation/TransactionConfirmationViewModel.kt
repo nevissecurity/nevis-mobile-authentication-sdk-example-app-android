@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023-2024. Nevis Security AG. All rights reserved.
@@ -44,7 +44,7 @@ class TransactionConfirmationViewModel @Inject constructor(
     private lateinit var account: Account
 
     /**
-     * An instance of an [AccountSelectionHandler]. Transaction confirmation data received only in case an out-of-band authentication is started
+     * An instance of an [AccountSelectionHandler]. Transaction confirmation data received only in case an out-of-band authentication is started,
      * and we navigate to Transaction Confirmation view to ask the user to confirm or deny the operation based on the transaction confirmation data
      * before we continue the operation with account selection.
      */

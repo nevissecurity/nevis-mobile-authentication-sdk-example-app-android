@@ -10,8 +10,8 @@ on:
 
 env:
   KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
+  KEYSTORE_PROPERTIES: ${{ secrets.KEYSTORE_PROPERTIES }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  SIGNING_CONFIGS: ${{ secrets.SIGNING_CONFIGS }}
   FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
   FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
   GH_USERNAME: ${{ vars.GH_USERNAME }}
@@ -21,7 +21,7 @@ env:
   SLACK_WEBHOOK_URL: ${{ vars.SLACK_WEBHOOK_URL }}
 
   JAVA_VERSION: '17'
-  RUBY_VERSION: '3.4.2'
+  RUBY_VERSION: '4.0'
   CURRENT_BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
 
 jobs:
@@ -64,8 +64,17 @@ jobs:
         uses: timheuer/base64-to-file@v2
         with:
           fileName: 'keystore-example-app.jks'
-          fileDir: './etc'
+          fileDir: ${{ github.workspace }}/etc
           encodedString: ${{ env.KEYSTORE_FILE }}
+
+        # Setup keystore properties file
+      - name: Create Keystore Properties
+        if: ${{ env.KEYSTORE_PROPERTIES != '' }}
+        uses: timheuer/base64-to-file@v2
+        with:
+            fileName: 'keystore.properties'
+            fileDir: ${{ github.workspace }}
+            encodedString: ${{ env.KEYSTORE_PROPERTIES }}
 
       # Generate build number based on Git tag
       - name: Generate build number

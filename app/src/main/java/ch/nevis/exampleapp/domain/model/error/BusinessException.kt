@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023. Nevis Security AG. All rights reserved.
@@ -54,7 +54,7 @@ enum class BusinessExceptionType(
 }
 
 /**
- * A sub-class of [Exception] that represents a business exception.
+ * A subclass of [Exception] that represents a business exception.
  */
 class BusinessException private constructor(
     /**

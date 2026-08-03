@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023. Nevis Security AG. All rights reserved.
@@ -41,7 +41,7 @@ data class VerifyUserNavigationParameter(
     val authenticatorTitleResId: Int,
     /**
      * An instance of a [BiometricUserVerificationHandler] in case of an operation is started that requested
-     * biometric user verification and we navigate to Verify User view to ask the user to verify herself/himself
+     * biometric user verification, and we navigate to Verify User view to ask the user to verify herself/himself
      * using biometric authentication (fingerprint or face ID) to be able to continue the operation.
      *
      * [VerifyUserNavigationParameter.verifyUserViewMode] must be [VerifyUserViewMode.BIOMETRIC].
@@ -50,7 +50,7 @@ data class VerifyUserNavigationParameter(
     val biometricUserVerificationHandler: BiometricUserVerificationHandler? = null,
     /**
      * An instance of a [DevicePasscodeUserVerificationHandler] in case of an operation is started that requested
-     * device passcode user verification and we navigate to Verify User view to ask the user to verify herself/himself
+     * device passcode user verification, and we navigate to Verify User view to ask the user to verify herself/himself
      * using device passcode authentication to be able to continue the operation.
      *
      * [VerifyUserNavigationParameter.verifyUserViewMode] must be [VerifyUserViewMode.DEVICE_PASSCODE].
@@ -59,7 +59,7 @@ data class VerifyUserNavigationParameter(
     val devicePasscodeUserVerificationHandler: DevicePasscodeUserVerificationHandler? = null,
     /**
      * An instance of a [FingerprintUserVerificationHandler] in case of an operation is started that requested
-     * fingerprint user verification and we navigate to Verify User view to ask the user to verify herself/himself
+     * fingerprint user verification, and we navigate to Verify User view to ask the user to verify herself/himself
      * using fingerprint authentication to be able to continue the operation.
      *
      * [VerifyUserNavigationParameter.verifyUserViewMode] must be [VerifyUserViewMode.FINGERPRINT].

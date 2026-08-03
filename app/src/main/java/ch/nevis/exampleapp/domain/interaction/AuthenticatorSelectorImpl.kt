@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2024. Nevis Security AG. All rights reserved.
@@ -66,6 +66,7 @@ class AuthenticatorSelectorImpl(
                     configurationProvider.authenticatorAllowlist
                 )
             }
+
             AuthenticatorSelectorOperation.AUTHENTICATION -> {
                 authenticatorValidator.validateForAuthentication(
                     context,

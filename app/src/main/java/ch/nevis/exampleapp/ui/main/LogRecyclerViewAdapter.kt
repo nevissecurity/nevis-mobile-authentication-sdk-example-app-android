@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023. Nevis Security AG. All rights reserved.
@@ -91,7 +91,7 @@ class LogRecyclerViewAdapter(private val context: Context) : RecyclerView.Adapte
      * @constructor Creates a new instance.
      * @param itemView The item view provided by recycler view.
      */
-    inner class LogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class LogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //region Properties
 
         /**

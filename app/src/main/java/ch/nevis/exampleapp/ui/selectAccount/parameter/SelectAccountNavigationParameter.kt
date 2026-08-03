@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023-2024. Nevis Security AG. All rights reserved.
@@ -33,7 +33,7 @@ data class SelectAccountNavigationParameter(
     @IgnoredOnParcel
     val accounts: Set<Account>? = null,
     /**
-     * An instance of an [AccountSelectionHandler] in case an out-of-band authentication is started and we navigate to
+     * An instance of an [AccountSelectionHandler] in case an out-of-band authentication is started, and we navigate to
      * Select Account view to ask the user to select one of the available accounts to be able to continue the operation.
      * [SelectAccountNavigationParameter.operation] must be [Operation.OUT_OF_BAND_AUTHENTICATION].
      */

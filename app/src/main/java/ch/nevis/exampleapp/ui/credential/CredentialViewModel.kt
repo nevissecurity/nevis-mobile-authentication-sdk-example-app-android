@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023. Nevis Security AG. All rights reserved.
@@ -53,7 +53,7 @@ class CredentialViewModel @Inject constructor(
     private var credentialViewMode: CredentialViewMode? = null
 
     /**
-     * An instance of a [PinChangeHandler] in case a PIN change operation is started and we navigate
+     * An instance of a [PinChangeHandler] in case a PIN change operation is started, and we navigate
      * to Credential view to ask the user to enter the old and new PINs to be able to continue the operation.
      * [CredentialViewModel.credentialViewMode] must be [CredentialViewMode.CHANGE].
      */
@@ -61,7 +61,7 @@ class CredentialViewModel @Inject constructor(
 
     /**
      * An instance of a [PinEnrollmentHandler] in case a PIN enrollment is started as part of a
-     * registration operation and we navigate to Credential view to ask the user to enter, define the
+     * registration operation, and we navigate to Credential view to ask the user to enter, define the
      * PIN to be able to continue the operation.
      * [CredentialViewModel.credentialViewMode] must be [CredentialViewMode.ENROLLMENT].
      */
@@ -69,14 +69,14 @@ class CredentialViewModel @Inject constructor(
 
     /**
      * An instance of a [PinUserVerificationHandler] in case a PIN verification is started as part of
-     * an authentication operation and we navigate to Credential view to ask the user to enter the PIN
+     * an authentication operation, and we navigate to Credential view to ask the user to enter the PIN
      * to be able to continue the operation.
      * [CredentialViewModel.credentialViewMode] must be [CredentialViewMode.VERIFICATION].
      */
     private var pinUserVerificationHandler: PinUserVerificationHandler? = null
 
     /**
-     * An instance of a [PasswordChangeHandler] in case a Password change operation is started and we
+     * An instance of a [PasswordChangeHandler] in case a Password change operation is started, and we
      * navigate to Credential view to ask the user to enter the old and new passwords to be able to
      * continue the operation.
      * [CredentialViewModel.credentialViewMode] must be [CredentialViewMode.CHANGE].
@@ -85,7 +85,7 @@ class CredentialViewModel @Inject constructor(
 
     /**
      * An instance of a [PasswordEnrollmentHandler] in case a Password enrollment is started as part
-     * of a registration operation and we navigate to Credential view to ask the user to enter, define
+     * of a registration operation, and we navigate to Credential view to ask the user to enter, define
      * the password to be able to continue the operation.
      * [CredentialViewModel.credentialViewMode] must be [CredentialViewMode.ENROLLMENT].
      */
@@ -93,7 +93,7 @@ class CredentialViewModel @Inject constructor(
 
     /**
      * An instance of a [PasswordUserVerificationHandler] in case a Password verification is started
-     * as part of an authentication operation and we navigate to Credential view to ask the user to
+     * as part of an authentication operation, and we navigate to Credential view to ask the user to
      * enter the password to be able to continue the operation.
      * [CredentialViewModel.credentialViewMode] must be [CredentialViewMode.VERIFICATION].
      */
@@ -145,18 +145,21 @@ class CredentialViewModel @Inject constructor(
                     passwordChangeHandler?.passwords(oldCredential, credential)
                     this.passwordChangeHandler = null
                 }
+
                 CredentialViewMode.ENROLLMENT -> {
                     pinEnrollmentHandler?.pin(credential)
                     this.pinEnrollmentHandler = null
                     passwordEnrollmentHandler?.password(credential)
                     this.passwordEnrollmentHandler = null
                 }
+
                 CredentialViewMode.VERIFICATION -> {
                     pinUserVerificationHandler?.verifyPin(credential)
                     this.pinUserVerificationHandler = null
                     passwordUserVerificationHandler?.verifyPassword(credential)
                     this.passwordUserVerificationHandler = null
                 }
+
                 else -> throw BusinessException.invalidState()
             }
         } catch (exception: Exception) {
@@ -180,12 +183,14 @@ class CredentialViewModel @Inject constructor(
                 pinEnrollmentHandler = parameter.pinEnrollmentHandler
                 pinUserVerificationHandler = parameter.pinUserVerificationHandler
             }
+
             is PasswordNavigationParameter -> {
                 credentialType = Authenticator.PASSWORD_AUTHENTICATOR_AAID
                 passwordChangeHandler = parameter.passwordChangeHandler
                 passwordEnrollmentHandler = parameter.passwordEnrollmentHandler
                 passwordUserVerificationHandler = parameter.passwordUserVerificationHandler
             }
+
             else -> throw BusinessException.invalidState()
         }
     }
@@ -202,11 +207,13 @@ class CredentialViewModel @Inject constructor(
                 getPinProtectionInfo(it)
             }
         }
+
         is PasswordNavigationParameter -> {
             parameter.passwordAuthenticatorProtectionStatus?.let {
                 getPasswordProtectionInfo(it)
             }
         }
+
         else -> throw BusinessException.invalidState()
     }
 
@@ -223,6 +230,7 @@ class CredentialViewModel @Inject constructor(
                 Timber.asTree().sdk("PIN authenticator is unlocked.")
                 CredentialProtectionInformation()
             }
+
             is PinAuthenticatorProtectionStatus.LastAttemptFailed -> {
                 Timber.asTree().sdk("Last attempt failed using the PIN authenticator.")
                 Timber.asTree()
@@ -239,6 +247,7 @@ class CredentialViewModel @Inject constructor(
                     coolDownTime = protectionStatus.coolDownTimeInSeconds()
                 )
             }
+
             is PinAuthenticatorProtectionStatus.LockedOut -> {
                 Timber.asTree().sdk("PIN authenticator is locked.")
                 CredentialProtectionInformation(
@@ -246,6 +255,7 @@ class CredentialViewModel @Inject constructor(
                     message = protectionStatus.message(context)
                 )
             }
+
             else -> throw IllegalStateException("Unsupported PIN authenticator protection status.")
         }
 
@@ -262,6 +272,7 @@ class CredentialViewModel @Inject constructor(
                 Timber.asTree().sdk("Password authenticator is unlocked.")
                 CredentialProtectionInformation()
             }
+
             is PasswordAuthenticatorProtectionStatus.LastAttemptFailed -> {
                 Timber.asTree().sdk("Last attempt failed using the Password authenticator.")
                 Timber.asTree()
@@ -278,6 +289,7 @@ class CredentialViewModel @Inject constructor(
                     coolDownTime = protectionStatus.coolDownTimeInSeconds()
                 )
             }
+
             is PasswordAuthenticatorProtectionStatus.LockedOut -> {
                 Timber.asTree().sdk("Password authenticator is locked.")
                 CredentialProtectionInformation(
@@ -285,6 +297,7 @@ class CredentialViewModel @Inject constructor(
                     message = protectionStatus.message(context)
                 )
             }
+
             else -> throw IllegalStateException("Unsupported Password authenticator protection status.")
         }
     //endregion

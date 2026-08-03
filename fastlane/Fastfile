@@ -13,6 +13,7 @@ gradle_properties = File.join(root_dir, "gradle.properties")
 application_module = File.join(root_dir, "app/src/main/java/ch/nevis/exampleapp/dagger/ApplicationModule.kt")
 android_manifest = File.join(root_dir, "app/src/main/AndroidManifest.xml")
 build_gradle = File.join(root_dir, "app/build.gradle.kts")
+keystore_properties_file = File.join(root_dir, "keystore.properties")
 display_name = "Nevis Mobile Authentication SDK Android Example App"
 
 def report_on_success(message)
@@ -51,6 +52,13 @@ platform :android do
         host_name = options[:host_name]
         custom_uri_scheme = options[:custom_uri_scheme]
 
+        unless File.exist?(keystore_properties_file)
+            UI.user_error!(
+                "keystore.properties not found at #{keystore_properties_file}. " \
+                "Set the KEYSTORE_FILE and KEYSTORE_PROPERTIES secrets so the \"signing\" signingConfig can be created."
+            )
+        end
+
         # Loading gradle.properties file.
         properties = JavaProperties.load(gradle_properties)
 
@@ -87,13 +95,6 @@ platform :android do
             file_path: android_manifest,
             old_value: "<data android:scheme=\"myaccessapp\" />",
             new_value: "<data android:scheme=\"#{custom_uri_scheme}\" />"
-        )
-
-        modify_file(
-            file_path: build_gradle,
-            old_value: "android {",
-            new_value: ENV["SIGNING_CONFIGS"],
-            mode: "append"
         )
 
         modify_file(

@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023-2024. Nevis Security AG. All rights reserved.
@@ -44,6 +44,7 @@ class AccountSelectorImpl(private val navigationDispatcher: NavigationDispatcher
                 context.transactionConfirmationData().orElse(null)
             when (accounts.size) {
                 0 -> throw BusinessException.accountsNotFound()
+
                 1 -> {
                     Timber.asTree()
                         .sdk("One account found, performing automatic selection!")
@@ -61,6 +62,7 @@ class AccountSelectorImpl(private val navigationDispatcher: NavigationDispatcher
                         handler.username(accounts.first().username())
                     }
                 }
+
                 else -> {
                     navigationDispatcher.requestNavigation(
                         NavigationGraphDirections.actionGlobalSelectAccountFragment(

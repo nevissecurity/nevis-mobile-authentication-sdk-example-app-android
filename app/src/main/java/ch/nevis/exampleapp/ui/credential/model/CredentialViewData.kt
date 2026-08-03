@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023. Nevis Security AG. All rights reserved.
@@ -57,11 +57,13 @@ data class CredentialViewData(
                     Authenticator.PASSWORD_AUTHENTICATOR_AAID -> R.string.password_title_change
                     else -> throw IllegalStateException("Unsupported credential type.")
                 }
+
                 CredentialViewMode.ENROLLMENT -> when (credentialType) {
                     Authenticator.PIN_AUTHENTICATOR_AAID -> R.string.pin_title_enrollment
                     Authenticator.PASSWORD_AUTHENTICATOR_AAID -> R.string.password_title_enrollment
                     else -> throw IllegalStateException("Unsupported credential type.")
                 }
+
                 CredentialViewMode.VERIFICATION -> when (credentialType) {
                     Authenticator.PIN_AUTHENTICATOR_AAID -> R.string.pin_title_verify
                     Authenticator.PASSWORD_AUTHENTICATOR_AAID -> R.string.password_title_verify
@@ -82,11 +84,13 @@ data class CredentialViewData(
                     Authenticator.PASSWORD_AUTHENTICATOR_AAID -> R.string.password_description_change
                     else -> throw IllegalStateException("Unsupported credential type.")
                 }
+
                 CredentialViewMode.ENROLLMENT -> when (credentialType) {
                     Authenticator.PIN_AUTHENTICATOR_AAID -> R.string.pin_description_enrollment
                     Authenticator.PASSWORD_AUTHENTICATOR_AAID -> R.string.password_description_enrollment
                     else -> throw IllegalStateException("Unsupported credential type.")
                 }
+
                 CredentialViewMode.VERIFICATION -> when (credentialType) {
                     Authenticator.PIN_AUTHENTICATOR_AAID -> R.string.pin_description_verify
                     Authenticator.PASSWORD_AUTHENTICATOR_AAID -> R.string.password_description_verify

@@ -1,4 +1,4 @@
-/**
+/*
  * Nevis Mobile Authentication SDK Example App
  *
  * Copyright © 2023. Nevis Security AG. All rights reserved.
@@ -38,7 +38,7 @@ data class PinNavigationParameter(
     @IgnoredOnParcel
     val pinAuthenticatorProtectionStatus: PinAuthenticatorProtectionStatus? = null,
     /**
-     * An instance of a [PinChangeHandler] in case a PIN change operation is started and we navigate
+     * An instance of a [PinChangeHandler] in case a PIN change operation is started, and we navigate
      * to Credential view to ask the user to enter the old and new PINs to be able to continue the
      * operation. [PinNavigationParameter.credentialViewMode] must be [CredentialViewMode.CHANGE].
      */
@@ -46,7 +46,7 @@ data class PinNavigationParameter(
     val pinChangeHandler: PinChangeHandler? = null,
     /**
      * An instance of a [PinEnrollmentHandler] in case a PIN enrollment is started as part of a
-     * registration operation and we navigate to Credential view to ask the user to enter, define the
+     * registration operation, and we navigate to Credential view to ask the user to enter, define the
      * PIN to be able to continue the operation.
      * [PinNavigationParameter.credentialViewMode] must be [CredentialViewMode.ENROLLMENT].
      */
@@ -54,7 +54,7 @@ data class PinNavigationParameter(
     val pinEnrollmentHandler: PinEnrollmentHandler? = null,
     /**
      * An instance of a [PinUserVerificationHandler] in case a PIN verification is started as part of
-     * an authentication operation and we navigate to Credential view to ask the user to enter the PIN
+     * an authentication operation, and we navigate to Credential view to ask the user to enter the PIN
      * to be able to continue the operation.
      * [PinNavigationParameter.credentialViewMode] must be [CredentialViewMode.VERIFICATION].
      */

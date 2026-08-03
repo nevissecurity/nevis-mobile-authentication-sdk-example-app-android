@@ -1,7 +1,4 @@
-import java.io.FileInputStream
-import java.util.Properties
-
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+// Top-level build file where you can add configuration options common to all subprojects/modules.
 val customFooterMessage = "© 2025 made with ❤️ by Nevis"
 val customLogoFile = "$projectDir/logo-style.css"
 
@@ -17,31 +14,19 @@ plugins {
 }
 
 fun getConfig(name: String): String {
-    val localPropertiesFile = File(rootProject.rootDir, "local.properties")
+    val localPropertiesFile = rootDir.resolve("local.properties")
     if (localPropertiesFile.exists()) {
-        val localProperties = Properties().apply {
-            load(FileInputStream(localPropertiesFile))
-        }
-        if (localProperties.containsKey(name)) {
-            return localProperties.getProperty(name)
-        }
+        val localProperties = java.util.Properties()
+        localPropertiesFile.inputStream().use { localProperties.load(it) }
+        localProperties.getProperty(name)?.let { return it }
     }
-    val env = System.getenv(name)
-    if (env != null) {
-        return env
-    }
-    val prop = System.getProperty(name)
-    if (prop != null) {
-        return prop
-    }
-    (project.property(name) as? String)?.let {
-        return it
-    }
+    System.getenv(name)?.let { return it }
+    System.getProperty(name)?.let { return it }
+    providers.gradleProperty(name).orNull?.let { return it }
 
-    println(
-        "Getting env variable failed, returning empty: set $name as environment variable or as system property in your ~/.gradle/gradle.properties"
+    throw GradleException(
+        "Getting configuration with name $name failed! Set it as environment variable or as local/project/system property."
     )
-    return ""
 }
 
 allprojects {
@@ -62,6 +47,19 @@ allprojects {
         mavenCentral {
             content {
                 excludeGroupByRegex("ch\\.nevis\\..*")
+            }
+        }
+    }
+}
+
+// Workaround for https://github.com/JLLeitschuh/ktlint-gradle/issues/1037:
+// the ktlint Gradle plugin only auto-detects the version from ktlint-plugins.properties
+// for the root project, not for subprojects, so it needs to be propagated explicitly.
+ktlint.version.let { ktlintVersion ->
+    subprojects {
+        pluginManager.withPlugin("org.jlleitschuh.gradle.ktlint") {
+            configure<org.jlleitschuh.gradle.ktlint.KtlintExtension> {
+                version.set(ktlintVersion)
             }
         }
     }
