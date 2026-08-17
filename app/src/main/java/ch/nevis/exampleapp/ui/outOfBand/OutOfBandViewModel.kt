@@ -1,7 +1,7 @@
 /*
  * Nevis Mobile Authentication SDK Example App
  *
- * Copyright © 2023. Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2026. Nevis Security AG. All rights reserved.
  */
 
 package ch.nevis.exampleapp.ui.outOfBand
@@ -92,14 +92,14 @@ abstract class OutOfBandViewModel(
     }
     //endregion
 
-    //region Private Interface
+    //region Protected Interface
 
     /**
      * Starts processing of out-of-band payload.
      *
      * @param payload The [OutOfBandPayload] object to be processed.
      */
-    private fun processOutOfBandPayload(payload: OutOfBandPayload) {
+    protected fun processOutOfBandPayload(payload: OutOfBandPayload) {
         try {
             val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
             client.operations().outOfBandOperation()
@@ -116,6 +116,9 @@ abstract class OutOfBandViewModel(
             errorHandler.handle(exception)
         }
     }
+    //endregion
+
+    //region Private Interface
 
     /**
      * Sets-up and executes the given out-of-band authentication.
