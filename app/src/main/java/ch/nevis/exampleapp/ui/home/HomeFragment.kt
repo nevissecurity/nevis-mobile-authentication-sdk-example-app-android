@@ -1,7 +1,7 @@
 /*
  * Nevis Mobile Authentication SDK Example App
  *
- * Copyright © 2023. Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2026. Nevis Security AG. All rights reserved.
  */
 
 package ch.nevis.exampleapp.ui.home
@@ -66,6 +66,10 @@ class HomeFragment : BaseFragment() {
 
         binding.inBandAuthenticationButton.setOnClickListener {
             viewModel.inBandAuthentication()
+        }
+
+        binding.fetchPendingOperations.setOnClickListener {
+            viewModel.fetchPendingOperations()
         }
 
         binding.deregisterButton.setOnClickListener {

@@ -1,7 +1,7 @@
 /*
  * Nevis Mobile Authentication SDK Example App
  *
- * Copyright © 2023. Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2026. Nevis Security AG. All rights reserved.
  */
 
 package ch.nevis.exampleapp.ui.home
@@ -37,6 +37,7 @@ import ch.nevis.mobile.sdk.api.devicecapabilities.FidoUafAttestationInformation.
 import ch.nevis.mobile.sdk.api.localdata.Authenticator
 import ch.nevis.mobile.sdk.api.metadata.MetaData
 import ch.nevis.mobile.sdk.api.operation.OperationError
+import ch.nevis.mobile.sdk.api.operation.outofband.PendingOutOfBandOperation
 import ch.nevis.mobile.sdk.api.operation.password.PasswordChanger
 import ch.nevis.mobile.sdk.api.operation.password.PasswordEnroller
 import ch.nevis.mobile.sdk.api.operation.pin.PinChanger
@@ -171,6 +172,33 @@ class HomeViewModel @Inject constructor(
                     )
                 )
             )
+        } catch (exception: Exception) {
+            errorHandler.handle(exception)
+        }
+    }
+
+    /**
+     * Starts a fetch for pending operations.
+     */
+    fun fetchPendingOperations() {
+        try {
+            val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
+            val accounts = client.localData().accounts()
+            if (accounts.isEmpty()) {
+                throw BusinessException.accountsNotFound()
+            }
+
+            viewModelScope.launch {
+                try {
+                    val pendingOperations = executePendingOutOfBandOperations()
+                    // The operations are sorted by creation time, the last one is the latest.
+                    pendingOperations.lastOrNull()?.let {
+                        processOutOfBandPayload(it.payload())
+                    }
+                } catch (exception: Exception) {
+                    errorHandler.handle(exception)
+                }
+            }
         } catch (exception: Exception) {
             errorHandler.handle(exception)
         }
@@ -353,6 +381,15 @@ class HomeViewModel @Inject constructor(
             requestViewUpdate(homeViewData)
         }
     }
+
+    private suspend fun executePendingOutOfBandOperations(): List<PendingOutOfBandOperation> =
+        suspendCancellableCoroutine { cancellableContinuation ->
+            val client = clientProvider.get() ?: throw BusinessException.clientNotInitialized()
+            client.operations().pendingOutOfBandOperations().onResult { pendingOutOfBandOperationsResult ->
+                val pendingOperations = pendingOutOfBandOperationsResult.operations().toList()
+                cancellableContinuation.resume(pendingOperations)
+            }.execute()
+        }
 
     /**
      * De-registers an account in case of Authentication Cloud environment.
