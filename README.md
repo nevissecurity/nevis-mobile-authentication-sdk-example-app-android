@@ -272,6 +272,10 @@ During registration, the device information can be provided that contains the na
 > [!NOTE]
 > Firebase Cloud Messaging is not supported in the example app.
 
+#### Fetch pending operations
+
+Fetching the pending out-of-band operations of the registered accounts is implemented in the [HomeViewModel](app/src/main/java/ch/nevis/exampleapp/ui/home/HomeViewModel.kt) class. The fetch operation completes with a [PendingOutOfBandOperationsResult](https://docs.nevis.net/mobilesdk/api-references/javadoc/ch/nevis/mobile/sdk/api/operation/outofband/PendingOutOfBandOperationsResult.html), containing a set of [PendingOutOfBandOperation](https://docs.nevis.net/mobilesdk/api-references/javadoc/ch/nevis/mobile/sdk/api/operation/outofband/PendingOutOfBandOperation.html) objects together with their payloads, if there are any. If pending out-of-band operations are found, the [OutOfBandPayload](https://docs.nevis.net/mobilesdk/api-references/javadoc/ch/nevis/mobile/sdk/api/operation/outofband/OutOfBandPayload.html) of the latest one is processed by the [OutOfBandViewModel](app/src/main/java/ch/nevis/exampleapp/ui/outOfBand/OutOfBandViewModel.kt) superclass the same way as one obtained from a QR code or a link. If there is no pending out-of-band operation, nothing is done.
+
 #### Get information
 
 You can use the [LocalData](https://docs.nevis.net/mobilesdk/api-references/javadoc/ch/nevis/mobile/sdk/api/localdata/LocalData.html) to obtain the following information:
