@@ -1,18 +1,26 @@
 /*
  * Nevis Mobile Authentication SDK Example App
  *
- * Copyright © 2023. Nevis Security AG. All rights reserved.
+ * Copyright © 2023-2026. Nevis Security AG. All rights reserved.
  */
 
 package ch.nevis.exampleapp.ui.main
 
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.SystemBarStyle
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.graphics.Insets
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isGone
+import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -20,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import ch.nevis.exampleapp.R
 import ch.nevis.exampleapp.databinding.ActivityMainBinding
 import ch.nevis.exampleapp.ui.util.navigateToHome
+import com.google.android.material.color.MaterialColors
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -45,14 +54,37 @@ class MainActivity : AppCompatActivity() {
      * A [LogRecyclerViewAdapter] instance that is used to render SDK log items in a [androidx.recyclerview.widget.RecyclerView].
      */
     private lateinit var logRecyclerViewAdapter: LogRecyclerViewAdapter
+
+    /**
+     * The insets of the system bars, the display cutout and the software keyboard that were dispatched to the root
+     * view most recently. They are needed to re-apply the bottom inset to the correct view when the log is shown or
+     * hidden.
+     */
+    private var windowInsets: Insets = Insets.NONE
     //endregion
 
     //region Activity
     override fun onCreate(savedInstanceState: Bundle?) {
+        // The app draws behind the system bars on all supported Android versions. The status bar is drawn over the App Bar,
+        // with `colorPrimary` being its background color, so its icons should use the same light/dark appearance as `colorOnPrimary`.
+        val colorOnPrimary = MaterialColors.getColor(
+            this,
+            com.google.android.material.R.attr.colorOnPrimary,
+            Color.WHITE
+        )
+        enableEdgeToEdge(
+            statusBarStyle = if (MaterialColors.isColorLight(colorOnPrimary)) {
+                SystemBarStyle.dark(Color.TRANSPARENT)
+            } else {
+                SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
+            }
+        )
         super.onCreate(savedInstanceState)
 
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+        applyWindowInsets()
 
         // Initialization of Android Jetpack Navigation component and home screen/fragment.
         val navHostFragment =
@@ -70,6 +102,7 @@ class MainActivity : AppCompatActivity() {
                 binding.logRecyclerView.visibility = View.GONE
                 binding.logToggleButton.text = getString(R.string.main_show_log)
             }
+            applyBottomInset()
         }
     }
 
@@ -103,6 +136,37 @@ class MainActivity : AppCompatActivity() {
     //endregion
 
     //region Private Interface
+
+    /**
+     * Applies the system bar, display cutout and software keyboard insets to the views of the activity, so that the
+     * UI is drawn edge-to-edge but its content is neither covered by the system bars nor by the keyboard:
+     * - the top inset is applied as padding to the app bar, so that it is drawn behind the status bar,
+     * - the horizontal insets are applied as padding to the root view,
+     * - the bottom inset is applied to the log views, see [applyBottomInset].
+     */
+    private fun applyWindowInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            windowInsets = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars() or
+                    WindowInsetsCompat.Type.displayCutout() or
+                    WindowInsetsCompat.Type.ime()
+            )
+            view.updatePadding(left = windowInsets.left, right = windowInsets.right)
+            binding.appBarLayout.updatePadding(top = windowInsets.top)
+            applyBottomInset()
+            WindowInsetsCompat.CONSUMED
+        }
+    }
+
+    /**
+     * Applies the bottom inset as padding to the view that is currently at the bottom of the screen: the log
+     * list if it is visible, otherwise the log toggle button container.
+     */
+    private fun applyBottomInset() {
+        val isLogVisible = binding.logRecyclerView.isVisible
+        binding.logRecyclerView.updatePadding(bottom = if (isLogVisible) windowInsets.bottom else 0)
+        binding.logToggleButtonContainer.updatePadding(bottom = if (isLogVisible) 0 else windowInsets.bottom)
+    }
 
     /**
      * Processes the received [Intent]. This function checks if the intent has a [Intent.ACTION_VIEW] action and the data URI
