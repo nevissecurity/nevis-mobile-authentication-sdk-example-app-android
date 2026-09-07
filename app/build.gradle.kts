@@ -1,6 +1,5 @@
 import java.io.FileInputStream
 import java.util.Properties
-import kotlin.apply
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
@@ -52,7 +51,7 @@ android {
     defaultConfig {
         applicationId = "ch.nevis.exampleapp"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = readVersionCode()
         versionName = readVersionName()
 
