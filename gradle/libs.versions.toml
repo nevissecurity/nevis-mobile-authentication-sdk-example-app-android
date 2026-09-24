@@ -1,5 +1,5 @@
 [versions]
-agp-version = "9.2.1"
+agp-version = "9.4.1"
 kotlin-version = "2.4.10"
 dagger-hilt-version = "2.60.1"
 navigation-version = "2.9.8"
