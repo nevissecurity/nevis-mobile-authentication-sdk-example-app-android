@@ -46,7 +46,7 @@ val keystoreProperties = Properties().apply {
 
 android {
     namespace = "ch.nevis.exampleapp"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "ch.nevis.exampleapp"
