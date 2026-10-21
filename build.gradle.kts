@@ -1,5 +1,5 @@
 // Top-level build file where you can add configuration options common to all subprojects/modules.
-val customFooterMessage = "© 2025 made with ❤️ by Nevis"
+val customFooterMessage = "© 2026 made with ❤️  by Nevis"
 val customLogoFile = "$projectDir/logo-style.css"
 
 plugins {
