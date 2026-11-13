@@ -29,6 +29,7 @@ render.experimental.xml
 # Keystore files
 *.jks
 *.keystore
+keystore.properties
 
 # Google Services (e.g. APIs or Firebase)
 google-services.json
@@ -302,3 +303,6 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/ruby,dotenv,macos,android,androidstudio,gradle,fastlane
+
+# AI coding assistants: local, per-user state
+.claude/settings.local.json
